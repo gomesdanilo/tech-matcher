@@ -7,14 +7,81 @@
 //
 
 import UIKit
+import FirebaseDatabase
 
 struct TMUser {
+
+    enum Mode {
+        case Teach
+        case Learn
+    }
     
-    let identifier : String
-    let name : String
+    let uid : String
+    let fullname : String
     let about : String
+    let mode : Mode
+    let maximumDistance : Int
+    let latitude : Double?
+    let longitude : Double?
+    let discoveryEnabled : Bool
     
-    // Last gps coordinates
-    let latitude : Double
-    let longitude : Double
+    init?(snapshot : DataSnapshot) {
+        
+        guard let dictionary = snapshot.value as? [String : Any?] else {
+            return nil
+        }
+        self.init(json: dictionary)
+    }
+    
+    init?(json dictionary: [String : Any?]) {
+        
+        guard let fullname = dictionary["fullname"] as? String else {
+            return nil
+        }
+        
+        guard let about = dictionary["about"] as? String else {
+            return nil
+        }
+        
+        guard let mode = dictionary["mode"] as? String else {
+            return nil
+        }
+        
+        guard let maximumDistance = dictionary["maximumDistance"] as? Int else {
+            return nil
+        }
+        
+        guard let discoveryEnabled = dictionary["discoveryEnabled"] as? Bool else {
+            return nil
+        }
+        
+        self.uid = snapshot.key
+        self.fullname = fullname
+        self.about = about
+        self.mode = mode == "Teach" ? Mode.Teach : Mode.Learn
+        self.maximumDistance = maximumDistance
+        self.discoveryEnabled = discoveryEnabled
+        
+        latitude = dictionary["latitude"] as? Double
+        longitude = dictionary["longitude"] as? Double
+    }
+    
+    
+    func getValueOrNull(_ value : Any?) -> Any{
+        return value != nil ? value! : NSNull()
+    }
+    
+    func json() -> [String: Any]{
+        return [
+            "uid" : uid,
+            "fullname" : fullname,
+            "about" : about,
+            "mode" : mode,
+            "maximumDistance" : maximumDistance,
+            "latitude" : getValueOrNull(latitude),
+            "longitude" : getValueOrNull(longitude),
+            "discoveryEnabled" : discoveryEnabled
+        ]
+    }
+    
 }

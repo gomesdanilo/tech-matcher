@@ -20,10 +20,12 @@ class FinderViewController: UIViewController {
     fileprivate var databaseHandle: DatabaseHandle!
     
     var currentUser : User!
+    var currentUserData : TMUser?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureDatabase()
+        checkFirstUse()
     }
     
     @IBAction func didClickOnSettingsButton(_ sender: Any) {
@@ -40,6 +42,24 @@ class FinderViewController: UIViewController {
     
     @IBAction func didClickOnConnect(_ sender: Any) {
         
+    }
+    
+    
+    func checkFirstUse(){
+        
+        let userId = currentUser.uid
+        databaseReference.child("users").child(userId).observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            if let user = TMUser(snapshot: snapshot) {
+                print(user)
+                self.currentUserData = user
+            } else {
+                self.currentUserData = nil
+                self.didClickOnSettingsButton(self)
+            }
+        }) { (error) in
+            print(error.localizedDescription)
+        }
     }
     
     
@@ -65,5 +85,14 @@ class FinderViewController: UIViewController {
     
     deinit {
         databaseReference.child("messages").removeObserver(withHandle: databaseHandle)
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if "showSettings" == segue.identifier {
+            let vc = segue.destination as! SettingsViewController
+            vc.firebaseUser = self.currentUser
+            vc.user = self.currentUserData
+        }
     }
 }
