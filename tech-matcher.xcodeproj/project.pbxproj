@@ -7,24 +7,36 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		995505611F66C3570019ECC5 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995505601F66C3570019ECC5 /* SettingsViewController.swift */; };
+		995505631F66C3710019ECC5 /* FinderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995505621F66C3710019ECC5 /* FinderViewController.swift */; };
+		995505651F66C37B0019ECC5 /* MatchesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995505641F66C37B0019ECC5 /* MatchesViewController.swift */; };
+		995505671F66C3820019ECC5 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995505661F66C3820019ECC5 /* ChatViewController.swift */; };
+		995505691F66CAA50019ECC5 /* TMUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995505681F66CAA50019ECC5 /* TMUser.swift */; };
 		996C20FB1F66AD4D004291C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996C20FA1F66AD4D004291C1 /* AppDelegate.swift */; };
-		996C20FD1F66AD4D004291C1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996C20FC1F66AD4D004291C1 /* ViewController.swift */; };
 		996C21001F66AD4D004291C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 996C20FE1F66AD4D004291C1 /* Main.storyboard */; };
 		996C21021F66AD4D004291C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 996C21011F66AD4D004291C1 /* Assets.xcassets */; };
 		996C21051F66AD4D004291C1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 996C21031F66AD4D004291C1 /* LaunchScreen.storyboard */; };
+		99B0C5041F66B7D300347235 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B0C5031F66B7D300347235 /* LoginViewController.swift */; };
+		99DA77DB1F66B4F2009D96FE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 99DA77DA1F66B4F2009D96FE /* GoogleService-Info.plist */; };
 		C2E4478FAEAD9DC9416395B3 /* Pods_tech_matcher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45526E6469A2A456183AA3B3 /* Pods_tech_matcher.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0FAEE96F8B51903C0BE66C79 /* Pods-tech-matcher.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tech-matcher.release.xcconfig"; path = "Pods/Target Support Files/Pods-tech-matcher/Pods-tech-matcher.release.xcconfig"; sourceTree = "<group>"; };
 		45526E6469A2A456183AA3B3 /* Pods_tech_matcher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_tech_matcher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		995505601F66C3570019ECC5 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		995505621F66C3710019ECC5 /* FinderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FinderViewController.swift; sourceTree = "<group>"; };
+		995505641F66C37B0019ECC5 /* MatchesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchesViewController.swift; sourceTree = "<group>"; };
+		995505661F66C3820019ECC5 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		995505681F66CAA50019ECC5 /* TMUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMUser.swift; sourceTree = "<group>"; };
 		996C20F71F66AD4D004291C1 /* tech-matcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "tech-matcher.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		996C20FA1F66AD4D004291C1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		996C20FC1F66AD4D004291C1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		996C20FA1F66AD4D004291C1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "tech-matcher/AppDelegate.swift"; sourceTree = "<group>"; };
 		996C20FF1F66AD4D004291C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		996C21011F66AD4D004291C1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		996C21011F66AD4D004291C1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = "tech-matcher/Assets.xcassets"; sourceTree = "<group>"; };
 		996C21041F66AD4D004291C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		996C21061F66AD4D004291C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		996C21061F66AD4D004291C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "tech-matcher/Info.plist"; sourceTree = "<group>"; };
+		99B0C5031F66B7D300347235 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		99DA77DA1F66B4F2009D96FE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "tech-matcher/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E9EE0669935E24175C3C6F69 /* Pods-tech-matcher.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tech-matcher.debug.xcconfig"; path = "Pods/Target Support Files/Pods-tech-matcher/Pods-tech-matcher.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -57,6 +69,28 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		9955056A1F66CB110019ECC5 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				99DA77DA1F66B4F2009D96FE /* GoogleService-Info.plist */,
+				996C20FA1F66AD4D004291C1 /* AppDelegate.swift */,
+				996C20FE1F66AD4D004291C1 /* Main.storyboard */,
+				996C21011F66AD4D004291C1 /* Assets.xcassets */,
+				996C21031F66AD4D004291C1 /* LaunchScreen.storyboard */,
+				996C21061F66AD4D004291C1 /* Info.plist */,
+			);
+			name = Assets;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		9955056B1F66CB2B0019ECC5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				995505681F66CAA50019ECC5 /* TMUser.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		996C20EE1F66AD4D004291C1 = {
 			isa = PBXGroup;
 			children = (
@@ -78,14 +112,31 @@
 		996C20F91F66AD4D004291C1 /* tech-matcher */ = {
 			isa = PBXGroup;
 			children = (
-				996C20FA1F66AD4D004291C1 /* AppDelegate.swift */,
-				996C20FC1F66AD4D004291C1 /* ViewController.swift */,
-				996C20FE1F66AD4D004291C1 /* Main.storyboard */,
-				996C21011F66AD4D004291C1 /* Assets.xcassets */,
-				996C21031F66AD4D004291C1 /* LaunchScreen.storyboard */,
-				996C21061F66AD4D004291C1 /* Info.plist */,
+				9955056A1F66CB110019ECC5 /* Assets */,
+				9955056B1F66CB2B0019ECC5 /* Model */,
+				99B0C5021F66B7BA00347235 /* View */,
+				99B0C5011F66B7B500347235 /* Controller */,
 			);
 			path = "tech-matcher";
+			sourceTree = "<group>";
+		};
+		99B0C5011F66B7B500347235 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				99B0C5031F66B7D300347235 /* LoginViewController.swift */,
+				995505601F66C3570019ECC5 /* SettingsViewController.swift */,
+				995505621F66C3710019ECC5 /* FinderViewController.swift */,
+				995505641F66C37B0019ECC5 /* MatchesViewController.swift */,
+				995505661F66C3820019ECC5 /* ChatViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		99B0C5021F66B7BA00347235 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -151,6 +202,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				996C21051F66AD4D004291C1 /* LaunchScreen.storyboard in Resources */,
+				99DA77DB1F66B4F2009D96FE /* GoogleService-Info.plist in Resources */,
 				996C21021F66AD4D004291C1 /* Assets.xcassets in Resources */,
 				996C21001F66AD4D004291C1 /* Main.storyboard in Resources */,
 			);
@@ -166,11 +218,15 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-tech-matcher/Pods-tech-matcher-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -183,9 +239,49 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-tech-matcher/Pods-tech-matcher-resources.sh",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/FUIAccountSettingsViewController.nib",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/FUIAuthPickerViewController.nib",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/FUIAuthTableViewCell.nib",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/FUIEmailEntryViewController.nib",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/FUIInputTableViewCell.nib",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/FUIPasswordRecoveryViewController.nib",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/FUIPasswordSignInViewController.nib",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/FUIPasswordSignUpViewController.nib",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/FUIPasswordTableViewCell.nib",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/FUIPasswordVerificationViewController.nib",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/FUIStaticContentTableViewController.nib",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/ic_email.png",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/ic_email@2x.png",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/ic_email@3x.png",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/ic_visibility.png",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/ic_visibility@2x.png",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/ic_visibility@3x.png",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/ic_visibility_off.png",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/ic_visibility_off@2x.png",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/ic_visibility_off@3x.png",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/ar.lproj",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/de.lproj",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/en-GB.lproj",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/en.lproj",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/es-419.lproj",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/es-ES.lproj",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/fr.lproj",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/it.lproj",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/ja.lproj",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/ko.lproj",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/nl.lproj",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/pl.lproj",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/pt-BR.lproj",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/ru.lproj",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/th.lproj",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/tr.lproj",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/zh-Hans.lproj",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/zh-Hant.lproj",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -217,8 +313,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				996C20FD1F66AD4D004291C1 /* ViewController.swift in Sources */,
+				995505651F66C37B0019ECC5 /* MatchesViewController.swift in Sources */,
+				99B0C5041F66B7D300347235 /* LoginViewController.swift in Sources */,
+				995505671F66C3820019ECC5 /* ChatViewController.swift in Sources */,
+				995505611F66C3570019ECC5 /* SettingsViewController.swift in Sources */,
+				995505631F66C3710019ECC5 /* FinderViewController.swift in Sources */,
 				996C20FB1F66AD4D004291C1 /* AppDelegate.swift in Sources */,
+				995505691F66CAA50019ECC5 /* TMUser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -231,6 +332,7 @@
 				996C20FF1F66AD4D004291C1 /* Base */,
 			);
 			name = Main.storyboard;
+			path = "tech-matcher";
 			sourceTree = "<group>";
 		};
 		996C21031F66AD4D004291C1 /* LaunchScreen.storyboard */ = {
@@ -239,6 +341,7 @@
 				996C21041F66AD4D004291C1 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			path = "tech-matcher";
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
