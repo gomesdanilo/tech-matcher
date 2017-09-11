@@ -16,11 +16,14 @@ class FinderViewController: UIViewController {
     @IBOutlet weak var aboutTextView: UILabel!
     @IBOutlet weak var avatarImageView: UIImageView!
     
+    var databaseReference: DatabaseReference!
+    fileprivate var databaseHandle: DatabaseHandle!
     
     var currentUser : User!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureDatabase()
     }
     
     @IBAction func didClickOnSettingsButton(_ sender: Any) {
@@ -39,4 +42,28 @@ class FinderViewController: UIViewController {
         
     }
     
+    
+    
+    func configureDatabase() {
+        databaseReference = Database.database().reference()
+        
+        // listen for new messages in the firebase database
+        databaseHandle = databaseReference.child("messages").observe(.childAdded) { (snapshot: DataSnapshot)in
+
+            
+            
+//            let data = [Constants.MessageFields.text: textField.text! as String]
+//            sendMessage(data: data)
+//            
+//            var mdata = data
+//            // add name to message and then data to firebase database
+//            mdata[Constants.MessageFields.name] = displayName
+//            ref.child("messages").childByAutoId().setValue(mdata)
+            
+        }
+    }
+    
+    deinit {
+        databaseReference.child("messages").removeObserver(withHandle: databaseHandle)
+    }
 }
