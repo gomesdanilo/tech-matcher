@@ -21,9 +21,28 @@ struct TMUser {
     let about : String
     let mode : Mode
     let maximumDistance : Int
+    let discoveryEnabled : Bool
+    
     let latitude : Double?
     let longitude : Double?
-    let discoveryEnabled : Bool
+    
+//    init (
+//        uid : String,
+//        fullname : String,
+//        about : String,
+//        mode : Mode,
+//        maximumDistance : Int,
+//        discoveryEnabled : Bool
+//        ){
+//        self.uid = uid
+//        self.fullname = fullname
+//        self.about = about
+//        self.mode = mode
+//        self.maximumDistance = maximumDistance
+//        self.discoveryEnabled = discoveryEnabled
+//    }
+//    
+    
     
     init?(snapshot : DataSnapshot) {
         

@@ -19,7 +19,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var learnFromOtherPeopleCell: UITableViewCell!
     @IBOutlet weak var configureTopicsCell: UITableViewCell!
     @IBOutlet weak var logoutCell: UITableViewCell!
-    
+    @IBOutlet weak var nameTextfield: UITextField!
     @IBOutlet weak var maximumDistanceLabel: UILabel!
     
     var uid : String?
@@ -37,6 +37,7 @@ class SettingsViewController: UITableViewController {
     func loadSettingsData(){
     
         if let user = user {
+            nameTextfield.text = user.fullname
             aboutTextView.text = user.about
             discoveryEnabledSwitch.isOn = user.discoveryEnabled
             maximumDistanceSlider.value = Float(user.maximumDistance)
@@ -50,6 +51,7 @@ class SettingsViewController: UITableViewController {
         } else {
             showErrorMessage("This is your first use of the app, please fill all fields.")
             
+            nameTextfield.text = ""
             aboutTextView.text = ""
             discoveryEnabledSwitch.isOn = true
             maximumDistanceSlider.value = 15

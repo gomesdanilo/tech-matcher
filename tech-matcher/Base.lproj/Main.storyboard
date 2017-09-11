@@ -225,10 +225,35 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
+                            <tableViewSection headerTitle="Name" id="8Nf-3K-ycd">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="4lp-4U-acD">
+                                        <rect key="frame" x="0.0" y="56" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4lp-4U-acD" id="KV2-YI-S0c">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Please type your name here" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TUQ-c9-wr6">
+                                                    <rect key="frame" x="10" y="13.5" width="355" height="17"/>
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="TUQ-c9-wr6" firstAttribute="centerY" secondItem="KV2-YI-S0c" secondAttribute="centerY" id="RnS-6v-8tG"/>
+                                                <constraint firstAttribute="trailing" secondItem="TUQ-c9-wr6" secondAttribute="trailing" constant="10" id="TB6-vz-mUZ"/>
+                                                <constraint firstItem="TUQ-c9-wr6" firstAttribute="leading" secondItem="KV2-YI-S0c" secondAttribute="leading" constant="10" id="XUZ-x0-II8"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                             <tableViewSection headerTitle="About me" id="TXU-wn-6E0">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="150" id="1NI-yH-34O">
-                                        <rect key="frame" x="0.0" y="56" width="375" height="150"/>
+                                        <rect key="frame" x="0.0" y="156" width="375" height="150"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1NI-yH-34O" id="Cih-zK-z0o">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="149"/>
@@ -255,7 +280,7 @@
                             <tableViewSection id="Mgo-G2-E7a">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Wif-WW-ZcM">
-                                        <rect key="frame" x="0.0" y="242" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="342" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Wif-WW-ZcM" id="LLm-OM-1AU">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
@@ -284,7 +309,7 @@
                             <tableViewSection headerTitle="Where" id="JmG-0J-2Ym">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="100" id="7SN-mb-jNe">
-                                        <rect key="frame" x="0.0" y="342" width="375" height="100"/>
+                                        <rect key="frame" x="0.0" y="442" width="375" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7SN-mb-jNe" id="Icd-3W-mSc">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="99"/>
@@ -325,7 +350,7 @@
                             <tableViewSection headerTitle="What do I want to do?" id="weI-o4-xDc">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="checkmark" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="RUA-Jf-8zF" style="IBUITableViewCellStyleDefault" id="YGS-IU-XqS">
-                                        <rect key="frame" x="0.0" y="498" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="598" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YGS-IU-XqS" id="59A-YR-wz9">
                                             <rect key="frame" x="0.0" y="0.0" width="336" height="43.5"/>
@@ -342,7 +367,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="zi1-I2-OgQ" style="IBUITableViewCellStyleDefault" id="TRq-uk-mGi">
-                                        <rect key="frame" x="0.0" y="542" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="642" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TRq-uk-mGi" id="2EN-bt-UON">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -363,7 +388,7 @@
                             <tableViewSection headerTitle="Topics" id="mKo-og-46N">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="gME-wM-cgS" detailTextLabel="ERo-e9-6HA" style="IBUITableViewCellStyleValue1" id="Gyw-FJ-jn5">
-                                        <rect key="frame" x="0.0" y="642" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="742" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Gyw-FJ-jn5" id="Yaa-QZ-aRe">
                                             <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
@@ -391,7 +416,7 @@
                             <tableViewSection id="ivW-uk-31e">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="7Q6-AP-uUb" style="IBUITableViewCellStyleDefault" id="ugO-ig-k1G">
-                                        <rect key="frame" x="0.0" y="722" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="822" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ugO-ig-k1G" id="UcS-vt-6FZ">
                                             <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
@@ -423,6 +448,7 @@
                         <outlet property="logoutCell" destination="ugO-ig-k1G" id="j3H-gX-ctH"/>
                         <outlet property="maximumDistanceLabel" destination="EEB-Ub-lqo" id="a6i-nx-iZU"/>
                         <outlet property="maximumDistanceSlider" destination="E3U-NK-PFK" id="acU-oH-DFp"/>
+                        <outlet property="nameTextfield" destination="TUQ-c9-wr6" id="hKK-MN-oXT"/>
                         <outlet property="teachOtherPeopleCell" destination="YGS-IU-XqS" id="5hY-aH-PQa"/>
                         <segue destination="v43-jf-MHg" kind="show" identifier="showTopics" id="ZCo-my-ip9"/>
                     </connections>

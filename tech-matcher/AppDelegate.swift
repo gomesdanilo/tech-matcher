@@ -21,15 +21,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
+        LocationService.sharedInstance().stopUpdates()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
+        LocationService.sharedInstance().stopUpdates()
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
+        LocationService.sharedInstance().startUpdates()
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
+        LocationService.sharedInstance().startUpdates()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
