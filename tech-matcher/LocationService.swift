@@ -25,7 +25,8 @@ class LocationService : NSObject {
         locationManager = CLLocationManager()
         locationManager?.delegate = self
         locationManager?.desiredAccuracy = kCLLocationAccuracyThreeKilometers
-        //locationManager?.distanceFilter = 500 // 500 meters
+        locationManager?.distanceFilter = 500 // 500 meters
+        locationManager?.requestWhenInUseAuthorization()
         locationManager?.startUpdatingLocation()
     }
     
@@ -36,6 +37,8 @@ class LocationService : NSObject {
     func postNotification(){
         let name = Notification.Name(rawValue: "location")
         NotificationCenter.default.post(name: name, object: lastLocation)
+        
+        print("Posting: ", lastLocation!)
     }
 }
 

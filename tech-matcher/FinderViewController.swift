@@ -83,6 +83,10 @@ class FinderViewController: UIViewController {
         }
     }
     
+    
+    
+    
+    
     deinit {
         databaseReference.child("messages").removeObserver(withHandle: databaseHandle)
     }
