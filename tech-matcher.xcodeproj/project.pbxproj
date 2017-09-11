@@ -17,6 +17,8 @@
 		995505711F66F2020019ECC5 /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995505701F66F2020019ECC5 /* Match.swift */; };
 		995505731F66F5720019ECC5 /* ChatStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995505721F66F5720019ECC5 /* ChatStorage.swift */; };
 		995505751F66FE4A0019ECC5 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995505741F66FE4A0019ECC5 /* LocationService.swift */; };
+		995505771F6709810019ECC5 /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995505761F6709810019ECC5 /* ChatTableViewCell.swift */; };
+		995505791F670A510019ECC5 /* MatchesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995505781F670A510019ECC5 /* MatchesTableViewCell.swift */; };
 		996C20FB1F66AD4D004291C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996C20FA1F66AD4D004291C1 /* AppDelegate.swift */; };
 		996C21001F66AD4D004291C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 996C20FE1F66AD4D004291C1 /* Main.storyboard */; };
 		996C21021F66AD4D004291C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 996C21011F66AD4D004291C1 /* Assets.xcassets */; };
@@ -39,6 +41,8 @@
 		995505701F66F2020019ECC5 /* Match.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Match.swift; sourceTree = "<group>"; };
 		995505721F66F5720019ECC5 /* ChatStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatStorage.swift; sourceTree = "<group>"; };
 		995505741F66FE4A0019ECC5 /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		995505761F6709810019ECC5 /* ChatTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatTableViewCell.swift; sourceTree = "<group>"; };
+		995505781F670A510019ECC5 /* MatchesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchesTableViewCell.swift; sourceTree = "<group>"; };
 		996C20F71F66AD4D004291C1 /* tech-matcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "tech-matcher.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		996C20FA1F66AD4D004291C1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "tech-matcher/AppDelegate.swift"; sourceTree = "<group>"; };
 		996C20FF1F66AD4D004291C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -150,6 +154,8 @@
 		99B0C5021F66B7BA00347235 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				995505761F6709810019ECC5 /* ChatTableViewCell.swift */,
+				995505781F670A510019ECC5 /* MatchesTableViewCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -333,12 +339,14 @@
 				9955056D1F66CCBC0019ECC5 /* TopicsSelectionTableViewController.swift in Sources */,
 				995505711F66F2020019ECC5 /* Match.swift in Sources */,
 				995505671F66C3820019ECC5 /* ChatViewController.swift in Sources */,
+				995505791F670A510019ECC5 /* MatchesTableViewCell.swift in Sources */,
 				995505611F66C3570019ECC5 /* SettingsViewController.swift in Sources */,
 				995505631F66C3710019ECC5 /* FinderViewController.swift in Sources */,
 				995505731F66F5720019ECC5 /* ChatStorage.swift in Sources */,
 				9955056F1F66F1880019ECC5 /* MatchesStorage.swift in Sources */,
 				996C20FB1F66AD4D004291C1 /* AppDelegate.swift in Sources */,
 				995505751F66FE4A0019ECC5 /* LocationService.swift in Sources */,
+				995505771F6709810019ECC5 /* ChatTableViewCell.swift in Sources */,
 				995505691F66CAA50019ECC5 /* TMUser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
