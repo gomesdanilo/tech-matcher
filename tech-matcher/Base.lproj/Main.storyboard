@@ -40,8 +40,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gsd-kk-FpD">
-                                <rect key="frame" x="168" y="114" width="38" height="30"/>
-                                <state key="normal" title="Login"/>
+                                <rect key="frame" x="87" y="114" width="200" height="40"/>
+                                <color key="backgroundColor" red="0.16308707580000001" green="0.76058717499999995" blue="0.95204445699999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="7BE-Dd-KtX"/>
+                                    <constraint firstAttribute="height" constant="40" id="Wbk-by-WJR"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                <state key="normal" title="Login">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="didClickOnLogin:" destination="ffK-aq-ASB" eventType="touchUpInside" id="p9m-kP-CcL"/>
                                 </connections>
@@ -55,7 +63,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Login" id="vwB-gf-gpq"/>
                     <connections>
-                        <segue destination="QH7-qh-j3U" kind="show" identifier="showFinder" id="JyX-90-5q4"/>
+                        <segue destination="QH7-qh-j3U" kind="show" identifier="showFinder" animates="NO" id="JyX-90-5q4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vbg-Jg-v98" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -65,7 +73,7 @@
         <!--Find-->
         <scene sceneID="aao-W3-zu5">
             <objects>
-                <viewController title="Find" id="QH7-qh-j3U" sceneMemberID="viewController">
+                <viewController title="Find" id="QH7-qh-j3U" customClass="FinderViewController" customModule="tech_matcher" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="H10-tG-Vk9"/>
                         <viewControllerLayoutGuide type="bottom" id="hZn-Sm-xNp"/>
@@ -102,10 +110,16 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MKr-mO-bsd">
                                                 <rect key="frame" x="0.0" y="0.0" width="59" height="30"/>
                                                 <state key="normal" title="Skip"/>
+                                                <connections>
+                                                    <action selector="didClickOnSkip:" destination="QH7-qh-j3U" eventType="touchUpInside" id="H72-qc-Tyi"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K02-v2-LJi">
                                                 <rect key="frame" x="159" y="0.0" width="59" height="30"/>
                                                 <state key="normal" title="Connect"/>
+                                                <connections>
+                                                    <action selector="didClickOnConnect:" destination="QH7-qh-j3U" eventType="touchUpInside" id="Ymr-qO-OKt"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -120,10 +134,21 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Tech Matcher" id="ae0-8K-hUK">
-                        <barButtonItem key="leftBarButtonItem" title="Settings" id="5qg-xy-tS4"/>
-                        <barButtonItem key="rightBarButtonItem" title="Matches" id="QLt-uJ-kIL"/>
+                        <barButtonItem key="leftBarButtonItem" title="Settings" id="5qg-xy-tS4">
+                            <connections>
+                                <action selector="didClickOnSettingsButton:" destination="QH7-qh-j3U" id="3Cr-oK-FAh"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Matches" id="QLt-uJ-kIL">
+                            <connections>
+                                <action selector="didClickOnMatchesButton:" destination="QH7-qh-j3U" id="izY-gb-YNH"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="aboutTextView" destination="Ghf-9B-w5g" id="VzK-0h-BKo"/>
+                        <outlet property="avatarImageView" destination="4HS-Tc-NEq" id="461-xh-aPw"/>
+                        <outlet property="fullnameLabel" destination="yHI-Sh-t8x" id="INk-rD-4gZ"/>
                         <segue destination="eKh-Pr-z04" kind="show" identifier="showSettings" id="coA-jm-CVh"/>
                         <segue destination="xh4-Uq-7FO" kind="show" identifier="showMatches" id="3lt-XT-GXe"/>
                     </connections>

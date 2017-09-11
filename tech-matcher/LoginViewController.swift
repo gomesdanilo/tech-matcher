@@ -14,6 +14,7 @@ import FirebaseAuthUI
 class LoginViewController: UIViewController {
 
     fileprivate var _authHandle: AuthStateDidChangeListenerHandle!
+    var currentUser : User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,19 +26,20 @@ class LoginViewController: UIViewController {
         present(vc, animated: true, completion: nil)
     }
     
+    func navigateToMainPage(user : User){
+        self.currentUser = user
+        self.performSegue(withIdentifier: "showFinder", sender: self)
+    }
     
     @IBAction func didClickOnLogin(_ sender: Any) {
         loginFlow()
     }
     
-    
     func configureAuth(){
         _authHandle = Auth.auth().addStateDidChangeListener { (auth, user) in
             
-            print("auth", auth)
-            
             if let user = user {
-                print("user", user)
+                self.navigateToMainPage(user : user)
             } else {
                 self.loginFlow()
             }
@@ -50,5 +52,12 @@ class LoginViewController: UIViewController {
         Auth.auth().removeStateDidChangeListener(_authHandle)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if "showFinder" == segue.identifier {
+            
+            let vc = segue.destination as! FinderViewController
+            vc.currentUser = self.currentUser!
+        }
+    }
 
 }

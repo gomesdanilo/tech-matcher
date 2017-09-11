@@ -7,15 +7,36 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuthUI
 
 class FinderViewController: UIViewController {
 
+    @IBOutlet weak var fullnameLabel: UILabel!
+    @IBOutlet weak var aboutTextView: UILabel!
+    @IBOutlet weak var avatarImageView: UIImageView!
+    
+    
+    var currentUser : User!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    }
+    
+    @IBAction func didClickOnSettingsButton(_ sender: Any) {
+        performSegue(withIdentifier: "showSettings", sender: self)
     }
 
+    @IBAction func didClickOnMatchesButton(_ sender: Any) {
+        performSegue(withIdentifier: "showMatches", sender: self)
+    }
     
-
+    @IBAction func didClickOnSkip(_ sender: Any) {
+    
+    }
+    
+    @IBAction func didClickOnConnect(_ sender: Any) {
+        
+    }
+    
 }
