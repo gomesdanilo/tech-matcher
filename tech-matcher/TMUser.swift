@@ -30,10 +30,6 @@ struct TMUser {
         guard let dictionary = snapshot.value as? [String : Any?] else {
             return nil
         }
-        self.init(json: dictionary)
-    }
-    
-    init?(json dictionary: [String : Any?]) {
         
         guard let fullname = dictionary["fullname"] as? String else {
             return nil

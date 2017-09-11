@@ -302,8 +302,11 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="E3U-NK-PFK">
+                                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minValue="5" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="E3U-NK-PFK">
                                                     <rect key="frame" x="16" y="47" width="343" height="31"/>
+                                                    <connections>
+                                                        <action selector="didChangeMaximumDistance:" destination="eKh-Pr-z04" eventType="valueChanged" id="JIE-KS-mwl"/>
+                                                    </connections>
                                                 </slider>
                                             </subviews>
                                             <constraints>
@@ -418,6 +421,7 @@
                         <outlet property="discoveryEnabledSwitch" destination="dDV-mc-QpM" id="NSa-om-SOH"/>
                         <outlet property="learnFromOtherPeopleCell" destination="TRq-uk-mGi" id="vdr-3q-2yT"/>
                         <outlet property="logoutCell" destination="ugO-ig-k1G" id="j3H-gX-ctH"/>
+                        <outlet property="maximumDistanceLabel" destination="EEB-Ub-lqo" id="a6i-nx-iZU"/>
                         <outlet property="maximumDistanceSlider" destination="E3U-NK-PFK" id="acU-oH-DFp"/>
                         <outlet property="teachOtherPeopleCell" destination="YGS-IU-XqS" id="5hY-aH-PQa"/>
                         <segue destination="v43-jf-MHg" kind="show" identifier="showTopics" id="ZCo-my-ip9"/>

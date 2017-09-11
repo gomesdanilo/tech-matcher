@@ -91,7 +91,7 @@ class FinderViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if "showSettings" == segue.identifier {
             let vc = segue.destination as! SettingsViewController
-            vc.firebaseUser = self.currentUser
+            vc.uid = self.currentUser!.uid
             vc.user = self.currentUserData
         }
     }
