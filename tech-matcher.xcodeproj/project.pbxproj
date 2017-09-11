@@ -12,6 +12,7 @@
 		995505651F66C37B0019ECC5 /* MatchesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995505641F66C37B0019ECC5 /* MatchesViewController.swift */; };
 		995505671F66C3820019ECC5 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995505661F66C3820019ECC5 /* ChatViewController.swift */; };
 		995505691F66CAA50019ECC5 /* TMUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995505681F66CAA50019ECC5 /* TMUser.swift */; };
+		9955056D1F66CCBC0019ECC5 /* TopicsSelectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9955056C1F66CCBC0019ECC5 /* TopicsSelectionTableViewController.swift */; };
 		996C20FB1F66AD4D004291C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996C20FA1F66AD4D004291C1 /* AppDelegate.swift */; };
 		996C21001F66AD4D004291C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 996C20FE1F66AD4D004291C1 /* Main.storyboard */; };
 		996C21021F66AD4D004291C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 996C21011F66AD4D004291C1 /* Assets.xcassets */; };
@@ -29,6 +30,7 @@
 		995505641F66C37B0019ECC5 /* MatchesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchesViewController.swift; sourceTree = "<group>"; };
 		995505661F66C3820019ECC5 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		995505681F66CAA50019ECC5 /* TMUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMUser.swift; sourceTree = "<group>"; };
+		9955056C1F66CCBC0019ECC5 /* TopicsSelectionTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicsSelectionTableViewController.swift; sourceTree = "<group>"; };
 		996C20F71F66AD4D004291C1 /* tech-matcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "tech-matcher.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		996C20FA1F66AD4D004291C1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "tech-matcher/AppDelegate.swift"; sourceTree = "<group>"; };
 		996C20FF1F66AD4D004291C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 				995505621F66C3710019ECC5 /* FinderViewController.swift */,
 				995505641F66C37B0019ECC5 /* MatchesViewController.swift */,
 				995505661F66C3820019ECC5 /* ChatViewController.swift */,
+				9955056C1F66CCBC0019ECC5 /* TopicsSelectionTableViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -315,6 +318,7 @@
 			files = (
 				995505651F66C37B0019ECC5 /* MatchesViewController.swift in Sources */,
 				99B0C5041F66B7D300347235 /* LoginViewController.swift in Sources */,
+				9955056D1F66CCBC0019ECC5 /* TopicsSelectionTableViewController.swift in Sources */,
 				995505671F66C3820019ECC5 /* ChatViewController.swift in Sources */,
 				995505611F66C3570019ECC5 /* SettingsViewController.swift in Sources */,
 				995505631F66C3710019ECC5 /* FinderViewController.swift in Sources */,
