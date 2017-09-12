@@ -144,8 +144,8 @@
 			isa = PBXGroup;
 			children = (
 				99B0C5031F66B7D300347235 /* LoginViewController.swift */,
-				995505601F66C3570019ECC5 /* SettingsViewController.swift */,
 				995505621F66C3710019ECC5 /* FinderViewController.swift */,
+				995505601F66C3570019ECC5 /* SettingsViewController.swift */,
 				995505641F66C37B0019ECC5 /* MatchesViewController.swift */,
 				995505661F66C3820019ECC5 /* ChatViewController.swift */,
 				9955056C1F66CCBC0019ECC5 /* TopicsSelectionTableViewController.swift */,

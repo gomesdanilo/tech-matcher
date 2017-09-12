@@ -10,10 +10,9 @@ import UIKit
 import Firebase
 import FirebaseAuthUI
 
-
 class LoginViewController: UIViewController {
 
-    fileprivate var _authHandle: AuthStateDidChangeListenerHandle!
+    fileprivate var authHandle: AuthStateDidChangeListenerHandle!
     var currentUser : User?
     
     override func viewDidLoad() {
@@ -36,20 +35,18 @@ class LoginViewController: UIViewController {
     }
     
     func configureAuth(){
-        _authHandle = Auth.auth().addStateDidChangeListener { (auth, user) in
+        authHandle = Auth.auth().addStateDidChangeListener { (auth, user) in
             
             if let user = user {
                 self.navigateToMainPage(user : user)
             } else {
                 self.loginFlow()
             }
-            
         }
     }
     
-    
     deinit {
-        Auth.auth().removeStateDidChangeListener(_authHandle)
+        Auth.auth().removeStateDidChangeListener(authHandle)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
