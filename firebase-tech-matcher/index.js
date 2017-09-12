@@ -41,35 +41,36 @@ function addUsers(){
 	}
 }
 
-function addLike(matchesNode, fromId, toId){
-	var match = matchesNode.child(fromId)
-	var json = {}
-	json[toId] = true
-	match.update(json)
+function addLike(userLikes, userLikedBy, fromId, toId){
 
-	if (likes[fromId] == null) {
-		likes[fromId] = {}
-	}
+	userLikes.child(fromId + "/" + toId).set(true)
+	userLikedBy.child(toId + "/" + fromId).set(true)
 
-	likes[fromId][toId] = true
+	// if (likes[fromId] == null) {
+	// 	likes[fromId] = {}
+	// }
+
+	// likes[fromId][toId] = true
 }
 
-function addDislike(matchesNode, fromId, toId){
-	var match = matchesNode.child(fromId)
-	var json = {}
-	json[toId] = false
-	match.update(json)
+function addDislike(userLikes, userLikedBy, fromId, toId){
+	userLikes.child(fromId + "/" + toId).set(false)
+	userLikedBy.child(toId + "/" + fromId).set(false)
 
-	if (likes[fromId] == null) {
-		likes[fromId] = {}
-	}
-	likes[fromId][toId] = false
+	// if (likes[fromId] == null) {
+	// 	likes[fromId] = {}
+	// }
+	// likes[fromId][toId] = false
 }
 
 function addLikes(){
 	console.log("addding likes")
-	var matchesRef = database.ref("/likes")
-	matchesRef.set(null)
+
+	var userLikes = database.ref("/userLikes")
+	userLikes.set(null)
+
+	var userLikedBy = database.ref("/userLikedBy")
+	userLikedBy.set(null)
 
 	for(var i = 0; i < 100; i++){
 		for(var j = 0; j < 100; j++){
@@ -82,9 +83,9 @@ function addLikes(){
 			} else if (randomNumber == 0) {
 				// Jump without like/dislike
 			} else if (randomNumber == 1) {
-				addLike(matchesRef, fromId, toId)
+				addLike(userLikes, userLikedBy, fromId, toId)
 			} else if (randomNumber == 2) {
-				addDislike(matchesRef, fromId, toId)
+				addDislike(userLikes, userLikedBy, fromId, toId)
 			}
 		}
 	}

@@ -12,6 +12,7 @@ import Firebase
 
 class SettingsViewController: UITableViewController {
 
+    @IBOutlet weak var nameTextfield: UITextField!
     @IBOutlet weak var aboutTextView: UITextView!
     @IBOutlet weak var discoveryEnabledSwitch: UISwitch!
     @IBOutlet weak var maximumDistanceSlider: UISlider!
@@ -19,46 +20,62 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var learnFromOtherPeopleCell: UITableViewCell!
     @IBOutlet weak var configureTopicsCell: UITableViewCell!
     @IBOutlet weak var logoutCell: UITableViewCell!
-    @IBOutlet weak var nameTextfield: UITextField!
     @IBOutlet weak var maximumDistanceLabel: UILabel!
     
-    var uid : String?
-    var user : TMUser?
+    var loggedInUserId : String?
+    var datasource : FinderDatasource?
     
-    var databaseReference: DatabaseReference!
-    fileprivate var databaseHandle: DatabaseHandle!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureDatabase()
+        datasource = FinderDatasource(currentUserId: loggedInUserId!)
+        populateScreenWithEmptyValues()
         loadSettingsData()
     }
     
-    func loadSettingsData(){
     
-        if let user = user {
-            nameTextfield.text = user.fullname
-            aboutTextView.text = user.about
-            discoveryEnabledSwitch.isOn = user.discoveryEnabled
-            maximumDistanceSlider.value = Float(user.maximumDistance)
-            if user.mode == .Teach {
-                teachOtherPeopleCell.accessoryType = .checkmark
-                learnFromOtherPeopleCell.accessoryType = .none
-            } else {
-                teachOtherPeopleCell.accessoryType = .none
-                learnFromOtherPeopleCell.accessoryType = .checkmark
-            }
+    func populateScreenWithEmptyValues(){
+        nameTextfield.text = ""
+        aboutTextView.text = ""
+        discoveryEnabledSwitch.isOn = true
+        maximumDistanceSlider.value = 15
+        teachOtherPeopleCell.accessoryType = .none
+        learnFromOtherPeopleCell.accessoryType = .checkmark
+        didChangeMaximumDistance(maximumDistanceSlider)
+    }
+    
+    func populateScreenWithUser(_ user : TMUser){
+        nameTextfield.text = user.fullname
+        aboutTextView.text = user.about
+        discoveryEnabledSwitch.isOn = user.discoveryEnabled
+        maximumDistanceSlider.value = Float(user.maximumDistance)
+        if user.mode == .Teach {
+            teachOtherPeopleCell.accessoryType = .checkmark
+            learnFromOtherPeopleCell.accessoryType = .none
         } else {
-            showErrorMessage("This is your first use of the app, please fill all fields.")
-            
-            nameTextfield.text = ""
-            aboutTextView.text = ""
-            discoveryEnabledSwitch.isOn = true
-            maximumDistanceSlider.value = 15
             teachOtherPeopleCell.accessoryType = .none
             learnFromOtherPeopleCell.accessoryType = .checkmark
         }
         didChangeMaximumDistance(maximumDistanceSlider)
+    }
+    
+    func loadSettingsData(){
+        
+        datasource?.loadUserDetails({ (user, error) in
+            guard error == nil else {
+                self.showErrorMessage(error!)
+                self.showErrorMessage("This is your first use of the app, please fill all fields.")
+                return
+            }
+            
+            guard let user = user else {
+                self.showErrorMessage("Invalid user")
+                self.showErrorMessage("This is your first use of the app, please fill all fields.")
+                return
+            }
+            
+            self.populateScreenWithUser(user)
+        })
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -66,45 +83,50 @@ class SettingsViewController: UITableViewController {
         saveSettings()
     }
     
-    func updateUser() -> TMUser? {
+    func validateScreen() -> Bool {
+    
+        if nameTextfield!.text!.characters.count <= 3 {
+            showErrorMessage("Field name is mandatory")
+            return false
+        }
         
-//        let user = TMUser(
-//            user.fullname = "Sample Name"
-//            user.about = aboutTextView.text
-//            user.mode = teachOtherPeopleCell.accessoryType == UITableViewCellAccessoryType.checkmark ? TMUser.Mode.Teach : TMUser.Mode.Learn
-//            user.maximumDistance = Int(maximumDistanceSlider.value)
-//            user.discoveryEnabled = discoveryEnabledSwitch.isOn
-//            user.latitude = nil
-//            user.longitude = nil
-//        )
-//        
-//        return user
-        return nil
+        if aboutTextView!.text!.characters.count <= 3 {
+            showErrorMessage("Field about is mandatory")
+            return false
+        }
         
+        return true
+    }
+    
+    func createUserUpdate() -> TMUser{
+        
+        let mode = teachOtherPeopleCell.accessoryType == .checkmark ? TMUser.Mode.Teach : TMUser.Mode.Learn
+        
+        return TMUser(uid: loggedInUserId!,
+                      fullname: nameTextfield!.text!,
+                      about: aboutTextView!.text!,
+                      mode: mode,
+                      maximumDistance: Int(maximumDistanceSlider.value),
+                      discoveryEnabled: discoveryEnabledSwitch.isOn,
+                      latitude: nil, longitude: nil)
     }
     
     func saveSettings(){
-        if let user = updateUser() {
-            let json = user.json()
-            
-            let userNode = databaseReference.child("users").child(uid!)
-            userNode.updateChildValues(json) { (error, databaseReference) in
-            
-                guard error == nil else {
-                    print(error!)
-                    return
-                }
-            }
+        
+        if !validateScreen(){
+            return
         }
+        
+        let user = createUserUpdate()
+        
+        datasource?.updateUserSettings(user, completionBlock: { (success, errorMessage) in
+            guard errorMessage == nil else {
+                self.showErrorMessage(errorMessage!)
+                return
+            }
+        })
     }
     
-    func showErrorMessage(_ message : String){
-        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .cancel , handler: nil))
-        present(alert, animated: true, completion: nil)
-    
-    }
-
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let cell = tableView.cellForRow(at: indexPath)
@@ -117,22 +139,13 @@ class SettingsViewController: UITableViewController {
             learnFromOtherPeopleCell.accessoryType = .checkmark
         }
         else if cell == configureTopicsCell {
-            print("clicked on configure topics")
+            showErrorNotImplemented()
         } else if cell == logoutCell {
-            print("clicked on logout cell")
+            self.navigationController?.popToRootViewController(animated: true)
         }
-    }
-    
-    func configureDatabase() {
-        databaseReference = Database.database().reference()
     }
     
     @IBAction func didChangeMaximumDistance(_ sender: Any) {
         maximumDistanceLabel.text =  "\(Int(maximumDistanceSlider.value)) km"
-    }
-    
-    deinit {
-        
-        
     }
 }

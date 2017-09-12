@@ -30,7 +30,7 @@ class FinderViewController: UIViewController {
     }
     
     @IBAction func didClickOnSettingsButton(_ sender: Any) {
-        performSegue(withIdentifier: "showSettings", sender: self)
+        performSegue(withIdentifier: Constants.SegueShowSettings, sender: self)
     }
 
     @IBAction func didClickOnMatchesButton(_ sender: Any) {
@@ -38,21 +38,22 @@ class FinderViewController: UIViewController {
     }
     
     @IBAction func didClickOnSkip(_ sender: Any) {
-        retrieveNextUser()
+        datasource?.likeUser(userId: presentingUser!.uid, like: false, completionBlock: {
+            self.retrieveNextUser()
+        })
     }
     
     @IBAction func didClickOnConnect(_ sender: Any) {
-        retrieveNextUser()
+        
+        datasource?.likeUser(userId: presentingUser!.uid, like: true, completionBlock: { 
+            self.retrieveNextUser()
+        })
     }
     
     func loadUser(_ user : TMUser){
         presentingUser = user
         fullnameLabel.text = user.fullname
         aboutLabel.text = user.about
-    }
-    
-    func showErrorMessage(_ message : String){
-        print("error", message)
     }
     
     func retrieveNextUser(){
@@ -69,32 +70,20 @@ class FinderViewController: UIViewController {
         })
     }
     
-//    func checkFirstUse(){
-//        
-//        let userId = currentUser.uid
-//        databaseReference.child("users").child(userId).observeSingleEvent(of: .value, with: { (snapshot) in
-//            
-//            if let user = TMUser(snapshot: snapshot) {
-//                print(user)
-//                self.currentUserData = user
-//            } else {
-//                self.currentUserData = nil
-//                self.didClickOnSettingsButton(self)
-//            }
-//        }) { (error) in
-//            print(error.localizedDescription)
-//        }
-//    }
-    
-    
-    
-    
+    func checkFirstUse(){
+        datasource?.checkFirstUse({ (isFirstUse, error) in
+            if let isFirstUse = isFirstUse {
+                if isFirstUse {
+                    self.didClickOnSettingsButton(self)
+                }
+            }
+        })
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if "showSettings" == segue.identifier {
-//            let vc = segue.destination as! SettingsViewController
-//            vc.uid = self.currentUser!.uid
-//            vc.user = self.currentUserData
+        if Constants.SegueShowSettings == segue.identifier {
+            let vc = segue.destination as! SettingsViewController
+            vc.loggedInUserId = loggedInUserId
         }
     }
 }

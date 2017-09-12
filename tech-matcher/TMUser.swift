@@ -26,22 +26,27 @@ struct TMUser {
     let latitude : Double?
     let longitude : Double?
     
-//    init (
-//        uid : String,
-//        fullname : String,
-//        about : String,
-//        mode : Mode,
-//        maximumDistance : Int,
-//        discoveryEnabled : Bool
-//        ){
-//        self.uid = uid
-//        self.fullname = fullname
-//        self.about = about
-//        self.mode = mode
-//        self.maximumDistance = maximumDistance
-//        self.discoveryEnabled = discoveryEnabled
-//    }
-//    
+    
+    init(   uid : String,
+            fullname : String,
+            about : String,
+            mode : Mode,
+            maximumDistance : Int,
+            discoveryEnabled : Bool,
+            latitude : Double?,
+            longitude : Double?){
+        
+        self.uid = uid
+        self.fullname = fullname
+        self.about = about
+        self.mode = mode
+        self.maximumDistance = maximumDistance
+        self.discoveryEnabled = discoveryEnabled
+        self.latitude = latitude
+        self.longitude = longitude
+    }
+
+    
     
     
     init?(snapshot : DataSnapshot) {
@@ -91,7 +96,7 @@ struct TMUser {
             "uid" : uid,
             "fullname" : fullname,
             "about" : about,
-            "mode" : mode,
+            "mode" : mode == .Teach ? "Teach" : "Learn",
             "maximumDistance" : maximumDistance,
             "latitude" : getValueOrNull(latitude),
             "longitude" : getValueOrNull(longitude),

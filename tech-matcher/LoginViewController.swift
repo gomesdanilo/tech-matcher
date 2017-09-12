@@ -27,7 +27,7 @@ class LoginViewController: UIViewController {
     
     func navigateToMainPage(user : User){
         self.currentUser = user
-        self.performSegue(withIdentifier: "showFinder", sender: self)
+        self.performSegue(withIdentifier: Constants.SegueShowFinder, sender: self)
     }
     
     @IBAction func didClickOnLogin(_ sender: Any) {
@@ -36,7 +36,6 @@ class LoginViewController: UIViewController {
     
     func configureAuth(){
         authHandle = Auth.auth().addStateDidChangeListener { (auth, user) in
-            
             if let user = user {
                 self.navigateToMainPage(user : user)
             } else {
@@ -50,8 +49,7 @@ class LoginViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if "showFinder" == segue.identifier {
-            
+        if Constants.SegueShowFinder == segue.identifier {
             let vc = segue.destination as! FinderViewController
             vc.loggedInUserId = currentUser!.uid
         }
