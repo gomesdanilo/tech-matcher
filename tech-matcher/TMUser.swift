@@ -26,6 +26,7 @@ struct TMUser {
     let latitude : Double?
     let longitude : Double?
     
+    let image : String?
     
     init(   uid : String,
             fullname : String,
@@ -34,7 +35,8 @@ struct TMUser {
             maximumDistance : Int,
             discoveryEnabled : Bool,
             latitude : Double?,
-            longitude : Double?){
+            longitude : Double?,
+            image : String?){
         
         self.uid = uid
         self.fullname = fullname
@@ -44,6 +46,7 @@ struct TMUser {
         self.discoveryEnabled = discoveryEnabled
         self.latitude = latitude
         self.longitude = longitude
+        self.image = image
     }
 
     
@@ -84,6 +87,7 @@ struct TMUser {
         
         latitude = dictionary["latitude"] as? Double
         longitude = dictionary["longitude"] as? Double
+        image = dictionary["image"] as? String
     }
     
     
@@ -100,7 +104,8 @@ struct TMUser {
             "maximumDistance" : maximumDistance,
             "latitude" : getValueOrNull(latitude),
             "longitude" : getValueOrNull(longitude),
-            "discoveryEnabled" : discoveryEnabled
+            "discoveryEnabled" : discoveryEnabled,
+            "image" : getValueOrNull(image)
         ]
     }
     

@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseDatabase
+import FirebaseStorage
 
 class FinderDatasource {
     
@@ -15,12 +16,17 @@ class FinderDatasource {
     
     fileprivate var currentUserId : String
     fileprivate var databaseReference: DatabaseReference!
-    fileprivate var startingValue : String?
     fileprivate var databaseHandle : DatabaseHandle?
+    fileprivate var startingValue : String?
+    
+    fileprivate var storageReference: StorageReference!
+    fileprivate var storageHandle : StorageHandle?
+    
     fileprivate var dataHandled = false
     
     init(currentUserId : String) {
         databaseReference = Database.database().reference()
+        storageReference = Storage.storage().reference()
         self.currentUserId = currentUserId
     }
     
@@ -137,6 +143,32 @@ class FinderDatasource {
             
             completionBlock(true, nil)
         }
+    }
+    
+    func savePicture(_ data : Data, completionBlock : @escaping (_ imageUrl : String?, _ error : String?) -> Void){
+        let path = "user/\(currentUserId)/image.jpg"
+        
+        let metadata = StorageMetadata()
+        metadata.contentType = "image/jpeg"
+        
+        storageReference.child(path).putData(data, metadata: metadata) { (metadata, error) in
+            if error != nil {
+                completionBlock(nil, error!.localizedDescription)
+            } else {
+                let url = self.storageReference!.child(metadata!.path!).description
+                completionBlock(url, nil)
+            }
+        }
+        
+    }
+    
+    
+    func downloadPicture(url : String, completionBlock : @escaping (_ data : Data?, _ error : String?) -> Void){
+        Storage.storage().reference(forURL: url).getData(maxSize: INT64_MAX, completion: { (data, error) in
+            
+            completionBlock(data, error != nil ? error!.localizedDescription : nil)
+        })
+    
     }
     
 }
