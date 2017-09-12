@@ -16,15 +16,15 @@ class FinderViewController: UIViewController {
     @IBOutlet weak var aboutLabel: UILabel!
     @IBOutlet weak var avatarImageView: UIImageView!
     
-    var databaseReference: DatabaseReference!
-    fileprivate var databaseHandle: DatabaseHandle!
+    var datasource : FinderDatasource?
     
-    var loggedInUser : TMUser?
+    var loggedInUserId : String?
     var presentingUser : TMUser?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureDatabase()
+        datasource = FinderDatasource(currentUserId: loggedInUserId!)
+        //configureDatabase()
         //checkFirstUse()
         retrieveNextUser()
     }
@@ -46,29 +46,27 @@ class FinderViewController: UIViewController {
     }
     
     func loadUser(_ user : TMUser){
+        presentingUser = user
         fullnameLabel.text = user.fullname
         aboutLabel.text = user.about
     }
     
+    func showErrorMessage(_ message : String){
+        print("error", message)
+    }
+    
     func retrieveNextUser(){
         
-        // TODO: Validate if there is a match or not.
-        // Skip users that have already been liked/disliked.
-        // Skip same user as logged in
-        
-        databaseReference.child("users").queryLimited(toLast: 1).observeSingleEvent(of: .childAdded, with: { (snapshot) in
-            
-            
-            guard let user = TMUser(snapshot: snapshot) else {
-                // Error
+        datasource?.nextUser(completionBlock: { (user, error) in
+            if error != nil {
+                self.showErrorMessage(error!)
                 return
             }
             
-            self.loadUser(user)
-            
-        }) { (error) in
-            print(error)
-        }
+            if user != nil {
+                self.loadUser(user!)
+            }
+        })
     }
     
 //    func checkFirstUse(){
@@ -90,32 +88,6 @@ class FinderViewController: UIViewController {
     
     
     
-    func configureDatabase() {
-        databaseReference = Database.database().reference()
-        
-        // listen for new messages in the firebase database
-        databaseHandle = databaseReference.child("messages").observe(.childAdded) { (snapshot: DataSnapshot)in
-
-            
-            
-//            let data = [Constants.MessageFields.text: textField.text! as String]
-//            sendMessage(data: data)
-//            
-//            var mdata = data
-//            // add name to message and then data to firebase database
-//            mdata[Constants.MessageFields.name] = displayName
-//            ref.child("messages").childByAutoId().setValue(mdata)
-            
-        }
-    }
-    
-    
-    
-    
-    
-    deinit {
-        databaseReference.child("messages").removeObserver(withHandle: databaseHandle)
-    }
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

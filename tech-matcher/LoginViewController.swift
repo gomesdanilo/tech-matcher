@@ -53,7 +53,7 @@ class LoginViewController: UIViewController {
         if "showFinder" == segue.identifier {
             
             let vc = segue.destination as! FinderViewController
-            //vc.currentUser = self.currentUser!
+            vc.loggedInUserId = currentUser!.uid
         }
     }
 
