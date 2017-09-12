@@ -15,7 +15,7 @@ class ChatViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     var chatId : String?
     var uid : String?
-    var data : [DataSnapshot]?
+    var messages : [DataSnapshot] = []
     var dateFormatter : DateFormatter?
 
     var databaseReference: DatabaseReference!
@@ -28,8 +28,6 @@ class ChatViewController: UIViewController {
         dateFormatter = DateFormatter()
         dateFormatter?.dateFormat = "HH:mm:ss dd/MM/yyyy"
         
-        
-        data = []
         configureDatabase()
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 44.0
@@ -40,9 +38,10 @@ class ChatViewController: UIViewController {
         
         // listen for new messages in the firebase database
         databaseHandle = getChatNode().observe(.childAdded) { (snapshot: DataSnapshot) in
-            self.data?.append(snapshot)
-            let rows = [IndexPath(row: self.data!.count-1, section: 0)]
+            self.messages.append(snapshot)
+            let rows = [IndexPath(row: self.messages.count-1, section: 0)]
             self.tableView.insertRows(at: rows, with: .automatic)
+            self.scrollToBottomMessage()
         }
     }
     
@@ -80,6 +79,15 @@ class ChatViewController: UIViewController {
         let date = Date(timeIntervalSince1970: TimeInterval(seconds))
         return dateFormatter!.string(from: date)
     }
+    
+    func scrollToBottomMessage() {
+        if messages.count == 0 {
+            return
+        }
+        
+        let bottomMessageIndex = IndexPath(row: tableView.numberOfRows(inSection: 0) - 1, section: 0)
+        tableView.scrollToRow(at: bottomMessageIndex, at: .bottom, animated: true)
+    }
 }
 
 extension ChatViewController : UITableViewDelegate, UITableViewDataSource {
@@ -89,7 +97,7 @@ extension ChatViewController : UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.data!.count
+        return self.messages.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -98,7 +106,7 @@ extension ChatViewController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! ChatTableViewCell
-        let row = self.data![indexPath.row].value as! [String : Any]
+        let row = self.messages[indexPath.row].value as! [String : Any]
         
         let timestamp = row["timestamp"] as! Double
         
