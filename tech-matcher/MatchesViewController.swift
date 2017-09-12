@@ -13,7 +13,7 @@ class MatchesViewController: UITableViewController {
     
     var uid : String?
     var selectedChatId : String?
-    var matches : [DataSnapshot] = []
+    var matches : [TMUser] = []
     var databaseReference: DatabaseReference!
     fileprivate var databaseHandle: DatabaseHandle!
     
@@ -25,11 +25,13 @@ class MatchesViewController: UITableViewController {
     func configureDatabase() {
         databaseReference = Database.database().reference()
         
-        // listen for new messages in the firebase database
         databaseHandle = getMatchesNode().observe(.childAdded) { (snapshot: DataSnapshot) in
-            self.matches.append(snapshot)
-            let rows = [IndexPath(row: self.matches.count-1, section: 0)]
-            self.tableView.insertRows(at: rows, with: .automatic)
+            
+            if let user = TMUser(snapshot: snapshot) {
+                self.matches.append(user)
+                let rows = [IndexPath(row: self.matches.count-1, section: 0)]
+                self.tableView.insertRows(at: rows, with: .automatic)
+            }
         }
     }
 
@@ -44,6 +46,7 @@ class MatchesViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! MatchesTableViewCell
         let row = matches[indexPath.row]
+        
         
         
         

@@ -123,11 +123,11 @@ class FinderDatasource {
         
         databaseReference.child("users").child(currentUserId).observeSingleEvent(of: .value, with: { (snapshot) in
             guard TMUser(snapshot: snapshot) != nil else {
-                completionBlock(false, nil)
+                completionBlock(true, nil)
                 return
             }
             
-            completionBlock(true, nil)
+            completionBlock(false, nil)
         })
     }
     

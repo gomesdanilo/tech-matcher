@@ -16,6 +16,7 @@ class FinderViewController: UIViewController {
     @IBOutlet weak var aboutLabel: UILabel!
     @IBOutlet weak var avatarImageView: UIImageView!
     
+    @IBOutlet weak var container: UIStackView!
     var datasource : FinderDatasource?
     
     var loggedInUserId : String?
@@ -24,8 +25,8 @@ class FinderViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         datasource = FinderDatasource(currentUserId: loggedInUserId!)
-        //configureDatabase()
-        //checkFirstUse()
+        checkFirstUse()
+        self.container.isHidden = true
         retrieveNextUser()
     }
     
@@ -38,27 +39,49 @@ class FinderViewController: UIViewController {
     }
     
     @IBAction func didClickOnSkip(_ sender: Any) {
-        datasource?.likeUser(userId: presentingUser!.uid, like: false, completionBlock: {
-            self.retrieveNextUser()
-        })
+        likeUser(like: false)
     }
     
     @IBAction func didClickOnConnect(_ sender: Any) {
-        
-        datasource?.likeUser(userId: presentingUser!.uid, like: true, completionBlock: { 
-            self.retrieveNextUser()
-        })
+        likeUser(like: true)
+    }
+    
+    func likeUser(like : Bool){
+        if let presentingUser = presentingUser {
+            datasource?.likeUser(userId: presentingUser.uid, like: like, completionBlock: {
+                self.retrieveNextUser()
+            })
+        }
     }
     
     func loadUser(_ user : TMUser){
+        
+        container.isHidden = false
+        
         presentingUser = user
         fullnameLabel.text = user.fullname
         aboutLabel.text = user.about
+        
+        avatarImageView.image = #imageLiteral(resourceName: "avatar-finder-placeholder")
+        if let image = user.image {
+            datasource?.downloadPicture(url: image, completionBlock: { (data, error) in
+                
+                if let data = data {
+                    if let img = UIImage(data: data) {
+                        self.avatarImageView.image = img
+                        return
+                    }
+                }
+                
+                
+            })
+        }
     }
     
     func retrieveNextUser(){
-        
+        showProgressWithMessage(message: "Retrieving users...")
         datasource?.nextUser(completionBlock: { (user, error) in
+            self.dismissProgress()
             if error != nil {
                 self.showErrorMessage(error!)
                 return
@@ -66,6 +89,8 @@ class FinderViewController: UIViewController {
             
             if user != nil {
                 self.loadUser(user!)
+            } else {
+                self.container.isHidden = true
             }
         })
     }

@@ -83,7 +83,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="JEy-1X-2Tf">
-                                <rect key="frame" x="26" y="94" width="268" height="393.5"/>
+                                <rect key="frame" x="26" y="94" width="268" height="423.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Person name non non non non non non non non non non non non non non non non non " lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yHI-Sh-t8x">
                                         <rect key="frame" x="0.0" y="0.0" width="268" height="41"/>
@@ -104,24 +104,18 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="d1d-Ic-mVq">
-                                        <rect key="frame" x="0.0" y="343.5" width="268" height="50"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="d1d-Ic-mVq">
+                                        <rect key="frame" x="34" y="343.5" width="200" height="80"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MKr-mO-bsd">
-                                                <rect key="frame" x="0.0" y="0.0" width="150" height="50"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="GxW-ke-nQm"/>
-                                                </constraints>
+                                                <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
                                                 <state key="normal" image="skip-button"/>
                                                 <connections>
                                                     <action selector="didClickOnSkip:" destination="QH7-qh-j3U" eventType="touchUpInside" id="H72-qc-Tyi"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K02-v2-LJi">
-                                                <rect key="frame" x="150" y="0.0" width="118" height="50"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="rlK-Ld-CSS"/>
-                                                </constraints>
+                                                <rect key="frame" x="120" y="0.0" width="80" height="80"/>
                                                 <state key="normal" image="connect-button"/>
                                                 <connections>
                                                     <action selector="didClickOnConnect:" destination="QH7-qh-j3U" eventType="touchUpInside" id="Ymr-qO-OKt"/>
@@ -154,6 +148,7 @@
                     <connections>
                         <outlet property="aboutLabel" destination="Ghf-9B-w5g" id="6Yl-8W-QC2"/>
                         <outlet property="avatarImageView" destination="4HS-Tc-NEq" id="461-xh-aPw"/>
+                        <outlet property="container" destination="JEy-1X-2Tf" id="UD5-IL-AZo"/>
                         <outlet property="fullnameLabel" destination="yHI-Sh-t8x" id="INk-rD-4gZ"/>
                         <segue destination="eKh-Pr-z04" kind="show" identifier="showSettings" id="coA-jm-CVh"/>
                         <segue destination="xh4-Uq-7FO" kind="show" identifier="showMatches" id="3lt-XT-GXe"/>
@@ -565,11 +560,11 @@
                                         <rect key="frame" x="0.0" y="957" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ugO-ig-k1G" id="UcS-vt-6FZ">
-                                            <rect key="frame" x="0.0" y="0.0" width="287" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Logout" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7Q6-AP-uUb">
-                                                    <rect key="frame" x="15" y="0.0" width="270" height="43"/>
+                                                    <rect key="frame" x="15" y="0.0" width="270" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -645,8 +640,8 @@
     </scenes>
     <resources>
         <image name="avatar-finder-placeholder" width="300" height="200"/>
-        <image name="connect-button" width="150" height="50"/>
+        <image name="connect-button" width="80" height="80"/>
         <image name="match-placeholder" width="60" height="60"/>
-        <image name="skip-button" width="150" height="50"/>
+        <image name="skip-button" width="80" height="80"/>
     </resources>
 </document>

@@ -24,6 +24,8 @@ class SettingsViewController: UITableViewController{
     @IBOutlet weak var imageView : UIImageView!
     @IBOutlet weak var imageViewCell: UITableViewCell!
     
+    
+    
     var currentPicture : Data?
     
     var loggedInUserId : String?
