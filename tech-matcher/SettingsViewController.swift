@@ -10,7 +10,7 @@ import UIKit
 import FirebaseDatabase
 import Firebase
 
-class SettingsViewController: UITableViewController {
+class SettingsViewController: UITableViewController{
 
     @IBOutlet weak var nameTextfield: UITextField!
     @IBOutlet weak var aboutTextView: UITextView!
@@ -21,6 +21,9 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var configureTopicsCell: UITableViewCell!
     @IBOutlet weak var logoutCell: UITableViewCell!
     @IBOutlet weak var maximumDistanceLabel: UILabel!
+    @IBOutlet weak var imageView : UIImageView!
+    
+    @IBOutlet weak var imageViewCell: UITableViewCell!
     
     var loggedInUserId : String?
     var datasource : FinderDatasource?
@@ -28,6 +31,10 @@ class SettingsViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        imageView.setBorder(width: 1, color: UIColor.gray)
+        imageView.setRound(cornerRadius: 40)
+        
         datasource = FinderDatasource(currentUserId: loggedInUserId!)
         populateScreenWithEmptyValues()
         loadSettingsData()
@@ -142,10 +149,53 @@ class SettingsViewController: UITableViewController {
             showErrorNotImplemented()
         } else if cell == logoutCell {
             self.navigationController?.popToRootViewController(animated: true)
+        } else if cell == imageViewCell {
+            askGalleryOrCamera()
         }
     }
     
     @IBAction func didChangeMaximumDistance(_ sender: Any) {
         maximumDistanceLabel.text =  "\(Int(maximumDistanceSlider.value)) km"
     }
+    
+    
+    func askGalleryOrCamera(){
+        let alert = UIAlertController(title: "Option", message: "Pictures from", preferredStyle: .alert)
+        
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (action) in
+                self.openPicker(camera: true)
+            }))
+        }
+        
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+            alert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: { (action) in
+                self.openPicker(camera: false)
+            }))
+        }
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func openPicker(camera : Bool){
+        let picker = UIImagePickerController()
+        picker.sourceType = camera ? .camera : .photoLibrary
+        picker.delegate = self
+        present(picker, animated: true, completion: nil)
+    }
+    
+    
+}
+
+extension SettingsViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        let image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        imageView.image = image
+        picker.dismiss(animated: true, completion: nil)
+    }
+
 }

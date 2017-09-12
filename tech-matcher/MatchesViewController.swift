@@ -10,7 +10,6 @@ import UIKit
 import FirebaseDatabase
 
 class MatchesViewController: UITableViewController {
-
     
     var uid : String?
     var selectedChatId : String?
