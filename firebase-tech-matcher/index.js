@@ -26,7 +26,7 @@ function addUsers(){
 	var usersRef = database.ref("/users")
 	usersRef.set(null)
 
-	for(var i = 0; i < 100; i++){
+	for(var i = 0; i < 2000; i++){
 		var userEntry = usersRef.push()
 		listUsers.push(userEntry.key)
 		userEntry.set({
@@ -121,7 +121,7 @@ function addLikes(){
 
 function main(){
 	addUsers()
-	addLikes()
+	//addLikes()
 	//addMatches()
 }
 

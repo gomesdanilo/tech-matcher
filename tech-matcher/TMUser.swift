@@ -49,14 +49,15 @@ struct TMUser {
         self.image = image
     }
 
-    
-    
-    
     init?(snapshot : DataSnapshot) {
-        
         guard let dictionary = snapshot.value as? [String : Any?] else {
             return nil
         }
+        self.init(uid: snapshot.key, dictionary: dictionary)
+    }
+    
+    
+    init?(uid : String, dictionary : [String: Any?]) {
         
         guard let fullname = dictionary["fullname"] as? String else {
             return nil
@@ -78,7 +79,7 @@ struct TMUser {
             return nil
         }
         
-        self.uid = snapshot.key
+        self.uid = uid
         self.fullname = fullname
         self.about = about
         self.mode = mode == "Teach" ? Mode.Teach : Mode.Learn

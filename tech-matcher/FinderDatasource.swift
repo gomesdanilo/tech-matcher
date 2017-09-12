@@ -24,6 +24,8 @@ class FinderDatasource {
     
     fileprivate var dataHandled = false
     
+    fileprivate var cacheUsers : [TMUser] =  []
+    
     init(currentUserId : String) {
         databaseReference = Database.database().reference()
         storageReference = Storage.storage().reference()
@@ -58,44 +60,93 @@ class FinderDatasource {
     }
     
     
+    
+    func retrievePage(completionBlock : @escaping (_ users : [TMUser]?, _ error : String?) -> Void){
+        var query = databaseReference.child("users").queryOrderedByKey()
+        
+        if startingValue != nil {
+            query = query.queryStarting(atValue: startingValue)
+        }
+        
+        query.queryLimited(toFirst: 30).observeSingleEvent(of: .value, with:{ (snapshot) in
+            
+            if let values = snapshot.value as? [String : [String : Any]] {
+                
+                // Populates cache.
+                var users : [TMUser] = []
+                values.forEach({ (key, value) in
+                    if let user = TMUser(uid: key, dictionary: value) {
+                        users.append(user)
+                    }
+                })
+                
+                // Sorts results.
+                users.sort(by: { (userA, userB) -> Bool in
+                    return userA.uid.compare(userB.uid) == ComparisonResult.orderedAscending
+                })
+                
+                // Saves pagination value.
+                if users.count > 0 {
+                    self.startingValue = users[users.count - 1].uid
+                    completionBlock(users, nil)
+                } else {
+                    self.startingValue = nil
+                    
+                    completionBlock(nil, "No records found")
+                }
+                
+                
+            } else {
+                
+                // Error
+                completionBlock(nil, "Failed to retrieve data")
+            }
+        })
+    }
+    
+    /**
+     Internally, it retrieves the next 30 items and stores it on the cache. Then when
+     the cache is reached, retrieves another page.
+     */
     func nextUser(completionBlock : @escaping UserFoundBlock){
         
-        completionBlock(nil, "Error, users not found")
+        if cacheUsers.count > 0 {
+            completionBlock(self.cacheUsers.remove(at: 0), nil)
+            return
+        }
         
-//        self.dataHandled = false
-//        releaseHandle()
-//        
-//        databaseHandle = databaseReference.child("users")
-//            .queryOrderedByKey()
-//            .observe(.childAdded, with: { (snapshot1) in
-//                self.startingValue = snapshot1.key
-//                
-//                self.databaseReference.child("/userLikes/\(self.currentUserId)/\(snapshot1.key)")
-//                    .observeSingleEvent(of: .value, with: { (snapshot2) in
-//                        
-//                        if self.dataHandled {
-//                            return
-//                        }
-//                        
-//                        if(!snapshot2.exists()){
-//                            self.dataHandled = true
-//                            self.releaseHandle()
-//                            
-//                            // Presents user.
-//                            if let user = TMUser(snapshot: snapshot1) {
-//                                completionBlock(user, nil)
-//                            } else {
-//                                completionBlock(nil, "Failed to parse user")
-//                            }
-//                            
-//                        } else {
-//                            // Skips this one.
-//                        }
-//                    })
-//            }, withCancel: { (error) in
-//                
-//            })
-        
+        self.cacheUsers = []
+        retrievePage { (users, error) in
+            
+            if let users = users {
+            
+                let path = "/userLikedBy/\(self.currentUserId)"
+                self.databaseReference.child(path).observeSingleEvent(of: .value, with: { (snapshot) in
+                    
+                    if let list = snapshot.value as? [String : [String : Bool]] {
+                        for user in users {
+                        
+                            if let item = list[user.uid] {
+                                // Seen
+                            } else {
+                                // Not seen
+                                self.cacheUsers.append(user)
+                            }
+                        }
+                    } else {
+                        self.cacheUsers = users
+                    }
+                    
+                    if self.cacheUsers.count > 0 {
+                        completionBlock(self.cacheUsers.remove(at: 0), nil)
+                    } else {
+                        completionBlock(nil, "Not found")
+                    }
+                })
+            } else {
+                completionBlock(nil, "Not found")
+            }
+        }
     }
     
     func releaseHandle(){
