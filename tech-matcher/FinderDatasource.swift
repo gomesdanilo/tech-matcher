@@ -60,39 +60,42 @@ class FinderDatasource {
     
     func nextUser(completionBlock : @escaping UserFoundBlock){
         
-        self.dataHandled = false
-        releaseHandle()
+        completionBlock(nil, "Error, users not found")
         
-        databaseHandle = databaseReference.child("users")
-            .queryOrderedByKey()
-            .observe(.childAdded, with:{ (snapshot1) in
-                
-                self.startingValue = snapshot1.key
-                
-                self.databaseReference.child("/userLikes/\(self.currentUserId)/\(snapshot1.key)")
-                    .observeSingleEvent(of: .value, with: { (snapshot2) in
-                        
-                        if self.dataHandled {
-                            return
-                        }
-                        
-                        if(!snapshot2.exists()){
-                            self.dataHandled = true
-                            self.releaseHandle()
-                            
-                            // Presents user.
-                            if let user = TMUser(snapshot: snapshot1) {
-                                completionBlock(user, nil)
-                            } else {
-                                completionBlock(nil, "Failed to parse user")
-                            }
-                            
-                        } else {
-                            // Skips this one.
-                        }
-                    })
-                
-            })
+//        self.dataHandled = false
+//        releaseHandle()
+//        
+//        databaseHandle = databaseReference.child("users")
+//            .queryOrderedByKey()
+//            .observe(.childAdded, with: { (snapshot1) in
+//                self.startingValue = snapshot1.key
+//                
+//                self.databaseReference.child("/userLikes/\(self.currentUserId)/\(snapshot1.key)")
+//                    .observeSingleEvent(of: .value, with: { (snapshot2) in
+//                        
+//                        if self.dataHandled {
+//                            return
+//                        }
+//                        
+//                        if(!snapshot2.exists()){
+//                            self.dataHandled = true
+//                            self.releaseHandle()
+//                            
+//                            // Presents user.
+//                            if let user = TMUser(snapshot: snapshot1) {
+//                                completionBlock(user, nil)
+//                            } else {
+//                                completionBlock(nil, "Failed to parse user")
+//                            }
+//                            
+//                        } else {
+//                            // Skips this one.
+//                        }
+//                    })
+//            }, withCancel: { (error) in
+//                
+//            })
+        
     }
     
     func releaseHandle(){
