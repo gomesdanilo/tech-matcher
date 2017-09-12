@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 extension UIViewController {
 
@@ -18,5 +19,13 @@ extension UIViewController {
     
     func showErrorNotImplemented(){
         showErrorMessage("Not implemented")
+    }
+    
+    func showProgressWithMessage(message : String){
+        SVProgressHUD.show(withStatus: message)
+    }
+    
+    func dismissProgress(){
+        SVProgressHUD.dismiss()
     }
 }

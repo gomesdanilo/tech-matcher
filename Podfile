@@ -10,4 +10,5 @@ target 'tech-matcher' do
     pod 'Firebase/RemoteConfig'
     #pod 'FirebaseUI'
     pod 'FirebaseUI/Auth'
+    pod 'SVProgressHUD'
 end

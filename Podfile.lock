@@ -51,6 +51,7 @@ PODS:
   - GoogleToolboxForMac/NSString+URLArguments (2.1.1)
   - GTMSessionFetcher/Core (1.1.10)
   - Protobuf (3.3.0)
+  - SVProgressHUD (2.1.2)
 
 DEPENDENCIES:
   - Firebase/Core
@@ -58,6 +59,7 @@ DEPENDENCIES:
   - Firebase/RemoteConfig
   - Firebase/Storage
   - FirebaseUI/Auth
+  - SVProgressHUD
 
 SPEC CHECKSUMS:
   Firebase: c7ad0731eab26d18a3fc547dd048b0f7cd9c63ae
@@ -72,7 +74,8 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMSessionFetcher: 30d874b96d0d76028f61fbd122801e3f030d47db
   Protobuf: d582fecf68201eac3d79ed61369ef45734394b9c
+  SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
 
-PODFILE CHECKSUM: 6e803b143d05db07a00ec1aab056cb7fb91a4e1b
+PODFILE CHECKSUM: af58db3f89583499a76fa64ff3b6500c67a75a85
 
 COCOAPODS: 1.3.1

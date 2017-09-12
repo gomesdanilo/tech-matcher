@@ -70,7 +70,7 @@ class SettingsViewController: UITableViewController{
         self.imageView.image = #imageLiteral(resourceName: "match-placeholder")
         
         if let url = user.image {
-            datasource?.downloadPicture(url: url, completionBlock: { (data, error) in
+            self.datasource?.downloadPicture(url: url, completionBlock: { (data, error) in
                 
                 self.currentPicture = data
                 if data != nil {
@@ -78,13 +78,16 @@ class SettingsViewController: UITableViewController{
                 }
             })
         }
-        
-        
     }
     
     func loadSettingsData(){
         
+        showProgressWithMessage(message: "Retrieving user details")
+        
         datasource?.loadUserDetails({ (user, error) in
+            
+            self.dismissProgress()
+            
             guard error == nil else {
                 self.showErrorMessage(error!)
                 self.showErrorMessage("This is your first use of the app, please fill all fields.")
