@@ -16,6 +16,7 @@ class ChatViewController: UIViewController {
     var chatId : String?
     var uid : String?
     var data : [DataSnapshot]?
+    var dateFormatter : DateFormatter?
 
     var databaseReference: DatabaseReference!
     fileprivate var databaseHandle: DatabaseHandle!
@@ -24,6 +25,10 @@ class ChatViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        dateFormatter = DateFormatter()
+        dateFormatter?.dateFormat = "HH:mm:ss dd/MM/yyyy"
+        
+        
         data = []
         configureDatabase()
         self.tableView.rowHeight = UITableViewAutomaticDimension
@@ -69,6 +74,12 @@ class ChatViewController: UIViewController {
     deinit {
         getChatNode().removeObserver(withHandle: databaseHandle)
     }
+    
+    func getTimestampText(_ timestampMS : Double) -> String {
+        let seconds = timestampMS / 1000.0
+        let date = Date(timeIntervalSince1970: TimeInterval(seconds))
+        return dateFormatter!.string(from: date)
+    }
 }
 
 extension ChatViewController : UITableViewDelegate, UITableViewDataSource {
@@ -87,12 +98,13 @@ extension ChatViewController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! ChatTableViewCell
-        let row = self.data![indexPath.row].value as? [String : Any?]
+        let row = self.data![indexPath.row].value as! [String : Any]
         
-        let timestamp = row?["timestamp"]
+        let timestamp = row["timestamp"] as! Double
         
-        cell.messageLabel?.text = row?["content"] as? String
-        cell.userLabel?.text = row?["user"] as? String
+        cell.messageLabel?.text = row["content"] as? String
+        cell.userLabel?.text = row["user"] as? String
+        cell.timestampLabel?.text = getTimestampText(timestamp)
         
         return cell
     }
