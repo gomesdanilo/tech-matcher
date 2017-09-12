@@ -8,15 +8,22 @@
 
 import UIKit
 
+
 class MatchesTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var avatarImageView: NSLayoutConstraint!
+    
+    @IBOutlet weak var avatarImageView: UIImageView!
     
     @IBOutlet weak var lastMessageLabel: UILabel!
     
     
     @IBOutlet weak var usernameLabel: UILabel!
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.avatarImageView.setBorder(width: 1, color: UIColor.gray)
+        self.avatarImageView.setRound(cornerRadius: 30)
+    }
     
     
 

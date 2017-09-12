@@ -37,7 +37,8 @@ class MatchesViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if "showChat" == segue.identifier {
             let vc = segue.destination as! ChatViewController
-            
+            vc.chatId = "chat01"
+            vc.uid = "user01"
         }
     }
     
