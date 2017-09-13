@@ -25,7 +25,7 @@ class MatchesTableViewCell: UITableViewCell {
     
     func populateWithMatch(_ match : TMMatch){
         self.lastMessageLabel.text = ""
-        self.usernameLabel.text = match.name
+        self.usernameLabel.text = match.user.fullname
     }
     
 }

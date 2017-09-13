@@ -11,9 +11,10 @@ import UIKit
 struct TMMessage {
     
     let content : String
-    let user : String
+    let userId : String
     let date : String
     let isOtherUser : Bool
+    var username : String?
     
     fileprivate static let dateFormatter = { () -> DateFormatter in
         var formatter = DateFormatter()
@@ -28,24 +29,24 @@ struct TMMessage {
         return TMMessage.dateFormatter.string(from: date)
     }
     
-    init?(currentUser: String, dictionary: [String:Any]){
+    init?(currentUserId: String, dictionary: [String:Any]){
         
-        guard let content = dictionary["content"] as? String else {
+        guard let content = dictionary[Constants.Keys.Content] as? String else {
             return nil
         }
         
-        guard let user = dictionary["user"] as? String else {
+        guard let userId = dictionary[Constants.Keys.UserId] as? String else {
             return nil
         }
         
-        guard let date = dictionary["timestamp"] as? Double else {
+        guard let date = dictionary[Constants.Keys.Timestamp] as? Double else {
             return nil
         }
         
         
         self.content = content
-        self.user = user
+        self.userId = userId
         self.date = TMMessage.getTimestampText(date)
-        self.isOtherUser = currentUser == user
+        self.isOtherUser = currentUserId != userId
     }
 }

@@ -25,8 +25,11 @@ struct Constants {
     static let SegueShowMatches = "showMatches"
     static let SegueShowChat = "showChat"
     
-    
-   
+    static let MinimumTextFieldCharacters = 3
+    static let ImageSize = 600
+    static let InitialMaximumDistance : Float = 15 // KM
+    static let InitialDiscoveryEnabled = false
+    static let JPEGCompression : CGFloat = 0.8
     
     struct Keys {
         

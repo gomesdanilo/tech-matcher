@@ -17,19 +17,22 @@ class ChatViewController: UIViewController {
     
     // MARK: Data
     fileprivate var messages : [TMMessage] = []
-    var loggedInUserId : String?
-    var matchId : String? // Same as chatId
+    var loggedInUser : TMUser?
+    var match : TMMatch?
     var datasource : TMDatasource?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        self.navigationItem.title = match!.user.fullname
+        
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 44.0
         
-        self.datasource = TMDatasource(currentUserId: loggedInUserId!)
+        self.datasource = TMDatasource(currentUserId: loggedInUser!.userId)
         self.datasource?.messageDelegate = self
-        self.datasource?.retrieveMessages(matchId: matchId!)
+        self.datasource?.retrieveMessages(matchId: match!.matchId)
     }
     
 }
@@ -72,7 +75,9 @@ extension ChatViewController {
     
     func sendMessage(_ message : String){
         
-        datasource?.sendMessage(message, matchId: self.matchId!, completionBlock: { (success, error) in
+        datasource?.sendMessage(message,
+                                matchId: self.match!.matchId,
+                                completionBlock: { (success, error) in
             if error != nil {
                 self.showErrorMessage(error!)
                 return
@@ -94,15 +99,21 @@ extension ChatViewController {
 
 extension ChatViewController : TMDatasourceMessageDelegate {
 
-    func didReceiveListMessages(_ matches: [TMMessage]?, _ error: String?) {
+    func didReceiveListMessages(_ messages: [TMMessage]?, _ error: String?) {
         
         if error != nil {
             showErrorMessage(error!)
             return
         }
         
-        if let matches = matches {
-            self.messages.append(contentsOf: matches)
+        if var messages = messages {
+            
+            // Updates user names
+            for index in 0..<messages.count {
+                messages[index].username = messages[index].userId == loggedInUser!.userId ? loggedInUser?.fullname : match!.user.fullname
+            }
+            
+            self.messages.append(contentsOf: messages)
             let rows = [IndexPath(row: self.messages.count-1, section: 0)]
             self.tableView.insertRows(at: rows, with: .none)
             self.scrollToBottomMessage()

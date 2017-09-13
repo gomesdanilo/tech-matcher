@@ -16,8 +16,16 @@ class ChatTableViewCell: UITableViewCell {
     @IBOutlet weak var messageLabel: UILabel!
     
     func populateWithMessage(_ message: TMMessage){
-        userLabel.text = message.user
+        userLabel.text = message.username
         timestampLabel.text = message.date
         messageLabel.text = message.content
+        
+        if message.isOtherUser {
+            userLabel.textAlignment = .right
+            userLabel.textColor = UIColor.gray
+        } else {
+            userLabel.textAlignment = .left
+            userLabel.textColor = UIColor.blue
+        }
     }
 }

@@ -11,20 +11,16 @@ import FirebaseDatabase
 
 struct TMMatch {
     
-    let name : String
-    let match : String
+    let matchId : String
+    let user : TMUser
     
-    init?(match: [String: Any], user : [String: Any]) {
+    init?(match: [String: Any], user : TMUser) {
         
-        guard let name = user["fullname"] as? String else {
+        guard let matchId = match[Constants.Keys.MatchId] as? String else {
             return nil
         }
         
-        guard let match = match["match"] as? String else {
-            return nil
-        }
-        
-        self.match = match
-        self.name = name
+        self.matchId = matchId
+        self.user = user
     }
 }

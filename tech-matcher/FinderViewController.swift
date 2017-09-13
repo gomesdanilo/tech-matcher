@@ -21,6 +21,7 @@ class FinderViewController: UIViewController {
     // MARK: DATA
     var datasource : TMDatasource?
     var loggedInUserId : String?
+    var loggedInUser : TMUser?
     var presentingUser : TMUser?
     
     
@@ -28,7 +29,7 @@ class FinderViewController: UIViewController {
         super.viewDidLoad()
         
         datasource = TMDatasource(currentUserId: loggedInUserId!)
-        checkFirstUse()
+        loadUserDetails()
         self.container.isHidden = true
         retrieveNextUser()
     }
@@ -39,7 +40,7 @@ class FinderViewController: UIViewController {
             vc.loggedInUserId = loggedInUserId
         } else if Constants.SegueShowMatches == segue.identifier {
             let vc = segue.destination as! MatchesViewController
-            vc.loggedInUserId = loggedInUserId
+            vc.loggedInUser = loggedInUser!
         }
     }
 }
@@ -70,7 +71,7 @@ extension FinderViewController {
 extension FinderViewController {
     func likeUser(like : Bool){
         if let presentingUser = presentingUser {
-            datasource?.likeUser(userId: presentingUser.uid, like: like, completionBlock: {
+            datasource?.likeUser(userId: presentingUser.userId, like: like, completionBlock: {
                 self.retrieveNextUser()
             })
         }
@@ -115,12 +116,13 @@ extension FinderViewController {
         })
     }
     
-    func checkFirstUse(){
-        datasource?.checkFirstUse({ (isFirstUse, error) in
-            if let isFirstUse = isFirstUse {
-                if isFirstUse {
-                    self.didClickOnSettingsButton(self)
-                }
+    func loadUserDetails(){
+        datasource?.loadUserDetails({ (user, error) in
+            
+            if user == nil {
+                self.didClickOnSettingsButton(self)
+            } else {
+                self.loggedInUser = user
             }
         })
     }

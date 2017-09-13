@@ -25,7 +25,7 @@ function addUsers(){
 	usersRef.set(null)
 
   
-	for(var i = 0; i < 10; i++){
+	for(var i = 0; i < 8; i++){
         var userEntry
         // Add default user
         if (i == 0) {
@@ -36,8 +36,8 @@ function addUsers(){
         
         listUsers.push(userEntry.key)
         userEntry.set({
-            "fullname" : "fullname" + i,
-            "about" : "about" + i,
+            "name" : "Sample Name #" + i,
+            "about" : "I'm a programmer!" + i,
             "mode" : "Learn",
             "maximumDistance" : i,
             "discoveryEnabled" : true,

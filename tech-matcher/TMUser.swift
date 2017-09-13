@@ -11,8 +11,7 @@ import FirebaseDatabase
 
 struct TMUser {
 
-    
-    let uid : String
+    let userId : String
     let fullname : String
     let about : String
     let mode : SearchMode
@@ -22,7 +21,7 @@ struct TMUser {
     let longitude : Double?
     let image : String?
     
-    init(   uid : String,
+    init(   userId : String,
             fullname : String,
             about : String,
             mode : SearchMode,
@@ -32,7 +31,7 @@ struct TMUser {
             longitude : Double?,
             image : String?){
         
-        self.uid = uid
+        self.userId = userId
         self.fullname = fullname
         self.about = about
         self.mode = mode
@@ -47,11 +46,11 @@ struct TMUser {
         guard let dictionary = snapshot.value as? [String : Any?] else {
             return nil
         }
-        self.init(uid: snapshot.key, dictionary: dictionary)
+        self.init(userId: snapshot.key, dictionary: dictionary)
     }
     
     
-    init?(uid : String, dictionary : [String: Any?]) {
+    init?(userId : String, dictionary : [String: Any?]) {
         
         guard let fullname = dictionary[Constants.Keys.Name] as? String else {
             return nil
@@ -73,7 +72,7 @@ struct TMUser {
             return nil
         }
         
-        self.uid = uid
+        self.userId = userId
         self.fullname = fullname
         self.about = about
         self.mode = searchModeFromString(mode)
@@ -92,10 +91,10 @@ struct TMUser {
     
     func json() -> [String: Any]{
         return [
-            Constants.Keys.UserId : uid,
+            Constants.Keys.UserId : userId,
             Constants.Keys.Name : fullname,
             Constants.Keys.About : about,
-            Constants.Keys.Mode : mode == .Teach ? "Teach" : "Learn",
+            Constants.Keys.Mode : mode == SearchMode.Teach ? "Teach" : "Learn",
             Constants.Keys.MaximumDistance : maximumDistance,
             Constants.Keys.Latitude : getValueOrNull(latitude),
             Constants.Keys.Longitude : getValueOrNull(longitude),

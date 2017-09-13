@@ -12,14 +12,14 @@ import UIKit
 class MatchesViewController: UITableViewController {
     
     // MARK: Data
-    var loggedInUserId : String?
+    var loggedInUser : TMUser?
     var datasource : TMDatasource?
     var matches : [TMMatch] = []
-    var selectedMatchId : String?
+    var selectedMatch : TMMatch?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        datasource = TMDatasource(currentUserId: loggedInUserId!)
+        datasource = TMDatasource(currentUserId: loggedInUser!.userId)
         datasource?.matchDelegate = self
         datasource?.retrieveMatches()
     }
@@ -27,8 +27,8 @@ class MatchesViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if Constants.SegueShowChat == segue.identifier {
             let vc = segue.destination as! ChatViewController
-            vc.loggedInUserId = loggedInUserId!
-            vc.matchId = self.selectedMatchId!
+            vc.loggedInUser = loggedInUser!
+            vc.match = self.selectedMatch!
         }
     }
 }
@@ -77,7 +77,7 @@ extension MatchesViewController : TMDatasourceMatchDelegate {
 extension MatchesViewController {
     
     func navigateToChat(_ match : TMMatch){
-        self.selectedMatchId = match.match
+        self.selectedMatch = match
         self.performSegue(withIdentifier: Constants.SegueShowChat, sender: self)
     }
 }

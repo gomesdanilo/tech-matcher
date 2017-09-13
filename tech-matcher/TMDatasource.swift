@@ -61,20 +61,8 @@ extension TMDatasource {
         })
     }
     
-    func checkFirstUse(_ completionBlock : @escaping (_ firstUse : Bool?,_ error : String?) -> Void){
-        
-        databaseReference.child("users").child(currentUserId).observeSingleEvent(of: .value, with: { (snapshot) in
-            guard TMUser(snapshot: snapshot) != nil else {
-                completionBlock(true, nil)
-                return
-            }
-            
-            completionBlock(false, nil)
-        })
-    }
-    
     func updateUserSettings(_ user : TMUser, completionBlock : @escaping (_ success : Bool, _ error : String?) -> Void){
-        let userNode = databaseReference.child("users").child(user.uid)
+        let userNode = databaseReference.child("users").child(user.userId)
         
         userNode.updateChildValues(user.json()) { (error, databaseReference) in
             
@@ -144,19 +132,19 @@ extension TMDatasource {
                 // Populates cache.
                 var users : [TMUser] = []
                 values.forEach({ (key, value) in
-                    if let user = TMUser(uid: key, dictionary: value) {
+                    if let user = TMUser(userId: key, dictionary: value) {
                         users.append(user)
                     }
                 })
                 
                 // Sorts results.
                 users.sort(by: { (userA, userB) -> Bool in
-                    return userA.uid.compare(userB.uid) == ComparisonResult.orderedAscending
+                    return userA.userId.compare(userB.userId) == ComparisonResult.orderedAscending
                 })
                 
                 // Saves pagination value.
                 if users.count > 0 {
-                    self.startingValue = users[users.count - 1].uid
+                    self.startingValue = users[users.count - 1].userId
                     completionBlock(users, nil)
                 } else {
                     self.startingValue = nil
@@ -195,7 +183,7 @@ extension TMDatasource {
                     if let list = snapshot.value as? [String : [String : Bool]] {
                         for user in users {
                             
-                            if list[user.uid] == nil {
+                            if list[user.userId] == nil {
                                 // Not seen
                                 self.cacheUsers.append(user)
                             }
@@ -228,23 +216,33 @@ extension TMDatasource {
         self.databaseReference
             .child("usersMatches/\(self.currentUserId)")
             .queryOrderedByKey()
-            .observe(.childAdded, with: { (match) in
+            .observe(.childAdded, with: { (matchSnapshot) in
                 
                 self.databaseReference
-                    .child("/users/\(match.key)")
-                    .observeSingleEvent(of: .value, with: { (user) in
+                    .child("/users/\(matchSnapshot.key)")
+                    .observeSingleEvent(of: .value, with: { (userSnapshot) in
                     
                         
-                        if let match = match.value as? [String: Any],
-                            let user = user.value as? [String: Any] {
-                        
-                            if let item = TMMatch(match: match, user : user) {
-                                self.matchDelegate?.didReceiveListMatches([item], nil)
-                            }
+                        guard let matchDictionary = matchSnapshot.value as? [String: Any] else {
+                            return
                         }
+                        
+                        guard let userDictionary = userSnapshot.value as? [String: Any] else {
+                            return
+                        }
+                        
+                        
+                        guard let user = TMUser(userId: userSnapshot.key, dictionary: userDictionary) else {
+                            return
+                        }
+                        
+                        guard let match = TMMatch(match: matchDictionary, user : user) else {
+                            return
+                        }
+                        
+                        self.matchDelegate?.didReceiveListMatches([match], nil)
+                        
                 })
-                
-                
             })
     }
 }
@@ -264,7 +262,7 @@ extension TMDatasource {
                     return
                 }
                 
-                guard let message = TMMessage(currentUser: self.currentUserId, dictionary: dictionary) else {
+                guard let message = TMMessage(currentUserId: self.currentUserId, dictionary: dictionary) else {
                     return
                 }
                 
@@ -280,10 +278,10 @@ extension TMDatasource {
         let ref =  self.databaseReference.child("chat/\(matchId)").childByAutoId()
         let timestamp = ServerValue.timestamp()
         
-        let data : [String : Any] = ["content" : message,
-                                     "chatId" : matchId,
-                                     "userId" : self.currentUserId,
-                                     "timestamp" : timestamp]
+        let data : [String : Any] = [Constants.Keys.Content : message,
+                                     Constants.Keys.MatchId : matchId,
+                                     Constants.Keys.UserId : self.currentUserId,
+                                     Constants.Keys.Timestamp : timestamp]
         
         ref.updateChildValues(data) { (error, databaseReference) in
             if error != nil {

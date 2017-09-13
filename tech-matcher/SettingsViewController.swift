@@ -112,7 +112,7 @@ extension SettingsViewController {
     }
     
     func getImageData(image : UIImage) -> Data? {
-        return UIImageJPEGRepresentation(image, 0.8)
+        return UIImageJPEGRepresentation(image, Constants.JPEGCompression)
     }
     
     func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
@@ -145,7 +145,7 @@ extension SettingsViewController {
         
         let mode = teachOtherPeopleCell.accessoryType == .checkmark ? SearchMode.Teach : SearchMode.Learn
         
-        return TMUser(uid: loggedInUserId!,
+        return TMUser(userId: loggedInUserId!,
                       fullname: nameTextfield!.text!,
                       about: aboutTextView!.text!,
                       mode: mode,
@@ -192,8 +192,8 @@ extension SettingsViewController {
     func populateScreenWithEmptyValues(){
         nameTextfield.text = ""
         aboutTextView.text = ""
-        discoveryEnabledSwitch.isOn = true
-        maximumDistanceSlider.value = 15
+        discoveryEnabledSwitch.isOn = Constants.InitialDiscoveryEnabled
+        maximumDistanceSlider.value = Constants.InitialMaximumDistance
         teachOtherPeopleCell.accessoryType = .none
         learnFromOtherPeopleCell.accessoryType = .checkmark
         didChangeMaximumDistance(maximumDistanceSlider)
@@ -253,12 +253,12 @@ extension SettingsViewController {
     
     func validateScreen() -> Bool {
         
-        if nameTextfield!.text!.characters.count <= 3 {
+        if nameTextfield!.text!.characters.count <= Constants.MinimumTextFieldCharacters {
             showErrorMessage("Field name is mandatory")
             return false
         }
         
-        if aboutTextView!.text!.characters.count <= 3 {
+        if aboutTextView!.text!.characters.count <= Constants.MinimumTextFieldCharacters {
             showErrorMessage("Field about is mandatory")
             return false
         }
@@ -275,7 +275,7 @@ extension SettingsViewController : UIImagePickerControllerDelegate, UINavigation
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
         var image = info[UIImagePickerControllerOriginalImage] as! UIImage
-        image = resizeImage(image: image, targetSize: CGSize(width: 600, height: 600))
+        image = resizeImage(image: image, targetSize: CGSize(width: Constants.ImageSize, height: Constants.ImageSize))
         currentPicture = getImageData(image: image)
         imageView.image = image
         picker.dismiss(animated: true, completion: nil)
