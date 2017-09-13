@@ -10,13 +10,23 @@ import UIKit
 import Firebase
 import FirebaseAuthUI
 
+
 class FinderViewController: UIViewController {
+    
+    enum ScreenMode {
+        case Presenting
+        case UsersNotFound
+        case Empty
+    }
 
     // MARK: UI
     @IBOutlet weak var fullnameLabel: UILabel!
     @IBOutlet weak var aboutLabel: UILabel!
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var container: UIStackView!
+    @IBOutlet weak var containerUsersNotFound: UIStackView!
+    
+    
     
     // MARK: DATA
     var datasource : TMDatasource?
@@ -28,9 +38,10 @@ class FinderViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        updateScreen(mode: .Empty)
+        
         datasource = TMDatasource(currentUserId: loggedInUserId!)
         loadUserDetails()
-        self.container.isHidden = true
         retrieveNextUser()
     }
     
@@ -63,12 +74,33 @@ extension FinderViewController {
     @IBAction func didClickOnConnect(_ sender: Any) {
         likeUser(like: true)
     }
+    
+    @IBAction func didClickOnSearchAgain(_ sender: Any) {
+        
+    }
+    
+    
 }
 
 
 // MARK: - ACTIONS
 
 extension FinderViewController {
+    
+    func updateScreen(mode : ScreenMode){
+        switch mode {
+        case .Presenting:
+            self.container.isHidden = false
+            self.containerUsersNotFound.isHidden = true
+        case .UsersNotFound:
+            self.container.isHidden = true
+            self.containerUsersNotFound.isHidden = false
+        case .Empty :
+            self.container.isHidden = true
+            self.containerUsersNotFound.isHidden = true
+        }
+    }
+    
     func likeUser(like : Bool){
         if let presentingUser = presentingUser {
             datasource?.likeUser(userId: presentingUser.userId, like: like, completionBlock: {
@@ -78,8 +110,6 @@ extension FinderViewController {
     }
     
     func loadUser(_ user : TMUser){
-        
-        container.isHidden = false
         
         presentingUser = user
         fullnameLabel.text = user.fullname
@@ -100,18 +130,23 @@ extension FinderViewController {
     }
     
     func retrieveNextUser(){
+        
         showProgressWithMessage(message: "Retrieving users...")
+        updateScreen(mode: .Empty)
         datasource?.nextUser(completionBlock: { (user, error) in
             self.dismissProgress()
+            
             if error != nil {
                 self.showErrorMessage(error!)
+                self.updateScreen(mode: .Empty)
                 return
             }
             
             if user != nil {
                 self.loadUser(user!)
+                self.updateScreen(mode: .Presenting)
             } else {
-                self.container.isHidden = true
+                self.updateScreen(mode: .UsersNotFound)
             }
         })
     }

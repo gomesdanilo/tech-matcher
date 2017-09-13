@@ -81,7 +81,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="JEy-1X-2Tf">
+                            <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="JEy-1X-2Tf">
                                 <rect key="frame" x="26" y="94" width="268" height="422.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Person name non non non non non non non non non non non non non non non non non " lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yHI-Sh-t8x">
@@ -124,12 +124,41 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
+                            <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="n5f-vb-lsN">
+                                <rect key="frame" x="26" y="84" width="268" height="161"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sorry, we couldn't find users at the moment. Please try again now or wait few minutes." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ehC-zs-2jx">
+                                        <rect key="frame" x="0.0" y="0.0" width="268" height="61"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t8X-eN-zrQ">
+                                        <rect key="frame" x="34" y="111" width="200" height="50"/>
+                                        <color key="backgroundColor" red="0.13687922499999999" green="0.68385221490000003" blue="0.87855718819999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="32P-fV-L9x"/>
+                                            <constraint firstAttribute="width" constant="200" id="Dd2-hc-wuR"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                        <state key="normal" title="Seach Again">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="didClickOnSearchAgain:" destination="QH7-qh-j3U" eventType="touchUpInside" id="VfX-Ig-yuD"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="n5f-vb-lsN" firstAttribute="leading" secondItem="hbk-rL-ppA" secondAttribute="leadingMargin" constant="10" id="Al7-zI-dOA"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="n5f-vb-lsN" secondAttribute="trailing" constant="10" id="CON-5q-vqo"/>
                             <constraint firstItem="JEy-1X-2Tf" firstAttribute="leading" secondItem="hbk-rL-ppA" secondAttribute="leadingMargin" constant="10" id="Xze-np-A4j"/>
                             <constraint firstItem="JEy-1X-2Tf" firstAttribute="top" secondItem="H10-tG-Vk9" secondAttribute="bottom" constant="30" id="ijp-VB-j37"/>
                             <constraint firstAttribute="trailingMargin" secondItem="JEy-1X-2Tf" secondAttribute="trailing" constant="10" id="sZj-dL-EMY"/>
+                            <constraint firstItem="n5f-vb-lsN" firstAttribute="top" secondItem="H10-tG-Vk9" secondAttribute="bottom" constant="20" id="wp9-2U-MvC"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Tech Matcher" id="ae0-8K-hUK">
@@ -148,6 +177,7 @@
                         <outlet property="aboutLabel" destination="Ghf-9B-w5g" id="6Yl-8W-QC2"/>
                         <outlet property="avatarImageView" destination="4HS-Tc-NEq" id="DrI-Zg-hLB"/>
                         <outlet property="container" destination="JEy-1X-2Tf" id="UD5-IL-AZo"/>
+                        <outlet property="containerUsersNotFound" destination="n5f-vb-lsN" id="oI4-hV-qUf"/>
                         <outlet property="fullnameLabel" destination="yHI-Sh-t8x" id="INk-rD-4gZ"/>
                         <segue destination="eKh-Pr-z04" kind="show" identifier="showSettings" id="coA-jm-CVh"/>
                         <segue destination="xh4-Uq-7FO" kind="show" identifier="showMatches" id="3lt-XT-GXe"/>
