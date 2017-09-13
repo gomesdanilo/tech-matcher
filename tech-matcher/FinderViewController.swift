@@ -76,7 +76,7 @@ extension FinderViewController {
     }
     
     @IBAction func didClickOnSearchAgain(_ sender: Any) {
-        
+        retrieveNextUser()
     }
     
     

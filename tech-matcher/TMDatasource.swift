@@ -125,13 +125,25 @@ extension TMDatasource {
             query = query.queryStarting(atValue: startingValue)
         }
         
-        query.queryLimited(toFirst: 30).observeSingleEvent(of: .value, with:{ (snapshot) in
+        query.queryLimited(toFirst: 31).observeSingleEvent(of: .value, with:{ (snapshot) in
             
             if let values = snapshot.value as? [String : [String : Any]] {
+                
                 
                 // Populates cache.
                 var users : [TMUser] = []
                 values.forEach({ (key, value) in
+                    
+                    // Skips first
+                    if key == self.startingValue {
+                        return
+                    }
+                    
+                    // Skips this user
+                    if self.currentUserId == key {
+                        return
+                    }
+                    
                     if let user = TMUser(userId: key, dictionary: value) {
                         users.append(user)
                     }
@@ -148,7 +160,6 @@ extension TMDatasource {
                     completionBlock(users, nil)
                 } else {
                     self.startingValue = nil
-                    
                     completionBlock(nil, "No records found")
                 }
                 
@@ -168,6 +179,7 @@ extension TMDatasource {
     func nextUser(completionBlock : @escaping UserFoundBlock){
         
         if cacheUsers.count > 0 {
+            // User found
             completionBlock(self.cacheUsers.remove(at: 0), nil)
             return
         }
@@ -193,13 +205,16 @@ extension TMDatasource {
                     }
                     
                     if self.cacheUsers.count > 0 {
+                        // User found
                         completionBlock(self.cacheUsers.remove(at: 0), nil)
                     } else {
-                        completionBlock(nil, "Not found")
+                        // Users not found
+                        completionBlock(nil, nil)
                     }
                 })
             } else {
-                completionBlock(nil, "Not found")
+                // Users not found
+                completionBlock(nil, nil)
             }
         }
     }
