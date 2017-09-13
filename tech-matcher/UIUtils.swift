@@ -11,10 +11,15 @@ import SVProgressHUD
 
 extension UIViewController {
 
-    func showErrorMessage(_ message : String){
-        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+    func showMessage(_ message : String, title: String){
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .cancel , handler: nil))
         present(alert, animated: true, completion: nil)
+    }
+    
+    
+    func showErrorMessage(_ message : String){
+        showMessage(message, title: "Error")
     }
     
     func showErrorNotImplemented(){

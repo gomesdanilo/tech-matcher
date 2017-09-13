@@ -13,6 +13,7 @@ struct TMMatch {
     
     let matchId : String
     let user : TMUser
+    let seen : Bool
     
     init?(match: [String: Any], user : TMUser) {
         
@@ -20,7 +21,12 @@ struct TMMatch {
             return nil
         }
         
+        guard let seen = match[Constants.Keys.Seen] as? Bool else {
+            return nil
+        }
+        
         self.matchId = matchId
         self.user = user
+        self.seen = seen
     }
 }

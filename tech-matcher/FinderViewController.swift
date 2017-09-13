@@ -41,6 +41,9 @@ class FinderViewController: UIViewController {
         updateScreen(mode: .Empty)
         
         datasource = TMDatasource(currentUserId: loggedInUserId!)
+        datasource?.matchDelegate = self
+        datasource?.retrieveMatches()
+        
         loadUserDetails()
         retrieveNextUser()
     }
@@ -161,4 +164,38 @@ extension FinderViewController {
             }
         })
     }
+}
+
+
+
+extension FinderViewController : TMDatasourceMatchDelegate {
+
+    func didReceiveListMatches(_ matches: [TMMatch]?, _ error: String?) {
+        
+        guard let matches = matches else {
+            return
+        }
+        
+        
+        let notSeen = matches.filter { (match) -> Bool in
+            return !match.seen
+        }
+        
+        if notSeen.count > 0 {
+            showMessage("You've got \(notSeen.count) match(es)! Why don't you have a look", title: "Yeah!")
+         
+            notSeen.forEach({ (item) in
+                datasource?.checkMatchAsSeen(match: item, completionBlock: { (success, error) in
+                    if error != nil {
+                        print(error!)
+                    }
+                })
+            })
+            
+        }
+        
+        
+    }
+
+
 }

@@ -39,6 +39,7 @@ struct Constants {
         
         // Match
         static let MatchId = "matchId"
+        static let Seen = "seen"
         
         // Message
         static let Content = "content"

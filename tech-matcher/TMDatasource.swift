@@ -227,6 +227,47 @@ extension TMDatasource {
 // MARK: - Matches screen
 
 extension TMDatasource {
+    
+    func parseMatch(_ userMatchSnapshot : DataSnapshot, _ userSnapshot  : DataSnapshot) -> TMMatch? {
+        
+        guard let matchDictionary = userMatchSnapshot.value as? [String: Any] else {
+            return nil
+        }
+        
+        guard let userDictionary = userSnapshot.value as? [String: Any] else {
+            return nil
+        }
+        
+        guard let user = TMUser(userId: userSnapshot.key, dictionary: userDictionary) else {
+            return nil
+        }
+        
+        guard let match = TMMatch(match: matchDictionary, user : user) else {
+            return nil
+        }
+        
+        // Ignores same user
+        if self.currentUserId == user.userId {
+            return nil
+        }
+        return match
+    }
+    
+    func checkMatchAsSeen(match : TMMatch,
+                          completionBlock : @escaping (_ success : Bool, _ error : String?) -> Void){
+        
+        let path = "usersMatches/\(self.currentUserId)/\(match.user.userId)"
+        let ref =  self.databaseReference.child(path)
+        let data : [String : Any] = [Constants.Keys.Seen : true]
+        
+        ref.updateChildValues(data) { (error, databaseReference) in
+            if error != nil {
+                completionBlock(false, error!.localizedDescription)
+                return
+            }
+            completionBlock(true, nil)
+        }
+    }
 
     func retrieveMatches(){
         
@@ -234,38 +275,19 @@ extension TMDatasource {
         self.databaseReference
             .child("usersMatches/\(self.currentUserId)")
             .queryOrderedByKey()
-            .observe(.childAdded, with: { (matchSnapshot) in
+            .observe(.childAdded, with: { (userMatchSnapshot) in
                 
                 self.databaseReference
-                    .child("/users/\(matchSnapshot.key)")
+                    .child("/users/\(userMatchSnapshot.key)")
                     .observeSingleEvent(of: .value, with: { (userSnapshot) in
-                    
                         
-                        guard let matchDictionary = matchSnapshot.value as? [String: Any] else {
-                            return
-                        }
-                        
-                        guard let userDictionary = userSnapshot.value as? [String: Any] else {
-                            return
-                        }
-                        
-                        
-                        guard let user = TMUser(userId: userSnapshot.key, dictionary: userDictionary) else {
-                            return
-                        }
-                        
-                        guard let match = TMMatch(match: matchDictionary, user : user) else {
-                            return
-                        }
-                        
-                        // Ignores same user
-                        if self.currentUserId == user.userId {
+                        guard let match = self.parseMatch(userMatchSnapshot, userSnapshot) else {
                             return
                         }
                         
                         self.matchDelegate?.didReceiveListMatches([match], nil)
-                        
-                })
+                    })
+                
             })
     }
 }
