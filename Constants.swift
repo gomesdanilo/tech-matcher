@@ -27,8 +27,6 @@ struct Constants {
     
     static let MinimumTextFieldCharacters = 3
     static let ImageSize = 600
-    static let InitialMaximumDistance : Float = 15 // KM
-    static let InitialDiscoveryEnabled = false
     static let JPEGCompression : CGFloat = 0.8
     
     struct Keys {
@@ -37,11 +35,6 @@ struct Constants {
         static let UserId = "userId"
         static let Name = "name"
         static let About = "about"
-        static let Mode = "mode"
-        static let MaximumDistance = "maximumDistance"
-        static let DiscoveryEnabled = "discoveryEnabled"
-        static let Latitude = "latitude"
-        static let Longitude = "longitude"
         static let ImageUrl = "imageUrl"
         
         // Match

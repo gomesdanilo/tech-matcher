@@ -14,31 +14,16 @@ struct TMUser {
     let userId : String
     let fullname : String
     let about : String
-    let mode : SearchMode
-    let maximumDistance : Int
-    let discoveryEnabled : Bool
-    let latitude : Double?
-    let longitude : Double?
     let image : String?
     
     init(   userId : String,
             fullname : String,
             about : String,
-            mode : SearchMode,
-            maximumDistance : Int,
-            discoveryEnabled : Bool,
-            latitude : Double?,
-            longitude : Double?,
             image : String?){
         
         self.userId = userId
         self.fullname = fullname
         self.about = about
-        self.mode = mode
-        self.maximumDistance = maximumDistance
-        self.discoveryEnabled = discoveryEnabled
-        self.latitude = latitude
-        self.longitude = longitude
         self.image = image
     }
 
@@ -60,28 +45,10 @@ struct TMUser {
             return nil
         }
         
-        guard let mode = dictionary[Constants.Keys.Mode] as? String else {
-            return nil
-        }
-        
-        guard let maximumDistance = dictionary[Constants.Keys.MaximumDistance] as? Int else {
-            return nil
-        }
-        
-        guard let discoveryEnabled = dictionary[Constants.Keys.DiscoveryEnabled] as? Bool else {
-            return nil
-        }
-        
         self.userId = userId
         self.fullname = fullname
         self.about = about
-        self.mode = searchModeFromString(mode)
-        self.maximumDistance = maximumDistance
-        self.discoveryEnabled = discoveryEnabled
-        
-        latitude = dictionary[Constants.Keys.Latitude] as? Double
-        longitude = dictionary[Constants.Keys.Longitude] as? Double
-        image = dictionary[Constants.Keys.ImageUrl] as? String
+        self.image = dictionary[Constants.Keys.ImageUrl] as? String
     }
     
     
@@ -94,11 +61,6 @@ struct TMUser {
             Constants.Keys.UserId : userId,
             Constants.Keys.Name : fullname,
             Constants.Keys.About : about,
-            Constants.Keys.Mode : mode == SearchMode.Teach ? "Teach" : "Learn",
-            Constants.Keys.MaximumDistance : maximumDistance,
-            Constants.Keys.Latitude : getValueOrNull(latitude),
-            Constants.Keys.Longitude : getValueOrNull(longitude),
-            Constants.Keys.DiscoveryEnabled : discoveryEnabled,
             Constants.Keys.ImageUrl : getValueOrNull(image)
         ]
     }

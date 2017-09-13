@@ -13,17 +13,11 @@ import Firebase
 class SettingsViewController: UITableViewController{
 
     // MARK: UI
-    @IBOutlet weak var nameTextfield: UITextField!
-    @IBOutlet weak var aboutTextView: UITextView!
-    @IBOutlet weak var discoveryEnabledSwitch: UISwitch!
-    @IBOutlet weak var maximumDistanceSlider: UISlider!
-    @IBOutlet weak var teachOtherPeopleCell: UITableViewCell!
-    @IBOutlet weak var learnFromOtherPeopleCell: UITableViewCell!
-    @IBOutlet weak var configureTopicsCell: UITableViewCell!
-    @IBOutlet weak var logoutCell: UITableViewCell!
-    @IBOutlet weak var maximumDistanceLabel: UILabel!
     @IBOutlet weak var imageView : UIImageView!
     @IBOutlet weak var imageViewCell: UITableViewCell!
+    @IBOutlet weak var nameTextfield: UITextField!
+    @IBOutlet weak var aboutTextView: UITextView!
+    @IBOutlet weak var logoutCell: UITableViewCell!
     
     // MARK: Data
     var currentPicture : Data?
@@ -34,7 +28,7 @@ class SettingsViewController: UITableViewController{
         super.viewDidLoad()
         
         imageView.setBorder(width: 1, color: UIColor.gray)
-        imageView.setRound(cornerRadius: 40)
+        imageView.setRound(cornerRadius: 50)
         
         datasource = TMDatasource(currentUserId: loggedInUserId!)
         populateScreenWithEmptyValues()
@@ -54,19 +48,13 @@ extension SettingsViewController {
         
         let cell = tableView.cellForRow(at: indexPath)
         
-        if cell == teachOtherPeopleCell {
-            teachOtherPeopleCell.accessoryType = .checkmark
-            learnFromOtherPeopleCell.accessoryType = .none
-        } else if cell == learnFromOtherPeopleCell {
-            teachOtherPeopleCell.accessoryType = .none
-            learnFromOtherPeopleCell.accessoryType = .checkmark
-        }
-        else if cell == configureTopicsCell {
-            showErrorNotImplemented()
-        } else if cell == logoutCell {
-            self.navigationController?.popToRootViewController(animated: true)
+        if cell == logoutCell {
+            logout()
+            
         } else if cell == imageViewCell {
-            askGalleryOrCamera()
+            DispatchQueue.main.async {
+                self.askGalleryOrCamera()
+            }
         }
     }
 }
@@ -75,15 +63,22 @@ extension SettingsViewController {
 
 extension SettingsViewController {
     
-    @IBAction func didChangeMaximumDistance(_ sender: Any) {
-        maximumDistanceLabel.text =  "\(Int(maximumDistanceSlider.value)) km"
-    }
 
 }
 
 // MARK: Actions
 
 extension SettingsViewController {
+    
+    func logout(){
+        self.navigationController?.popToRootViewController(animated: true)
+        do {
+            try Auth.auth().signOut()
+        } catch let error {
+            print(error.localizedDescription)
+        }
+    }
+    
     func askGalleryOrCamera(){
         let alert = UIAlertController(title: "Option", message: "Pictures from", preferredStyle: .alert)
         
@@ -143,15 +138,10 @@ extension SettingsViewController {
     
     func createUserUpdate(imageUrl : String?) -> TMUser{
         
-        let mode = teachOtherPeopleCell.accessoryType == .checkmark ? SearchMode.Teach : SearchMode.Learn
-        
         return TMUser(userId: loggedInUserId!,
                       fullname: nameTextfield!.text!,
                       about: aboutTextView!.text!,
-                      mode: mode,
-                      maximumDistance: Int(maximumDistanceSlider.value),
-                      discoveryEnabled: discoveryEnabledSwitch.isOn,
-                      latitude: nil, longitude: nil, image: imageUrl)
+                      image: imageUrl)
     }
     
     func saveSettings(){
@@ -192,27 +182,12 @@ extension SettingsViewController {
     func populateScreenWithEmptyValues(){
         nameTextfield.text = ""
         aboutTextView.text = ""
-        discoveryEnabledSwitch.isOn = Constants.InitialDiscoveryEnabled
-        maximumDistanceSlider.value = Constants.InitialMaximumDistance
-        teachOtherPeopleCell.accessoryType = .none
-        learnFromOtherPeopleCell.accessoryType = .checkmark
-        didChangeMaximumDistance(maximumDistanceSlider)
+        imageView.image = #imageLiteral(resourceName: "match-placeholder")
     }
     
     func populateScreenWithUser(_ user : TMUser){
         nameTextfield.text = user.fullname
         aboutTextView.text = user.about
-        discoveryEnabledSwitch.isOn = user.discoveryEnabled
-        maximumDistanceSlider.value = Float(user.maximumDistance)
-        if user.mode == .Teach {
-            teachOtherPeopleCell.accessoryType = .checkmark
-            learnFromOtherPeopleCell.accessoryType = .none
-        } else {
-            teachOtherPeopleCell.accessoryType = .none
-            learnFromOtherPeopleCell.accessoryType = .checkmark
-        }
-        didChangeMaximumDistance(maximumDistanceSlider)
-        
         self.currentPicture = nil
         self.imageView.image = #imageLiteral(resourceName: "match-placeholder")
         
@@ -220,8 +195,10 @@ extension SettingsViewController {
             self.datasource?.downloadPicture(url: url, completionBlock: { (data, error) in
                 
                 self.currentPicture = data
-                if data != nil {
-                    self.imageView.image = UIImage(data: data!)
+                if let data = data {
+                    if let pic = UIImage(data: data) {
+                        self.imageView.image = pic
+                    }
                 }
             })
         }

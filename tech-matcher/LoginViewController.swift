@@ -21,8 +21,11 @@ class LoginViewController: UIViewController {
     }
     
     func loginFlow(){
-        let vc = FUIAuth.defaultAuthUI()!.authViewController()
-        present(vc, animated: true, completion: nil)
+        
+        if let vc = FUIAuth.defaultAuthUI() {
+            let authVc = vc.authViewController()
+            present(authVc, animated: true, completion: nil)
+        }
     }
     
     func navigateToMainPage(user : User){
@@ -43,6 +46,7 @@ class LoginViewController: UIViewController {
             }
         }
     }
+  
     
     deinit {
         Auth.auth().removeStateDidChangeListener(authHandle)
