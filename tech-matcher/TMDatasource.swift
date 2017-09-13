@@ -1,5 +1,5 @@
 //
-//  FinderDatasource.swift
+//  TMDatasource.swift
 //  tech-matcher
 //
 //  Created by Danilo Gomes on 12/09/2017.
@@ -10,13 +10,15 @@ import UIKit
 import FirebaseDatabase
 import FirebaseStorage
 
-protocol FinderDatasourceDelegate {
-    
-    func didReceiveListMatches(_ matches : [Match]?, _ error : String?)
-    
+protocol TMDatasourceMatchDelegate {
+    func didReceiveListMatches(_ matches : [TMMatch]?, _ error : String?)
 }
 
-class FinderDatasource {
+protocol TMDatasourceMessageDelegate {
+    func didReceiveListMessages(_ matches : [TMMessage]?, _ error : String?)
+}
+
+class TMDatasource {
     
     typealias UserFoundBlock = (_ user : TMUser?, _ error : String?) -> Void
     
@@ -30,7 +32,8 @@ class FinderDatasource {
     fileprivate var cacheUsers : [TMUser] =  []
     
     
-    var delegate : FinderDatasourceDelegate?
+    var matchDelegate : TMDatasourceMatchDelegate?
+    var messageDelegate : TMDatasourceMessageDelegate?
     
     init(currentUserId : String) {
         databaseReference = Database.database().reference()
@@ -45,7 +48,7 @@ class FinderDatasource {
 
 // MARK: - User Details
 
-extension FinderDatasource {
+extension TMDatasource {
     
     func loadUserDetails(_ completionBlock : @escaping (_ user : TMUser?,_ error : String?) -> Void){
         
@@ -112,7 +115,7 @@ extension FinderDatasource {
 
 // MARK: - Finder
 
-extension FinderDatasource {
+extension TMDatasource {
     
     func likeUser(userId : String, like : Bool, completionBlock : @escaping () -> Void){
         
@@ -192,9 +195,7 @@ extension FinderDatasource {
                     if let list = snapshot.value as? [String : [String : Bool]] {
                         for user in users {
                             
-                            if let item = list[user.uid] {
-                                // Seen
-                            } else {
+                            if list[user.uid] == nil {
                                 // Not seen
                                 self.cacheUsers.append(user)
                             }
@@ -217,7 +218,9 @@ extension FinderDatasource {
     
 }
 
-extension FinderDatasource {
+// MARK: - Matches screen
+
+extension TMDatasource {
 
     func retrieveMatches(){
         
@@ -235,8 +238,8 @@ extension FinderDatasource {
                         if let match = match.value as? [String: Any],
                             let user = user.value as? [String: Any] {
                         
-                            if let item = Match(match: match, user : user) {
-                                self.delegate?.didReceiveListMatches([item], nil)
+                            if let item = TMMatch(match: match, user : user) {
+                                self.matchDelegate?.didReceiveListMatches([item], nil)
                             }
                         }
                 })
@@ -244,4 +247,55 @@ extension FinderDatasource {
                 
             })
     }
+}
+
+
+// MARK: - Messages Screen
+extension TMDatasource {
+    
+    func retrieveMessages(matchId : String){
+        // TODO: Release handle
+        self.databaseReference
+            .child("chat/\(matchId)")
+            .queryOrderedByKey()
+            .observe(.childAdded, with: { (message) in
+                
+                guard let dictionary = message.value as? [String: Any] else {
+                    return
+                }
+                
+                guard let message = TMMessage(currentUser: self.currentUserId, dictionary: dictionary) else {
+                    return
+                }
+                
+                
+                self.messageDelegate?.didReceiveListMessages([message], nil)
+            })
+
+    
+    }
+    
+    func sendMessage(_ message : String, matchId : String, completionBlock : @escaping (_ success : Bool, _ error : String?) -> Void){
+        
+        let ref =  self.databaseReference.child("chat/\(matchId)").childByAutoId()
+        let timestamp = ServerValue.timestamp()
+        
+        let data : [String : Any] = ["content" : message,
+                                     "chatId" : matchId,
+                                     "userId" : self.currentUserId,
+                                     "timestamp" : timestamp]
+        
+        ref.updateChildValues(data) { (error, databaseReference) in
+            if error != nil {
+                completionBlock(false, error!.localizedDescription)
+                return
+            }
+            completionBlock(true, nil)
+            
+        }
+    
+    
+    }
+
+
 }

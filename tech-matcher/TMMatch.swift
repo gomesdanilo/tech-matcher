@@ -9,7 +9,7 @@
 import FirebaseDatabase
 
 
-struct Match {
+struct TMMatch {
     
     let name : String
     let match : String

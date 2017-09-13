@@ -13,22 +13,22 @@ class MatchesViewController: UITableViewController {
     
     // MARK: Data
     var loggedInUserId : String?
-    var datasource : FinderDatasource?
-    var matches : [Match] = []
+    var datasource : TMDatasource?
+    var matches : [TMMatch] = []
+    var selectedMatchId : String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        datasource = FinderDatasource(currentUserId: loggedInUserId!)
-        datasource?.delegate = self
+        datasource = TMDatasource(currentUserId: loggedInUserId!)
+        datasource?.matchDelegate = self
         datasource?.retrieveMatches()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if Constants.SegueShowChat == segue.identifier {
             let vc = segue.destination as! ChatViewController
-            //vc.loggedInUserId = loggedInUserId
-            //vc.chatId = chatId
-            //vc.uid = uid
+            vc.loggedInUserId = loggedInUserId!
+            vc.matchId = self.selectedMatchId!
         }
     }
 }
@@ -50,15 +50,16 @@ extension MatchesViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        navigateToChat()
+        let row = matches[indexPath.row]
+        navigateToChat(row)
     }
 
 }
 
-// MARK: - FinderDatasourceDelegate
-extension MatchesViewController : FinderDatasourceDelegate {
+// MARK: - TMDatasourceDelegate
+extension MatchesViewController : TMDatasourceMatchDelegate {
 
-    func didReceiveListMatches(_ matches: [Match]?, _ error: String?) {
+    func didReceiveListMatches(_ matches: [TMMatch]?, _ error: String?) {
         
         if error != nil {
             showErrorMessage(error!)
@@ -75,7 +76,8 @@ extension MatchesViewController : FinderDatasourceDelegate {
 // MARK: - Actions
 extension MatchesViewController {
     
-    func navigateToChat(){
+    func navigateToChat(_ match : TMMatch){
+        self.selectedMatchId = match.match
         self.performSegue(withIdentifier: Constants.SegueShowChat, sender: self)
     }
 }

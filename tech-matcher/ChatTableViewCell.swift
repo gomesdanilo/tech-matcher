@@ -10,9 +10,14 @@ import UIKit
 
 class ChatTableViewCell: UITableViewCell {
 
+    // MARK: UI
     @IBOutlet weak var userLabel: UILabel!
     @IBOutlet weak var timestampLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
     
-    
+    func populateWithMessage(_ message: TMMessage){
+        userLabel.text = message.user
+        timestampLabel.text = message.date
+        messageLabel.text = message.content
+    }
 }

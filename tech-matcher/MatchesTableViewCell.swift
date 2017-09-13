@@ -23,7 +23,7 @@ class MatchesTableViewCell: UITableViewCell {
         self.avatarImageView.setRound(cornerRadius: 30)
     }
     
-    func populateWithMatch(_ match : Match){
+    func populateWithMatch(_ match : TMMatch){
         self.lastMessageLabel.text = ""
         self.usernameLabel.text = match.name
     }

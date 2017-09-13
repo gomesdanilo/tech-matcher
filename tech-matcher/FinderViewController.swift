@@ -19,7 +19,7 @@ class FinderViewController: UIViewController {
     @IBOutlet weak var container: UIStackView!
     
     // MARK: DATA
-    var datasource : FinderDatasource?
+    var datasource : TMDatasource?
     var loggedInUserId : String?
     var presentingUser : TMUser?
     
@@ -27,7 +27,7 @@ class FinderViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        datasource = FinderDatasource(currentUserId: loggedInUserId!)
+        datasource = TMDatasource(currentUserId: loggedInUserId!)
         checkFirstUse()
         self.container.isHidden = true
         retrieveNextUser()

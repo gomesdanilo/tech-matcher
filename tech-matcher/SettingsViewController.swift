@@ -12,6 +12,7 @@ import Firebase
 
 class SettingsViewController: UITableViewController{
 
+    // MARK: UI
     @IBOutlet weak var nameTextfield: UITextField!
     @IBOutlet weak var aboutTextView: UITextView!
     @IBOutlet weak var discoveryEnabledSwitch: UISwitch!
@@ -24,13 +25,10 @@ class SettingsViewController: UITableViewController{
     @IBOutlet weak var imageView : UIImageView!
     @IBOutlet weak var imageViewCell: UITableViewCell!
     
-    
-    
+    // MARK: Data
     var currentPicture : Data?
-    
     var loggedInUserId : String?
-    var datasource : FinderDatasource?
-    
+    var datasource : TMDatasource?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,11 +36,158 @@ class SettingsViewController: UITableViewController{
         imageView.setBorder(width: 1, color: UIColor.gray)
         imageView.setRound(cornerRadius: 40)
         
-        datasource = FinderDatasource(currentUserId: loggedInUserId!)
+        datasource = TMDatasource(currentUserId: loggedInUserId!)
         populateScreenWithEmptyValues()
         loadSettingsData()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        saveSettings()
+    }
+}
+
+// MARK: - Table
+extension SettingsViewController {
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let cell = tableView.cellForRow(at: indexPath)
+        
+        if cell == teachOtherPeopleCell {
+            teachOtherPeopleCell.accessoryType = .checkmark
+            learnFromOtherPeopleCell.accessoryType = .none
+        } else if cell == learnFromOtherPeopleCell {
+            teachOtherPeopleCell.accessoryType = .none
+            learnFromOtherPeopleCell.accessoryType = .checkmark
+        }
+        else if cell == configureTopicsCell {
+            showErrorNotImplemented()
+        } else if cell == logoutCell {
+            self.navigationController?.popToRootViewController(animated: true)
+        } else if cell == imageViewCell {
+            askGalleryOrCamera()
+        }
+    }
+}
+
+// MARK: Events
+
+extension SettingsViewController {
+    
+    @IBAction func didChangeMaximumDistance(_ sender: Any) {
+        maximumDistanceLabel.text =  "\(Int(maximumDistanceSlider.value)) km"
+    }
+
+}
+
+// MARK: Actions
+
+extension SettingsViewController {
+    func askGalleryOrCamera(){
+        let alert = UIAlertController(title: "Option", message: "Pictures from", preferredStyle: .alert)
+        
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (action) in
+                self.openPicker(camera: true)
+            }))
+        }
+        
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+            alert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: { (action) in
+                self.openPicker(camera: false)
+            }))
+        }
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func openPicker(camera : Bool){
+        let picker = UIImagePickerController()
+        picker.sourceType = camera ? .camera : .photoLibrary
+        picker.delegate = self
+        present(picker, animated: true, completion: nil)
+    }
+    
+    func getImageData(image : UIImage) -> Data? {
+        return UIImageJPEGRepresentation(image, 0.8)
+    }
+    
+    func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
+        let size = image.size
+        
+        let widthRatio  = targetSize.width  / image.size.width
+        let heightRatio = targetSize.height / image.size.height
+        
+        // Figure out what our orientation is, and use that to form the rectangle
+        var newSize: CGSize
+        if(widthRatio > heightRatio) {
+            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+        } else {
+            newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
+        }
+        
+        // This is the rect that we've calculated out and this is what is actually used below
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+        
+        // Actually do the resizing to the rect using the ImageContext stuff
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+        image.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage!
+    }
+    
+    func createUserUpdate(imageUrl : String?) -> TMUser{
+        
+        let mode = teachOtherPeopleCell.accessoryType == .checkmark ? SearchMode.Teach : SearchMode.Learn
+        
+        return TMUser(uid: loggedInUserId!,
+                      fullname: nameTextfield!.text!,
+                      about: aboutTextView!.text!,
+                      mode: mode,
+                      maximumDistance: Int(maximumDistanceSlider.value),
+                      discoveryEnabled: discoveryEnabledSwitch.isOn,
+                      latitude: nil, longitude: nil, image: imageUrl)
+    }
+    
+    func saveSettings(){
+        
+        if !validateScreen(){
+            return
+        }
+        
+        if let currentPicture = self.currentPicture {
+            self.datasource?.savePicture(currentPicture, completionBlock: { (imageUrl, error) in
+                guard error == nil else {
+                    self.showErrorMessage(error!)
+                    return
+                }
+                
+                let user = self.createUserUpdate(imageUrl: imageUrl)
+                
+                self.datasource?.updateUserSettings(user, completionBlock: { (success, errorMessage) in
+                    guard errorMessage == nil else {
+                        self.showErrorMessage(errorMessage!)
+                        return
+                    }
+                })
+                
+            })
+        } else {
+            let user = createUserUpdate(imageUrl : nil)
+            
+            datasource?.updateUserSettings(user, completionBlock: { (success, errorMessage) in
+                guard errorMessage == nil else {
+                    self.showErrorMessage(errorMessage!)
+                    return
+                }
+            })
+        }
+    }
     
     func populateScreenWithEmptyValues(){
         nameTextfield.text = ""
@@ -106,13 +251,8 @@ class SettingsViewController: UITableViewController{
         })
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        saveSettings()
-    }
-    
     func validateScreen() -> Bool {
-    
+        
         if nameTextfield!.text!.characters.count <= 3 {
             showErrorMessage("Field name is mandatory")
             return false
@@ -125,144 +265,10 @@ class SettingsViewController: UITableViewController{
         
         return true
     }
-    
-    func createUserUpdate(imageUrl : String?) -> TMUser{
-        
-        let mode = teachOtherPeopleCell.accessoryType == .checkmark ? TMUser.Mode.Teach : TMUser.Mode.Learn
-        
-        return TMUser(uid: loggedInUserId!,
-                      fullname: nameTextfield!.text!,
-                      about: aboutTextView!.text!,
-                      mode: mode,
-                      maximumDistance: Int(maximumDistanceSlider.value),
-                      discoveryEnabled: discoveryEnabledSwitch.isOn,
-                      latitude: nil, longitude: nil, image: imageUrl)
-    }
-    
-    func saveSettings(){
-        
-        if !validateScreen(){
-            return
-        }
-        
-        if let currentPicture = self.currentPicture {
-            self.datasource?.savePicture(currentPicture, completionBlock: { (imageUrl, error) in
-                guard error == nil else {
-                    self.showErrorMessage(error!)
-                    return
-                }
-                
-                let user = self.createUserUpdate(imageUrl: imageUrl)
-                
-                self.datasource?.updateUserSettings(user, completionBlock: { (success, errorMessage) in
-                    guard errorMessage == nil else {
-                        self.showErrorMessage(errorMessage!)
-                        return
-                    }
-                })
-                
-            })
-        } else {
-            let user = createUserUpdate(imageUrl : nil)
-            
-            datasource?.updateUserSettings(user, completionBlock: { (success, errorMessage) in
-                guard errorMessage == nil else {
-                    self.showErrorMessage(errorMessage!)
-                    return
-                }
-            })
-        }
-        
-        
-        
-      
-    }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let cell = tableView.cellForRow(at: indexPath)
-        
-        if cell == teachOtherPeopleCell {
-            teachOtherPeopleCell.accessoryType = .checkmark
-            learnFromOtherPeopleCell.accessoryType = .none
-        } else if cell == learnFromOtherPeopleCell {
-            teachOtherPeopleCell.accessoryType = .none
-            learnFromOtherPeopleCell.accessoryType = .checkmark
-        }
-        else if cell == configureTopicsCell {
-            showErrorNotImplemented()
-        } else if cell == logoutCell {
-            self.navigationController?.popToRootViewController(animated: true)
-        } else if cell == imageViewCell {
-            askGalleryOrCamera()
-        }
-    }
-    
-    @IBAction func didChangeMaximumDistance(_ sender: Any) {
-        maximumDistanceLabel.text =  "\(Int(maximumDistanceSlider.value)) km"
-    }
-    
-    
-    func askGalleryOrCamera(){
-        let alert = UIAlertController(title: "Option", message: "Pictures from", preferredStyle: .alert)
-        
-        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (action) in
-                self.openPicker(camera: true)
-            }))
-        }
-        
-        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
-            alert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: { (action) in
-                self.openPicker(camera: false)
-            }))
-        }
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        
-        present(alert, animated: true, completion: nil)
-    }
-    
-    func openPicker(camera : Bool){
-        let picker = UIImagePickerController()
-        picker.sourceType = camera ? .camera : .photoLibrary
-        picker.delegate = self
-        present(picker, animated: true, completion: nil)
-    }
-    
-    
-    
-    func getImageData(image : UIImage) -> Data? {
-        return UIImageJPEGRepresentation(image, 0.8)
-    }
-    
-    func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
-        let size = image.size
-        
-        let widthRatio  = targetSize.width  / image.size.width
-        let heightRatio = targetSize.height / image.size.height
-        
-        // Figure out what our orientation is, and use that to form the rectangle
-        var newSize: CGSize
-        if(widthRatio > heightRatio) {
-            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
-        } else {
-            newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
-        }
-        
-        // This is the rect that we've calculated out and this is what is actually used below
-        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
-        
-        // Actually do the resizing to the rect using the ImageContext stuff
-        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-        image.draw(in: rect)
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return newImage!
-    }
-    
 }
+
+
+// MARK: - Image Picker
 
 extension SettingsViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 

@@ -11,27 +11,21 @@ import FirebaseDatabase
 
 struct TMUser {
 
-    enum Mode {
-        case Teach
-        case Learn
-    }
     
     let uid : String
     let fullname : String
     let about : String
-    let mode : Mode
+    let mode : SearchMode
     let maximumDistance : Int
     let discoveryEnabled : Bool
-    
     let latitude : Double?
     let longitude : Double?
-    
     let image : String?
     
     init(   uid : String,
             fullname : String,
             about : String,
-            mode : Mode,
+            mode : SearchMode,
             maximumDistance : Int,
             discoveryEnabled : Bool,
             latitude : Double?,
@@ -59,36 +53,36 @@ struct TMUser {
     
     init?(uid : String, dictionary : [String: Any?]) {
         
-        guard let fullname = dictionary["fullname"] as? String else {
+        guard let fullname = dictionary[Constants.Keys.Name] as? String else {
             return nil
         }
         
-        guard let about = dictionary["about"] as? String else {
+        guard let about = dictionary[Constants.Keys.About] as? String else {
             return nil
         }
         
-        guard let mode = dictionary["mode"] as? String else {
+        guard let mode = dictionary[Constants.Keys.Mode] as? String else {
             return nil
         }
         
-        guard let maximumDistance = dictionary["maximumDistance"] as? Int else {
+        guard let maximumDistance = dictionary[Constants.Keys.MaximumDistance] as? Int else {
             return nil
         }
         
-        guard let discoveryEnabled = dictionary["discoveryEnabled"] as? Bool else {
+        guard let discoveryEnabled = dictionary[Constants.Keys.DiscoveryEnabled] as? Bool else {
             return nil
         }
         
         self.uid = uid
         self.fullname = fullname
         self.about = about
-        self.mode = mode == "Teach" ? Mode.Teach : Mode.Learn
+        self.mode = searchModeFromString(mode)
         self.maximumDistance = maximumDistance
         self.discoveryEnabled = discoveryEnabled
         
-        latitude = dictionary["latitude"] as? Double
-        longitude = dictionary["longitude"] as? Double
-        image = dictionary["image"] as? String
+        latitude = dictionary[Constants.Keys.Latitude] as? Double
+        longitude = dictionary[Constants.Keys.Longitude] as? Double
+        image = dictionary[Constants.Keys.ImageUrl] as? String
     }
     
     
@@ -98,15 +92,15 @@ struct TMUser {
     
     func json() -> [String: Any]{
         return [
-            "uid" : uid,
-            "fullname" : fullname,
-            "about" : about,
-            "mode" : mode == .Teach ? "Teach" : "Learn",
-            "maximumDistance" : maximumDistance,
-            "latitude" : getValueOrNull(latitude),
-            "longitude" : getValueOrNull(longitude),
-            "discoveryEnabled" : discoveryEnabled,
-            "image" : getValueOrNull(image)
+            Constants.Keys.UserId : uid,
+            Constants.Keys.Name : fullname,
+            Constants.Keys.About : about,
+            Constants.Keys.Mode : mode == .Teach ? "Teach" : "Learn",
+            Constants.Keys.MaximumDistance : maximumDistance,
+            Constants.Keys.Latitude : getValueOrNull(latitude),
+            Constants.Keys.Longitude : getValueOrNull(longitude),
+            Constants.Keys.DiscoveryEnabled : discoveryEnabled,
+            Constants.Keys.ImageUrl : getValueOrNull(image)
         ]
     }
     
