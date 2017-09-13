@@ -19,13 +19,13 @@
 		995505791F670A510019ECC5 /* MatchesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995505781F670A510019ECC5 /* MatchesTableViewCell.swift */; };
 		99593A461F67E47C001EE2E1 /* UIImageView+Rounded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99593A451F67E47C001EE2E1 /* UIImageView+Rounded.swift */; };
 		99593A481F6824AA001EE2E1 /* TMDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99593A471F6824AA001EE2E1 /* TMDatasource.swift */; };
-		99593A4A1F6849DE001EE2E1 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99593A491F6849DE001EE2E1 /* Constants.swift */; };
 		99593A4C1F684C60001EE2E1 /* UIUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99593A4B1F684C60001EE2E1 /* UIUtils.swift */; };
 		996C20FB1F66AD4D004291C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996C20FA1F66AD4D004291C1 /* AppDelegate.swift */; };
 		996C21001F66AD4D004291C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 996C20FE1F66AD4D004291C1 /* Main.storyboard */; };
 		996C21021F66AD4D004291C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 996C21011F66AD4D004291C1 /* Assets.xcassets */; };
 		996C21051F66AD4D004291C1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 996C21031F66AD4D004291C1 /* LaunchScreen.storyboard */; };
 		99B0C5041F66B7D300347235 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B0C5031F66B7D300347235 /* LoginViewController.swift */; };
+		99C0F1D81F6997A1005299A5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C0F1D71F6997A1005299A5 /* Constants.swift */; };
 		99DA77DB1F66B4F2009D96FE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 99DA77DA1F66B4F2009D96FE /* GoogleService-Info.plist */; };
 		C2E4478FAEAD9DC9416395B3 /* Pods_tech_matcher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45526E6469A2A456183AA3B3 /* Pods_tech_matcher.framework */; };
 /* End PBXBuildFile section */
@@ -45,7 +45,6 @@
 		995505781F670A510019ECC5 /* MatchesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchesTableViewCell.swift; sourceTree = "<group>"; };
 		99593A451F67E47C001EE2E1 /* UIImageView+Rounded.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Rounded.swift"; sourceTree = "<group>"; };
 		99593A471F6824AA001EE2E1 /* TMDatasource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMDatasource.swift; sourceTree = "<group>"; };
-		99593A491F6849DE001EE2E1 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		99593A4B1F684C60001EE2E1 /* UIUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIUtils.swift; sourceTree = "<group>"; };
 		996C20F71F66AD4D004291C1 /* tech-matcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "tech-matcher.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		996C20FA1F66AD4D004291C1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "tech-matcher/AppDelegate.swift"; sourceTree = "<group>"; };
@@ -54,6 +53,7 @@
 		996C21041F66AD4D004291C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		996C21061F66AD4D004291C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "tech-matcher/Info.plist"; sourceTree = "<group>"; };
 		99B0C5031F66B7D300347235 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		99C0F1D71F6997A1005299A5 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = "tech-matcher/Constants.swift"; sourceTree = "<group>"; };
 		99DA77DA1F66B4F2009D96FE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "tech-matcher/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E9EE0669935E24175C3C6F69 /* Pods-tech-matcher.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tech-matcher.debug.xcconfig"; path = "Pods/Target Support Files/Pods-tech-matcher/Pods-tech-matcher.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -90,13 +90,13 @@
 		9955056A1F66CB110019ECC5 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				99C0F1D71F6997A1005299A5 /* Constants.swift */,
 				99DA77DA1F66B4F2009D96FE /* GoogleService-Info.plist */,
 				996C20FA1F66AD4D004291C1 /* AppDelegate.swift */,
 				996C20FE1F66AD4D004291C1 /* Main.storyboard */,
 				996C21011F66AD4D004291C1 /* Assets.xcassets */,
 				996C21031F66AD4D004291C1 /* LaunchScreen.storyboard */,
 				996C21061F66AD4D004291C1 /* Info.plist */,
-				99593A491F6849DE001EE2E1 /* Constants.swift */,
 			);
 			name = Assets;
 			path = ..;
@@ -324,13 +324,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				995505651F66C37B0019ECC5 /* MatchesViewController.swift in Sources */,
-				99593A4A1F6849DE001EE2E1 /* Constants.swift in Sources */,
 				99B0C5041F66B7D300347235 /* LoginViewController.swift in Sources */,
 				9955056D1F66CCBC0019ECC5 /* TopicsSelectionTableViewController.swift in Sources */,
 				995505711F66F2020019ECC5 /* TMMatch.swift in Sources */,
 				99593A481F6824AA001EE2E1 /* TMDatasource.swift in Sources */,
 				995505671F66C3820019ECC5 /* ChatViewController.swift in Sources */,
 				995505791F670A510019ECC5 /* MatchesTableViewCell.swift in Sources */,
+				99C0F1D81F6997A1005299A5 /* Constants.swift in Sources */,
 				990FA8A51F696E95008047F8 /* TMMessage.swift in Sources */,
 				995505611F66C3570019ECC5 /* SettingsViewController.swift in Sources */,
 				995505631F66C3710019ECC5 /* FinderViewController.swift in Sources */,
