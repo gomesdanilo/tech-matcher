@@ -255,6 +255,11 @@ extension TMDatasource {
                             return
                         }
                         
+                        // Ignores same user
+                        if self.currentUserId == user.userId {
+                            return
+                        }
+                        
                         self.matchDelegate?.didReceiveListMatches([match], nil)
                         
                 })
