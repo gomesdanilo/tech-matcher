@@ -107,10 +107,7 @@ extension TMDatasource {
     
     func likeUser(userId : String, like : Bool, completionBlock : @escaping () -> Void){
         
-        let values = [
-            "/userLikedBy/\(userId)/\(currentUserId)": like,
-            "/userLikes/\(currentUserId)/\(userId)": like,
-            ]
+        let values = ["/userLikes/\(currentUserId)/\(userId)": like]
         
         // Updates database.
         databaseReference.updateChildValues(values) { (error, databaseReference) in
@@ -184,24 +181,30 @@ extension TMDatasource {
             return
         }
         
-        self.cacheUsers = []
-        retrievePage { (users, error) in
+        retrievePage { (usersRetrieved, error) in
             
-            if let users = users {
+            if let usersRetrieved = usersRetrieved {
                 
-                let path = "/userLikedBy/\(self.currentUserId)"
+                // Check if the users in the list were liked before.
+                let path = "/userLikes/\(self.currentUserId)"
                 self.databaseReference.child(path).observeSingleEvent(of: .value, with: { (snapshot) in
                     
-                    if let list = snapshot.value as? [String : [String : Bool]] {
-                        for user in users {
+                    
+                    
+                    if let likedPreviously = snapshot.value as? [String : Bool] {
+                        // User has likes
+                        self.cacheUsers = []
+                        
+                        for user in usersRetrieved {
                             
-                            if list[user.userId] == nil {
+                            if likedPreviously[user.userId] == nil {
                                 // Not seen
                                 self.cacheUsers.append(user)
                             }
                         }
                     } else {
-                        self.cacheUsers = users
+                        // User has no likes
+                        self.cacheUsers = usersRetrieved
                     }
                     
                     if self.cacheUsers.count > 0 {
