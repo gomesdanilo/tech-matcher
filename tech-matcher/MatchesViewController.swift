@@ -7,34 +7,33 @@
 //
 
 import UIKit
-import FirebaseDatabase
+
 
 class MatchesViewController: UITableViewController {
     
-    var uid : String?
-    var selectedChatId : String?
-    var matches : [TMUser] = []
-    var databaseReference: DatabaseReference!
-    fileprivate var databaseHandle: DatabaseHandle!
+    // MARK: Data
+    var loggedInUserId : String?
+    var datasource : FinderDatasource?
+    var matches : [Match] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureDatabase()
+        datasource = FinderDatasource(currentUserId: loggedInUserId!)
+        datasource?.delegate = self
+        datasource?.retrieveMatches()
     }
     
-    func configureDatabase() {
-        databaseReference = Database.database().reference()
-        
-        databaseHandle = getMatchesNode().observe(.childAdded) { (snapshot: DataSnapshot) in
-            
-            if let user = TMUser(snapshot: snapshot) {
-                self.matches.append(user)
-                let rows = [IndexPath(row: self.matches.count-1, section: 0)]
-                self.tableView.insertRows(at: rows, with: .automatic)
-            }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if Constants.SegueShowChat == segue.identifier {
+            let vc = segue.destination as! ChatViewController
+            //vc.loggedInUserId = loggedInUserId
+            //vc.chatId = chatId
+            //vc.uid = uid
         }
     }
+}
 
+extension MatchesViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -46,30 +45,37 @@ class MatchesViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! MatchesTableViewCell
         let row = matches[indexPath.row]
-        
-        
-        
-        
+        cell.populateWithMatch(row)
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.performSegue(withIdentifier: "showChat", sender: self)
+        navigateToChat()
     }
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if "showChat" == segue.identifier {
-            let vc = segue.destination as! ChatViewController
-            //vc.chatId = chatId
-            vc.uid = uid
+}
+
+// MARK: - FinderDatasourceDelegate
+extension MatchesViewController : FinderDatasourceDelegate {
+
+    func didReceiveListMatches(_ matches: [Match]?, _ error: String?) {
+        
+        if error != nil {
+            showErrorMessage(error!)
+            return
+        }
+        
+        if matches != nil {
+            self.matches = matches!
+            self.tableView.reloadData()
         }
     }
+}
+
+// MARK: - Actions
+extension MatchesViewController {
     
-    func getMatchesNode() -> DatabaseReference {
-        return databaseReference.child("matches").child(uid!)
-    }
-    
-    deinit {
-        getMatchesNode().removeObserver(withHandle: databaseHandle)
+    func navigateToChat(){
+        self.performSegue(withIdentifier: Constants.SegueShowChat, sender: self)
     }
 }

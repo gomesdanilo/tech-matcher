@@ -11,12 +11,10 @@ import UIKit
 
 class MatchesTableViewCell: UITableViewCell {
 
+    // MARK: UI
     
     @IBOutlet weak var avatarImageView: UIImageView!
-    
     @IBOutlet weak var lastMessageLabel: UILabel!
-    
-    
     @IBOutlet weak var usernameLabel: UILabel!
     
     override func awakeFromNib() {
@@ -25,6 +23,9 @@ class MatchesTableViewCell: UITableViewCell {
         self.avatarImageView.setRound(cornerRadius: 30)
     }
     
+    func populateWithMatch(_ match : Match){
+        self.lastMessageLabel.text = ""
+        self.usernameLabel.text = match.name
+    }
     
-
 }

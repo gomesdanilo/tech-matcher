@@ -10,6 +10,12 @@ import UIKit
 import FirebaseDatabase
 import FirebaseStorage
 
+protocol FinderDatasourceDelegate {
+    
+    func didReceiveListMatches(_ matches : [Match]?, _ error : String?)
+    
+}
+
 class FinderDatasource {
     
     typealias UserFoundBlock = (_ user : TMUser?, _ error : String?) -> Void
@@ -18,13 +24,12 @@ class FinderDatasource {
     fileprivate var databaseReference: DatabaseReference!
     fileprivate var databaseHandle : DatabaseHandle?
     fileprivate var startingValue : String?
-    
     fileprivate var storageReference: StorageReference!
     fileprivate var storageHandle : StorageHandle?
-    
     fileprivate var dataHandled = false
-    
     fileprivate var cacheUsers : [TMUser] =  []
+    
+    var delegate : FinderDatasourceDelegate?
     
     init(currentUserId : String) {
         databaseReference = Database.database().reference()
@@ -32,34 +37,101 @@ class FinderDatasource {
         self.currentUserId = currentUserId
     }
     
-    func listenForMatches(){
+    func releaseHandle(){
+        if databaseHandle != nil{
+            databaseReference.child("users").removeObserver(withHandle: databaseHandle!)
+            databaseHandle = nil
+        }
+    }
+
+    deinit {
+       releaseHandle()
+    }
+}
+
+// MARK: - User Details
+
+extension FinderDatasource {
+    
+    func loadUserDetails(_ completionBlock : @escaping (_ user : TMUser?,_ error : String?) -> Void){
         
-        //databaseReference.child("/matches/\(currentUserId)")
-         //   .queryEqual(toValue: false, childKey: "seenBy/\(currentUserId)")
+        databaseReference.child("users").child(currentUserId).observeSingleEvent(of: .value, with: { (snapshot) in
+            guard let user = TMUser(snapshot: snapshot) else {
+                completionBlock(nil, "Details not found.")
+                return
+            }
+            completionBlock(user, nil)
+        })
+    }
+    
+    func checkFirstUse(_ completionBlock : @escaping (_ firstUse : Bool?,_ error : String?) -> Void){
         
-        //databaseReference.child("/userLikedBy/\(currentUserId)").observe
+        databaseReference.child("users").child(currentUserId).observeSingleEvent(of: .value, with: { (snapshot) in
+            guard TMUser(snapshot: snapshot) != nil else {
+                completionBlock(true, nil)
+                return
+            }
+            
+            completionBlock(false, nil)
+        })
+    }
+    
+    func updateUserSettings(_ user : TMUser, completionBlock : @escaping (_ success : Bool, _ error : String?) -> Void){
+        let userNode = databaseReference.child("users").child(user.uid)
+        
+        userNode.updateChildValues(user.json()) { (error, databaseReference) in
+            
+            guard error == nil else {
+                completionBlock(false, error!.localizedDescription)
+                return
+            }
+            
+            completionBlock(true, nil)
+        }
+    }
+    
+    func savePicture(_ data : Data, completionBlock : @escaping (_ imageUrl : String?, _ error : String?) -> Void){
+        let path = "user/\(currentUserId)/image.jpg"
+        
+        let metadata = StorageMetadata()
+        metadata.contentType = "image/jpeg"
+        
+        storageReference.child(path).putData(data, metadata: metadata) { (metadata, error) in
+            if error != nil {
+                completionBlock(nil, error!.localizedDescription)
+            } else {
+                let url = self.storageReference!.child(metadata!.path!).description
+                completionBlock(url, nil)
+            }
+        }
         
     }
+
+    func downloadPicture(url : String, completionBlock : @escaping (_ data : Data?, _ error : String?) -> Void){
+        Storage.storage().reference(forURL: url).getData(maxSize: INT64_MAX, completion: { (data, error) in
+            
+            completionBlock(data, error != nil ? error!.localizedDescription : nil)
+        })
+        
+    }
+}
+
+// MARK: - Finder
+
+extension FinderDatasource {
     
     func likeUser(userId : String, like : Bool, completionBlock : @escaping () -> Void){
         
         let values = [
             "/userLikedBy/\(userId)/\(currentUserId)": like,
             "/userLikes/\(currentUserId)/\(userId)": like,
-        ]
+            ]
         
         // Updates database.
         databaseReference.updateChildValues(values) { (error, databaseReference) in
             completionBlock()
         }
     }
-    
-    func listenForMathes(){
-    
-        
-    }
-    
-    
     
     func retrievePage(completionBlock : @escaping (_ users : [TMUser]?, _ error : String?) -> Void){
         var query = databaseReference.child("users").queryOrderedByKey()
@@ -119,13 +191,13 @@ class FinderDatasource {
         retrievePage { (users, error) in
             
             if let users = users {
-            
+                
                 let path = "/userLikedBy/\(self.currentUserId)"
                 self.databaseReference.child(path).observeSingleEvent(of: .value, with: { (snapshot) in
                     
                     if let list = snapshot.value as? [String : [String : Bool]] {
                         for user in users {
-                        
+                            
                             if let item = list[user.uid] {
                                 // Seen
                             } else {
@@ -149,80 +221,28 @@ class FinderDatasource {
         }
     }
     
-    func releaseHandle(){
-        if databaseHandle != nil{
-            databaseReference.child("users").removeObserver(withHandle: databaseHandle!)
-            databaseHandle = nil
-        }
-    }
+}
 
-    deinit {
-       releaseHandle()
-    }
-    
-    
-    
-    func loadUserDetails(_ completionBlock : @escaping (_ user : TMUser?,_ error : String?) -> Void){
+extension FinderDatasource {
+
+    func retrieveMatches(){
         
-        databaseReference.child("users").child(currentUserId).observeSingleEvent(of: .value, with: { (snapshot) in
-            guard let user = TMUser(snapshot: snapshot) else {
-                completionBlock(nil, "Details not found.")
-                return
-            }
-            completionBlock(user, nil)
+        self.databaseReference
+            .child("usersMatches/\(self.currentUserId)")
+            .queryOrderedByKey()
+            .observeSingleEvent(of: .value, with: { (snapshot) in
+            
+                if let list = snapshot.value as? [String : [String: Any]] {
+                
+                    let output = list.map({ (key, value) -> Match in
+                        return Match(dictionary : value)
+                    })
+                    
+                    self.delegate?.didReceiveListMatches(output, nil)
+                } else {
+                    self.delegate?.didReceiveListMatches(nil, "Failed to receive matches.")
+                }
         })
-    }
-    
-    func checkFirstUse(_ completionBlock : @escaping (_ firstUse : Bool?,_ error : String?) -> Void){
-        
-        databaseReference.child("users").child(currentUserId).observeSingleEvent(of: .value, with: { (snapshot) in
-            guard TMUser(snapshot: snapshot) != nil else {
-                completionBlock(true, nil)
-                return
-            }
-            
-            completionBlock(false, nil)
-        })
-    }
-    
-    func updateUserSettings(_ user : TMUser, completionBlock : @escaping (_ success : Bool, _ error : String?) -> Void){
-        let userNode = databaseReference.child("users").child(user.uid)
-        
-        userNode.updateChildValues(user.json()) { (error, databaseReference) in
-            
-            guard error == nil else {
-                completionBlock(false, error!.localizedDescription)
-                return
-            }
-            
-            completionBlock(true, nil)
-        }
-    }
-    
-    func savePicture(_ data : Data, completionBlock : @escaping (_ imageUrl : String?, _ error : String?) -> Void){
-        let path = "user/\(currentUserId)/image.jpg"
-        
-        let metadata = StorageMetadata()
-        metadata.contentType = "image/jpeg"
-        
-        storageReference.child(path).putData(data, metadata: metadata) { (metadata, error) in
-            if error != nil {
-                completionBlock(nil, error!.localizedDescription)
-            } else {
-                let url = self.storageReference!.child(metadata!.path!).description
-                completionBlock(url, nil)
-            }
-        }
         
     }
-    
-    
-    func downloadPicture(url : String, completionBlock : @escaping (_ data : Data?, _ error : String?) -> Void){
-        Storage.storage().reference(forURL: url).getData(maxSize: INT64_MAX, completion: { (data, error) in
-            
-            completionBlock(data, error != nil ? error!.localizedDescription : nil)
-        })
-    
-    }
-    
 }

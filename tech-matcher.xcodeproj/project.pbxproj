@@ -15,7 +15,7 @@
 		9955056D1F66CCBC0019ECC5 /* TopicsSelectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9955056C1F66CCBC0019ECC5 /* TopicsSelectionTableViewController.swift */; };
 		9955056F1F66F1880019ECC5 /* MatchesStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9955056E1F66F1880019ECC5 /* MatchesStorage.swift */; };
 		995505711F66F2020019ECC5 /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995505701F66F2020019ECC5 /* Match.swift */; };
-		995505731F66F5720019ECC5 /* ChatStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995505721F66F5720019ECC5 /* ChatStorage.swift */; };
+		995505731F66F5720019ECC5 /* ChatDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995505721F66F5720019ECC5 /* ChatDatasource.swift */; };
 		995505751F66FE4A0019ECC5 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995505741F66FE4A0019ECC5 /* LocationService.swift */; };
 		995505771F6709810019ECC5 /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995505761F6709810019ECC5 /* ChatTableViewCell.swift */; };
 		995505791F670A510019ECC5 /* MatchesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995505781F670A510019ECC5 /* MatchesTableViewCell.swift */; };
@@ -43,7 +43,7 @@
 		9955056C1F66CCBC0019ECC5 /* TopicsSelectionTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicsSelectionTableViewController.swift; sourceTree = "<group>"; };
 		9955056E1F66F1880019ECC5 /* MatchesStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchesStorage.swift; sourceTree = "<group>"; };
 		995505701F66F2020019ECC5 /* Match.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Match.swift; sourceTree = "<group>"; };
-		995505721F66F5720019ECC5 /* ChatStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatStorage.swift; sourceTree = "<group>"; };
+		995505721F66F5720019ECC5 /* ChatDatasource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatDatasource.swift; sourceTree = "<group>"; };
 		995505741F66FE4A0019ECC5 /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		995505761F6709810019ECC5 /* ChatTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatTableViewCell.swift; sourceTree = "<group>"; };
 		995505781F670A510019ECC5 /* MatchesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchesTableViewCell.swift; sourceTree = "<group>"; };
@@ -109,14 +109,30 @@
 		9955056B1F66CB2B0019ECC5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				99593A4D1F6888FC001EE2E1 /* Clients */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		99593A4D1F6888FC001EE2E1 /* Clients */ = {
+			isa = PBXGroup;
+			children = (
+				99593A4E1F688906001EE2E1 /* Firebase */,
+			);
+			name = Clients;
+			sourceTree = "<group>";
+		};
+		99593A4E1F688906001EE2E1 /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
 				995505681F66CAA50019ECC5 /* TMUser.swift */,
 				9955056E1F66F1880019ECC5 /* MatchesStorage.swift */,
 				995505701F66F2020019ECC5 /* Match.swift */,
-				995505721F66F5720019ECC5 /* ChatStorage.swift */,
 				995505741F66FE4A0019ECC5 /* LocationService.swift */,
+				995505721F66F5720019ECC5 /* ChatDatasource.swift */,
 				99593A471F6824AA001EE2E1 /* FinderDatasource.swift */,
 			);
-			name = Model;
+			name = Firebase;
 			sourceTree = "<group>";
 		};
 		996C20EE1F66AD4D004291C1 = {
@@ -358,7 +374,7 @@
 				995505791F670A510019ECC5 /* MatchesTableViewCell.swift in Sources */,
 				995505611F66C3570019ECC5 /* SettingsViewController.swift in Sources */,
 				995505631F66C3710019ECC5 /* FinderViewController.swift in Sources */,
-				995505731F66F5720019ECC5 /* ChatStorage.swift in Sources */,
+				995505731F66F5720019ECC5 /* ChatDatasource.swift in Sources */,
 				9955056F1F66F1880019ECC5 /* MatchesStorage.swift in Sources */,
 				996C20FB1F66AD4D004291C1 /* AppDelegate.swift in Sources */,
 				99593A461F67E47C001EE2E1 /* UIImageView+Rounded.swift in Sources */,

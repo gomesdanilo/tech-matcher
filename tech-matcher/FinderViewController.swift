@@ -12,30 +12,47 @@ import FirebaseAuthUI
 
 class FinderViewController: UIViewController {
 
+    // MARK: UI
     @IBOutlet weak var fullnameLabel: UILabel!
     @IBOutlet weak var aboutLabel: UILabel!
     @IBOutlet weak var avatarImageView: UIImageView!
-    
     @IBOutlet weak var container: UIStackView!
-    var datasource : FinderDatasource?
     
+    // MARK: DATA
+    var datasource : FinderDatasource?
     var loggedInUserId : String?
     var presentingUser : TMUser?
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         datasource = FinderDatasource(currentUserId: loggedInUserId!)
         checkFirstUse()
         self.container.isHidden = true
         retrieveNextUser()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if Constants.SegueShowSettings == segue.identifier {
+            let vc = segue.destination as! SettingsViewController
+            vc.loggedInUserId = loggedInUserId
+        } else if Constants.SegueShowMatches == segue.identifier {
+            let vc = segue.destination as! MatchesViewController
+            vc.loggedInUserId = loggedInUserId
+        }
+    }
+}
+
+// MARK: - EVENTS
+
+extension FinderViewController {
     @IBAction func didClickOnSettingsButton(_ sender: Any) {
         performSegue(withIdentifier: Constants.SegueShowSettings, sender: self)
     }
-
+    
     @IBAction func didClickOnMatchesButton(_ sender: Any) {
-        performSegue(withIdentifier: "showMatches", sender: self)
+        performSegue(withIdentifier: Constants.SegueShowMatches, sender: self)
     }
     
     @IBAction func didClickOnSkip(_ sender: Any) {
@@ -45,7 +62,12 @@ class FinderViewController: UIViewController {
     @IBAction func didClickOnConnect(_ sender: Any) {
         likeUser(like: true)
     }
-    
+}
+
+
+// MARK: - ACTIONS
+
+extension FinderViewController {
     func likeUser(like : Bool){
         if let presentingUser = presentingUser {
             datasource?.likeUser(userId: presentingUser.uid, like: like, completionBlock: {
@@ -72,8 +94,6 @@ class FinderViewController: UIViewController {
                         return
                     }
                 }
-                
-                
             })
         }
     }
@@ -103,12 +123,5 @@ class FinderViewController: UIViewController {
                 }
             }
         })
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if Constants.SegueShowSettings == segue.identifier {
-            let vc = segue.destination as! SettingsViewController
-            vc.loggedInUserId = loggedInUserId
-        }
     }
 }

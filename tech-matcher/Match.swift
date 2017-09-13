@@ -11,22 +11,10 @@ import FirebaseDatabase
 
 struct Match {
     
-    let users : [String: String]
+    let name : String
     
-    init?(currentUserUid: String, snapshot : DataSnapshot) {
+    init(dictionary: [String: Any]) {
         
-        
-        guard let dictionary = snapshot.value as? [String : Any?] else {
-            return nil
-        }
-        
-        var list : [String:String] = [:]
-        
-        
-        
-        
-        
-        users = list
-        
+        self.name = "TODO: Implement this"
     }
 }

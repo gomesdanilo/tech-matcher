@@ -12,4 +12,6 @@ struct Constants {
     
     static let SegueShowFinder = "showFinder"
     static let SegueShowSettings = "showSettings"
+    static let SegueShowMatches = "showMatches"
+    static let SegueShowChat = "showChat"
 }
