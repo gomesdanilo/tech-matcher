@@ -66,7 +66,7 @@ extension MatchesViewController : FinderDatasourceDelegate {
         }
         
         if matches != nil {
-            self.matches = matches!
+            self.matches.append(contentsOf: matches!)
             self.tableView.reloadData()
         }
     }

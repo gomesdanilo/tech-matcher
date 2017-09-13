@@ -22,12 +22,13 @@ class FinderDatasource {
     
     fileprivate var currentUserId : String
     fileprivate var databaseReference: DatabaseReference!
-    fileprivate var databaseHandle : DatabaseHandle?
+    fileprivate var databaseHandles : [DatabaseHandle] = []
     fileprivate var startingValue : String?
     fileprivate var storageReference: StorageReference!
     fileprivate var storageHandle : StorageHandle?
     fileprivate var dataHandled = false
     fileprivate var cacheUsers : [TMUser] =  []
+    
     
     var delegate : FinderDatasourceDelegate?
     
@@ -37,15 +38,8 @@ class FinderDatasource {
         self.currentUserId = currentUserId
     }
     
-    func releaseHandle(){
-        if databaseHandle != nil{
-            databaseReference.child("users").removeObserver(withHandle: databaseHandle!)
-            databaseHandle = nil
-        }
-    }
-
     deinit {
-       releaseHandle()
+       databaseReference.removeAllObservers()
     }
 }
 
@@ -227,22 +221,27 @@ extension FinderDatasource {
 
     func retrieveMatches(){
         
+        // TODO: Release handle
         self.databaseReference
             .child("usersMatches/\(self.currentUserId)")
             .queryOrderedByKey()
-            .observeSingleEvent(of: .value, with: { (snapshot) in
-            
-                if let list = snapshot.value as? [String : [String: Any]] {
+            .observe(.childAdded, with: { (match) in
                 
-                    let output = list.map({ (key, value) -> Match in
-                        return Match(dictionary : value)
-                    })
+                self.databaseReference
+                    .child("/users/\(match.key)")
+                    .observeSingleEvent(of: .value, with: { (user) in
                     
-                    self.delegate?.didReceiveListMatches(output, nil)
-                } else {
-                    self.delegate?.didReceiveListMatches(nil, "Failed to receive matches.")
-                }
-        })
-        
+                        
+                        if let match = match.value as? [String: Any],
+                            let user = user.value as? [String: Any] {
+                        
+                            if let item = Match(match: match, user : user) {
+                                self.delegate?.didReceiveListMatches([item], nil)
+                            }
+                        }
+                })
+                
+                
+            })
     }
 }

@@ -12,9 +12,19 @@ import FirebaseDatabase
 struct Match {
     
     let name : String
+    let match : String
     
-    init(dictionary: [String: Any]) {
+    init?(match: [String: Any], user : [String: Any]) {
         
-        self.name = "TODO: Implement this"
+        guard let name = user["fullname"] as? String else {
+            return nil
+        }
+        
+        guard let match = match["match"] as? String else {
+            return nil
+        }
+        
+        self.match = match
+        self.name = name
     }
 }
