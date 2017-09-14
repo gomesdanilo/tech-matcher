@@ -90,43 +90,52 @@ function retrieveUserIds(){
 }
 
 
-// Total calls = 100*100 = 10000
-// Limit per seconds = 50 calls / second
-// Total time for 10000 = 200 seconds
-// Interval per 1 call = 20 ms
 
 
-retrieveUserIds().then(function(usersMap){
-  var listUsers = _.map(usersMap, function(value, key){ return key })
+
+
+
+// retrieveUserIds().then(function(usersMap){
+//   var listUsers = _.map(usersMap, function(value, key){ return key })
   
-  var intervalPerCall = 20
-  for(var i = 0; i < listUsers.length; i++){
-      var intervalBlock = listUsers.length * intervalPerCall * i
 
-      for(var j = 0; j < listUsers.length; j++){
-        var interval = j * intervalPerCall + intervalBlock
-        //console.log("Call at ", interval)
-        setTimeout(function(listUsers, i, j){
-          iterateLike(listUsers, i, j)
-        }, interval, listUsers, i, j);
-      }
-	}
-})
 
-function iterateLike(listUsers, i, j){
-  var fromId = listUsers[i]
-  var toId = listUsers[j]
-  var randomNumber = getRandomInt(0,3)
-  if (fromId == toId) {
-    console.log("Same user, ignoring...")
-  } else if (randomNumber == 0) {
-    // Jump without like/dislike
-  } else if (randomNumber == 1) {
-    addLike(fromId, toId, true)
-  } else if (randomNumber == 2) {
-    addLike(fromId, toId, false)
-  }
-}
+//   // Total calls = 100*100 = 10000
+//   // Limit per seconds = 50 calls / second
+//   // Total time for 10000 = 200 seconds
+//   // Interval per 1 call = 20 ms
+
+//   // Limit google = 100 calls per 100 seconds = 1 call per second
+//   var limitCallsPerSecond
+
+//   var intervalPerCall = 20
+//   for(var i = 0; i < listUsers.length; i++){
+//       var intervalBlock = listUsers.length * intervalPerCall * i
+
+//       for(var j = 0; j < listUsers.length; j++){
+//         var interval = j * intervalPerCall + intervalBlock
+//         //console.log("Call at ", interval)
+//         setTimeout(function(listUsers, i, j){
+//           iterateLike(listUsers, i, j)
+//         }, interval, listUsers, i, j);
+//       }
+// 	}
+// })
+
+// function iterateLike(listUsers, i, j){
+//   var fromId = listUsers[i]
+//   var toId = listUsers[j]
+//   var randomNumber = getRandomInt(0,3)
+//   if (fromId == toId) {
+//     console.log("Same user, ignoring...")
+//   } else if (randomNumber == 0) {
+//     // Jump without like/dislike
+//   } else if (randomNumber == 1) {
+//     addLike(fromId, toId, true)
+//   } else if (randomNumber == 2) {
+//     addLike(fromId, toId, false)
+//   }
+// }
 
 function addLike(fromId, toId, like){
 	admin.database().ref("/userLikes").child(fromId).child(toId).set(like)
