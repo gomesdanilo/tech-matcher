@@ -29,6 +29,7 @@ class SettingsViewController: UITableViewController{
         
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(didTapToHideKeyboard))
+        tap.cancelsTouchesInView = false
         self.tableView.addGestureRecognizer(tap)
         nameTextfield.delegate = self
         

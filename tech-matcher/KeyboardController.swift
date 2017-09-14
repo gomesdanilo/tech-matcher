@@ -77,6 +77,7 @@ class KeyboardController : NSObject, UITextFieldDelegate {
     func addDimissView(_ view : UIView){
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(didTapOnDismissView))
+        tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
     }
     
