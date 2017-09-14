@@ -1,7 +1,7 @@
 # Tech Matcher
 Project Submission for the course NanoDegree - iOS Developer at Udacity
 
-Tech Matcher allows you to find people interested in studying a specific topic related to programming and also allows your to find people willing to help/tech. Tech Matcher is the app that helps students and teacher find eachother.
+Tech Matcher allows you to find people interested in studying a specific topic related to programming and also allows you to find people willing to help/teach. Tech Matcher is the app that helps students and teachers find each other.
 
 ## Requirements from Udacity:
 https://docs.google.com/document/d/1CWsC1jszFEYX5EM3CE9sX88FuIZCim4fMNml-lUPKlo/pub?embedded=true
