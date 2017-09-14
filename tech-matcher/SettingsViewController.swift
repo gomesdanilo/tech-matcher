@@ -27,6 +27,11 @@ class SettingsViewController: UITableViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didTapToHideKeyboard))
+        self.tableView.addGestureRecognizer(tap)
+        nameTextfield.delegate = self
+        
         imageView.setBorder(width: 1, color: UIColor.gray)
         imageView.setRound(cornerRadius: 50)
         
@@ -61,8 +66,10 @@ extension SettingsViewController {
 // MARK: Events
 
 extension SettingsViewController {
-    
-
+    func didTapToHideKeyboard(){
+        nameTextfield.resignFirstResponder()
+        aboutTextView.resignFirstResponder()
+    }
 }
 
 // MARK: Actions
@@ -262,4 +269,11 @@ extension SettingsViewController : UIImagePickerControllerDelegate, UINavigation
         picker.dismiss(animated: true, completion: nil)
     }
 
+}
+
+extension SettingsViewController : UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return false
+    }
 }
