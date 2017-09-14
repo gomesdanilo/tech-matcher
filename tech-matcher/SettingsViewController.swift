@@ -35,10 +35,9 @@ class SettingsViewController: UITableViewController{
         loadSettingsData()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        saveSettings()
-    }
+    
+    
+    
 }
 
 // MARK: - Table
@@ -69,6 +68,11 @@ extension SettingsViewController {
 // MARK: Actions
 
 extension SettingsViewController {
+    
+    @IBAction func didClickOnBackButton(_ sender : Any){
+        saveSettings()
+        self.navigationController?.popViewController(animated: true)
+    }
     
     func logout(){
         self.navigationController?.popToRootViewController(animated: true)

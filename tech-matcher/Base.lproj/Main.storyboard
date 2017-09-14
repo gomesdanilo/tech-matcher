@@ -476,6 +476,13 @@
                             <outlet property="delegate" destination="eKh-Pr-z04" id="7B4-Jp-3J1"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Settings" id="fYx-rT-kkg">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="Orm-rS-Alj">
+                            <connections>
+                                <action selector="didClickOnBackButton:" destination="eKh-Pr-z04" id="Sdf-b9-Mzl"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="aboutTextView" destination="ZEu-ws-0B9" id="jLk-fQ-xAg"/>
                         <outlet property="imageView" destination="75H-i2-5pS" id="qwr-3s-g4d"/>
@@ -502,11 +509,11 @@
                                 <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NFn-E7-gko" id="JbY-2i-Fo1">
-                                    <rect key="frame" x="0.0" y="0.0" width="281" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="280" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XBj-zy-8ge">
-                                            <rect key="frame" x="15" y="0.0" width="266" height="43.5"/>
+                                            <rect key="frame" x="16" y="0.0" width="264" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
