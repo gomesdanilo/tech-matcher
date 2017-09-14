@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		990FA8A51F696E95008047F8 /* TMMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990FA8A41F696E95008047F8 /* TMMessage.swift */; };
+		99255F511F6AB45C00C97BAD /* KeyboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99255F501F6AB45C00C97BAD /* KeyboardController.swift */; };
 		995505611F66C3570019ECC5 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995505601F66C3570019ECC5 /* SettingsViewController.swift */; };
 		995505631F66C3710019ECC5 /* FinderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995505621F66C3710019ECC5 /* FinderViewController.swift */; };
 		995505651F66C37B0019ECC5 /* MatchesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995505641F66C37B0019ECC5 /* MatchesViewController.swift */; };
@@ -34,6 +35,7 @@
 		0FAEE96F8B51903C0BE66C79 /* Pods-tech-matcher.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tech-matcher.release.xcconfig"; path = "Pods/Target Support Files/Pods-tech-matcher/Pods-tech-matcher.release.xcconfig"; sourceTree = "<group>"; };
 		45526E6469A2A456183AA3B3 /* Pods_tech_matcher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_tech_matcher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		990FA8A41F696E95008047F8 /* TMMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMMessage.swift; sourceTree = "<group>"; };
+		99255F501F6AB45C00C97BAD /* KeyboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardController.swift; sourceTree = "<group>"; };
 		995505601F66C3570019ECC5 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		995505621F66C3710019ECC5 /* FinderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FinderViewController.swift; sourceTree = "<group>"; };
 		995505641F66C37B0019ECC5 /* MatchesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchesViewController.swift; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 				995505641F66C37B0019ECC5 /* MatchesViewController.swift */,
 				995505661F66C3820019ECC5 /* ChatViewController.swift */,
 				9955056C1F66CCBC0019ECC5 /* TopicsSelectionTableViewController.swift */,
+				99255F501F6AB45C00C97BAD /* KeyboardController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -334,6 +337,7 @@
 				990FA8A51F696E95008047F8 /* TMMessage.swift in Sources */,
 				995505611F66C3570019ECC5 /* SettingsViewController.swift in Sources */,
 				995505631F66C3710019ECC5 /* FinderViewController.swift in Sources */,
+				99255F511F6AB45C00C97BAD /* KeyboardController.swift in Sources */,
 				996C20FB1F66AD4D004291C1 /* AppDelegate.swift in Sources */,
 				99593A461F67E47C001EE2E1 /* UIImageView+Rounded.swift in Sources */,
 				99593A4C1F684C60001EE2E1 /* UIUtils.swift in Sources */,

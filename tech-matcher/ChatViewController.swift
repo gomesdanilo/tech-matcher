@@ -20,10 +20,16 @@ class ChatViewController: UIViewController {
     var loggedInUser : TMUser?
     var match : TMMatch?
     var datasource : TMDatasource?
+    var keyboardController : KeyboardController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.keyboardController = KeyboardController()
+        self.keyboardController?.delegate = self
+        self.keyboardController?.viewController = self
+        self.keyboardController?.manageTextField(messageField)
+        self.keyboardController?.addDimissView(self.tableView)
         
         self.navigationItem.title = match!.user.fullname
         
@@ -35,6 +41,15 @@ class ChatViewController: UIViewController {
         self.datasource?.retrieveMessages(matchId: match!.matchId)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        keyboardController?.subscribeToKeyboardNotifications()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        keyboardController?.unsubscribeToKeyboardNotifications()
+    }
 }
 
 // MARK: - Table
@@ -74,6 +89,10 @@ extension ChatViewController {
     }
     
     func sendMessage(_ message : String){
+        
+        if message.characters.count == 0 {
+            return
+        }
         
         datasource?.sendMessage(message,
                                 matchId: self.match!.matchId,
@@ -120,4 +139,11 @@ extension ChatViewController : TMDatasourceMessageDelegate {
         }
     }
 
+}
+
+extension ChatViewController : KeyboardControllerDelegate {
+
+    func keyboardControllerDidPressEnter(_ controller: KeyboardController) {
+        didClickOnSend(self)
+    }
 }
