@@ -12,7 +12,7 @@ https://review.udacity.com/#!/projects/3772828931/rubric
 - Swift 3.0
 - Firebase used as backend, persistence layer and API.
 
-## Instructions to install appp/test
+## Instructions to install appp/test (Udacity)
 1. Download zip or run git clone
 2. Extract files to a folder and then run the command:
 pod install
@@ -20,6 +20,10 @@ pod install
 4. To test the use you can signin with any email (account created automatically), or you can use one of the test accounts.
 
 ## Testing Accounts
+
+test0@test0.com
+Test1234 
+
 test1@test1.com
 Test1234 
 
@@ -29,7 +33,7 @@ Test1234
 test3@test3.com
 Test1234 
 
-and so on, till 50
+and so on, till 99
 
 ## Instructions to install with new firebase account
 1. Create your firebase account
@@ -41,23 +45,28 @@ The app has few screens, each one with a specific feature
 
 ## Login Screen
 This is the first screen, here the user has the chance to login with existing credentials or create a new account using email & password.
-![](/Screenshots/01.png)
+
+![](/Screenshots/01.png) ![](/Screenshots/02.png)
 
 ## Settings Screen
 You can use this screen to change your name on the app, update about section and upload your picture
-![](/Screenshots/02.png)
+
+![](/Screenshots/04.png)
 
 ## Match Screen
 This is the main screen, where you can connect to other people. You have the option to connect/like or ignore/skip. If it happens to the other person have already liked you, then you get a match.
-![](/Screenshots/03.png)
+
+![](/Screenshots/03_a.png) ![](/Screenshots/03_b.png)
 
 ## Match List
 This is screen shows all your previous matches. Then you can select any row to start a conversation.
-![](/Screenshots/04.png)
+
+![](/Screenshots/05.png)
 
 ## Chat
 Here you can chat with your match. Messages sent by you will appear in blue, messages sent by the match will appear in gray.
-![](/Screenshots/05.png)
+
+![](/Screenshots/06.png)
 
 
 # Improvement Ideas
