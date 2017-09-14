@@ -93,11 +93,11 @@
 			isa = PBXGroup;
 			children = (
 				99C0F1D71F6997A1005299A5 /* Constants.swift */,
-				99DA77DA1F66B4F2009D96FE /* GoogleService-Info.plist */,
 				996C20FA1F66AD4D004291C1 /* AppDelegate.swift */,
+				99DA77DA1F66B4F2009D96FE /* GoogleService-Info.plist */,
 				996C20FE1F66AD4D004291C1 /* Main.storyboard */,
-				996C21011F66AD4D004291C1 /* Assets.xcassets */,
 				996C21031F66AD4D004291C1 /* LaunchScreen.storyboard */,
+				996C21011F66AD4D004291C1 /* Assets.xcassets */,
 				996C21061F66AD4D004291C1 /* Info.plist */,
 			);
 			name = Assets;
@@ -169,7 +169,6 @@
 				995505641F66C37B0019ECC5 /* MatchesViewController.swift */,
 				995505661F66C3820019ECC5 /* ChatViewController.swift */,
 				9955056C1F66CCBC0019ECC5 /* TopicsSelectionTableViewController.swift */,
-				99255F501F6AB45C00C97BAD /* KeyboardController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -181,6 +180,7 @@
 				995505781F670A510019ECC5 /* MatchesTableViewCell.swift */,
 				99593A451F67E47C001EE2E1 /* UIImageView+Rounded.swift */,
 				99593A4B1F684C60001EE2E1 /* UIUtils.swift */,
+				99255F501F6AB45C00C97BAD /* KeyboardController.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
