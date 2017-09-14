@@ -74,13 +74,6 @@ function processUser(userId){
 // }
 
 
-
-
-
-
-
-
-
 function retrieveUserIds(){
   return new Promise(function(resolve,reject){
     admin.database().ref("/users").once('value').then(function(snapshot){
@@ -91,55 +84,111 @@ function retrieveUserIds(){
 
 
 
+var rootData = {}
+var matchesRegistered = {}
 
+retrieveUserIds().then(function(usersMap){
+  var listUsers = _.map(usersMap, function(value, key){ return key })
+  createLikesAndMatches(listUsers)
+})
 
+function createLikesAndMatches(listUsers){
 
+  // Creates likes locally.
+  for(i = 0; i < listUsers.length; i++){
+    for(j = 0; j < listUsers.length; j++){
+      iterateLike(listUsers, i, j)
+    }
+  }
 
-// retrieveUserIds().then(function(usersMap){
-//   var listUsers = _.map(usersMap, function(value, key){ return key })
+  // Save likes on server
+  admin.database().ref('/').update(rootData)
+
+  for(i = 0; i < listUsers.length; i++){
+    for(j = 0; j < listUsers.length; j++){
+      createMatchOnServer(listUsers[i], listUsers[j])
+    }
+  }
   
+  //console.log("Matches ", Object.keys(matchesRegistered).length / 2)
 
+} 
 
-//   // Total calls = 100*100 = 10000
-//   // Limit per seconds = 50 calls / second
-//   // Total time for 10000 = 200 seconds
-//   // Interval per 1 call = 20 ms
+function getLike(key1, key2){
 
-//   // Limit google = 100 calls per 100 seconds = 1 call per second
-//   var limitCallsPerSecond
+  if (rootData["userLikes"] == null) {
+    return false
+  }
 
-//   var intervalPerCall = 20
-//   for(var i = 0; i < listUsers.length; i++){
-//       var intervalBlock = listUsers.length * intervalPerCall * i
+  if (rootData["userLikes"][key1] == null) {
+    return false
+  }
 
-//       for(var j = 0; j < listUsers.length; j++){
-//         var interval = j * intervalPerCall + intervalBlock
-//         //console.log("Call at ", interval)
-//         setTimeout(function(listUsers, i, j){
-//           iterateLike(listUsers, i, j)
-//         }, interval, listUsers, i, j);
-//       }
-// 	}
-// })
+  if (rootData["userLikes"][key1][key2] == null) {
+    return false
+  }
 
-// function iterateLike(listUsers, i, j){
-//   var fromId = listUsers[i]
-//   var toId = listUsers[j]
-//   var randomNumber = getRandomInt(0,3)
-//   if (fromId == toId) {
-//     console.log("Same user, ignoring...")
-//   } else if (randomNumber == 0) {
-//     // Jump without like/dislike
-//   } else if (randomNumber == 1) {
-//     addLike(fromId, toId, true)
-//   } else if (randomNumber == 2) {
-//     addLike(fromId, toId, false)
-//   }
-// }
+  return rootData["userLikes"][key1][key2] === true
+}
+
+function createMatchOnServer(key1, key2){
+  
+  if (matchesRegistered[key1+key2] === true){
+    // Match already registered.
+    return
+  }
+
+  if (!getLike(key1, key2) || !getLike(key2, key1)){
+    // It's not a match
+    return
+  }
+
+  var matchKey = admin.database().ref('/matches').push().key
+
+	var json = {}
+	json["/matches/" + matchKey + "/" + key1] = true
+	json["/matches/" + matchKey + "/" + key2] = true
+	json["/usersMatches/" + key1 + "/" + key2] = {"matchId": matchKey, "seen" : false}
+	json["/usersMatches/" + key2 + "/" + key1] = {"matchId": matchKey, "seen" : false}
+  admin.database().ref('/').update(json)
+  
+  matchesRegistered[key1+key2] = true
+  matchesRegistered[key2+key1] = true
+}
 
 function addLike(fromId, toId, like){
-	admin.database().ref("/userLikes").child(fromId).child(toId).set(like)
+
+  if (rootData["userLikes"] == null) {
+    rootData["userLikes"] = {}
+  }
+
+  if (rootData["userLikes"][fromId] == null) {
+    rootData["userLikes"][fromId] = {}
+  }
+
+  rootData["userLikes"][fromId][toId] = like
 }
+
+
+
+
+
+function iterateLike(listUsers, i, j){
+  var fromId = listUsers[i]
+  var toId = listUsers[j]
+  var randomNumber = getRandomInt(0,3)
+  if (fromId == toId) {
+    console.log("Same user, ignoring...")
+  } else if (randomNumber == 0) {
+    // Jump without like/dislike
+  } else if (randomNumber == 1) {
+    addLike(fromId, toId, true)
+  } else if (randomNumber == 2) {
+    addLike(fromId, toId, false)
+  }
+}
+
+
 
 function getRandomInt(min, max) {
     min = Math.ceil(min);

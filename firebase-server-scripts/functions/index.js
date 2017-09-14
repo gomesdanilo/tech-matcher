@@ -5,15 +5,6 @@ const admin = require('firebase-admin');
 admin.initializeApp(functions.config().firebase);
 
 
-function createMatch(key1, key2){
-  console.log('Creating match', key1, key2)
-  const ref = admin.database().ref('/matches').push()
-  var json = {}
-  json[key1] = {'seen' : false}
-  json[key2] = {'seen' : false}
-  ref.set(json)
-}
-
 exports.matchTrigger = functions.database.ref('/userLikes/{fromUserId}/{toUserId}').onWrite(event => {
   const fromUserId = event.params.fromUserId;
   const toUserId = event.params.toUserId;
