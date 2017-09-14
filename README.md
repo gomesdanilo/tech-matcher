@@ -16,7 +16,7 @@ https://review.udacity.com/#!/projects/3772828931/rubric
 1. Download zip or run git clone
 2. Extract files to a folder and then run the command:
 pod install
-3. When cocoapods finishes installing the dependencies, open the workspace project.
+3. When cocoapods finishes installing the dependencies, open the workspace project (tech-matcher.xcworkspace).
 4. To test the use you can signin with any email (account created automatically), or you can use one of the test accounts.
 
 ## Testing Accounts
