@@ -14,7 +14,6 @@
 		995505651F66C37B0019ECC5 /* MatchesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995505641F66C37B0019ECC5 /* MatchesViewController.swift */; };
 		995505671F66C3820019ECC5 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995505661F66C3820019ECC5 /* ChatViewController.swift */; };
 		995505691F66CAA50019ECC5 /* TMUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995505681F66CAA50019ECC5 /* TMUser.swift */; };
-		9955056D1F66CCBC0019ECC5 /* TopicsSelectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9955056C1F66CCBC0019ECC5 /* TopicsSelectionTableViewController.swift */; };
 		995505711F66F2020019ECC5 /* TMMatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995505701F66F2020019ECC5 /* TMMatch.swift */; };
 		995505771F6709810019ECC5 /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995505761F6709810019ECC5 /* ChatTableViewCell.swift */; };
 		995505791F670A510019ECC5 /* MatchesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995505781F670A510019ECC5 /* MatchesTableViewCell.swift */; };
@@ -41,7 +40,6 @@
 		995505641F66C37B0019ECC5 /* MatchesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchesViewController.swift; sourceTree = "<group>"; };
 		995505661F66C3820019ECC5 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		995505681F66CAA50019ECC5 /* TMUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMUser.swift; sourceTree = "<group>"; };
-		9955056C1F66CCBC0019ECC5 /* TopicsSelectionTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicsSelectionTableViewController.swift; sourceTree = "<group>"; };
 		995505701F66F2020019ECC5 /* TMMatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMMatch.swift; sourceTree = "<group>"; };
 		995505761F6709810019ECC5 /* ChatTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatTableViewCell.swift; sourceTree = "<group>"; };
 		995505781F670A510019ECC5 /* MatchesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchesTableViewCell.swift; sourceTree = "<group>"; };
@@ -168,7 +166,6 @@
 				995505601F66C3570019ECC5 /* SettingsViewController.swift */,
 				995505641F66C37B0019ECC5 /* MatchesViewController.swift */,
 				995505661F66C3820019ECC5 /* ChatViewController.swift */,
-				9955056C1F66CCBC0019ECC5 /* TopicsSelectionTableViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -328,7 +325,6 @@
 			files = (
 				995505651F66C37B0019ECC5 /* MatchesViewController.swift in Sources */,
 				99B0C5041F66B7D300347235 /* LoginViewController.swift in Sources */,
-				9955056D1F66CCBC0019ECC5 /* TopicsSelectionTableViewController.swift in Sources */,
 				995505711F66F2020019ECC5 /* TMMatch.swift in Sources */,
 				99593A481F6824AA001EE2E1 /* TMDatasource.swift in Sources */,
 				995505671F66C3820019ECC5 /* ChatViewController.swift in Sources */,
