@@ -9,6 +9,10 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "firebase-admin": "^5.2.1"
+    "@google-cloud/storage": "^1.2.1",
+    "download": "^6.2.5",
+    "faker": "^4.1.0",
+    "firebase-admin": "^5.2.1",
+    "lodash": "^4.17.4"
   }
 }
