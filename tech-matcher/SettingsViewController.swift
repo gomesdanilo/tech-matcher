@@ -23,6 +23,7 @@ class SettingsViewController: UITableViewController{
     var currentPicture : Data?
     var loggedInUserId : String?
     var datasource : TMDatasource?
+    var shouldSaveData = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +39,7 @@ class SettingsViewController: UITableViewController{
         
         datasource = TMDatasource(currentUserId: loggedInUserId!)
         populateScreenWithEmptyValues()
-        loadSettingsData()
+        retrieveDetailsFromServer()
     }
     
     
@@ -78,7 +79,9 @@ extension SettingsViewController {
 extension SettingsViewController {
     
     @IBAction func didClickOnBackButton(_ sender : Any){
-        saveSettings()
+        if shouldSaveData {
+            saveSettings()
+        }
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -216,7 +219,7 @@ extension SettingsViewController {
         }
     }
     
-    func loadSettingsData(){
+    func retrieveDetailsFromServer(){
         
         
         datasource?.loadUserDetails({ (user, error) in
@@ -226,6 +229,7 @@ extension SettingsViewController {
                 return
             }
             
+            self.shouldSaveData = true
             guard let user = user else {
                 self.showErrorMessage(Constants.ErrorDetailsNotFound)
                 return
