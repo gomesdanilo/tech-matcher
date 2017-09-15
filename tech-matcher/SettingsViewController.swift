@@ -218,21 +218,16 @@ extension SettingsViewController {
     
     func loadSettingsData(){
         
-        showProgressWithMessage(message: "Retrieving user details")
         
         datasource?.loadUserDetails({ (user, error) in
             
-            self.dismissProgress()
-            
             guard error == nil else {
                 self.showErrorMessage(error!)
-                self.showErrorMessage("This is your first use of the app, please fill all fields.")
                 return
             }
             
             guard let user = user else {
-                self.showErrorMessage("Invalid user")
-                self.showErrorMessage("This is your first use of the app, please fill all fields.")
+                self.showErrorMessage(Constants.ErrorDetailsNotFound)
                 return
             }
             

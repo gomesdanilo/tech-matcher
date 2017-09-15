@@ -136,7 +136,7 @@ extension TMDatasource {
     func retrievePage(completionBlock : @escaping (_ users : [TMUser]?, _ error : String?) -> Void){
         
         if !isConnected() {
-            completionBlock(nil, "Sorry, your device is not connected to the Internet.")
+            completionBlock(nil, Constants.ErrorNoInternet)
             return
         }
         
@@ -203,6 +203,11 @@ extension TMDatasource {
         if cacheUsers.count > 0 {
             // User found
             completionBlock(self.cacheUsers.remove(at: 0), nil)
+            return
+        }
+        
+        if !isConnected() {
+            completionBlock(nil, Constants.ErrorNoInternet)
             return
         }
         
@@ -296,6 +301,10 @@ extension TMDatasource {
 
     func retrieveMatches(){
         
+        if !isConnected() {
+            self.matchDelegate?.didReceiveListMatches(nil, Constants.ErrorNoInternet)
+        }
+        
         // TODO: Release handle
         self.databaseReference
             .child("usersMatches/\(self.currentUserId)")
@@ -322,6 +331,11 @@ extension TMDatasource {
 extension TMDatasource {
     
     func retrieveMessages(matchId : String){
+        
+        if !isConnected(){
+            self.messageDelegate?.didReceiveListMessages(nil, Constants.ErrorNoInternet)
+        }
+        
         // TODO: Release handle
         self.databaseReference
             .child("chat/\(matchId)")
@@ -336,14 +350,16 @@ extension TMDatasource {
                     return
                 }
                 
-                
                 self.messageDelegate?.didReceiveListMessages([message], nil)
             })
-
-    
     }
     
     func sendMessage(_ message : String, matchId : String, completionBlock : @escaping (_ success : Bool, _ error : String?) -> Void){
+        
+        if !isConnected() {
+            completionBlock(false, Constants.ErrorNoInternet)
+            return
+        }
         
         let ref =  self.databaseReference.child("chat/\(matchId)").childByAutoId()
         let timestamp = ServerValue.timestamp()
@@ -361,9 +377,5 @@ extension TMDatasource {
             completionBlock(true, nil)
             
         }
-    
-    
     }
-
-
 }

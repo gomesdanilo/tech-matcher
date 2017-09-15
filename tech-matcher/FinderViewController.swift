@@ -134,10 +134,9 @@ extension FinderViewController {
     
     func retrieveNextUser(){
         
-        showProgressWithMessage(message: "Retrieving users...")
+        
         updateScreen(mode: .Empty)
         datasource?.nextUser(completionBlock: { (user, error) in
-            self.dismissProgress()
             
             if error != nil {
                 self.showErrorMessage(error!)

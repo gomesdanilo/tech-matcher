@@ -30,7 +30,7 @@ struct Constants {
     static let JPEGCompression : CGFloat = 0.8
     
     static let ErrorDetailsNotFound = "Details not found. This might be your first time. Please fill all details."
-    
+    static let ErrorNoInternet = "Sorry, your device is not connected to the Internet."
     
     struct Keys {
         
