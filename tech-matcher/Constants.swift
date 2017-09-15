@@ -20,6 +20,8 @@ func searchModeFromString(_ string : String?) -> SearchMode {
 
 struct Constants {
     
+    static let Timeout : Double = 5 // Seconds
+    
     static let SegueShowFinder = "showFinder"
     static let SegueShowSettings = "showSettings"
     static let SegueShowMatches = "showMatches"
@@ -31,6 +33,8 @@ struct Constants {
     
     static let ErrorDetailsNotFound = "Details not found. This might be your first time. Please fill all details."
     static let ErrorNoInternet = "Sorry, your device is not connected to the Internet."
+    
+    static let ErrorTimeout = "Sorry, timeout reached. Connectivity issues"
     
     struct Keys {
         

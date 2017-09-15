@@ -64,18 +64,40 @@ extension TMDatasource {
             return
         }
         
-        let ref = databaseReference.child(Constants.Entities.Users).child(currentUserId)
-        
-        ref.observeSingleEvent(of: .value, with: { (snapshot) in
-            guard let user = TMUser(snapshot: snapshot) else {
-                
-                completionBlock(nil, Constants.ErrorDetailsNotFound)
+        var responded = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + Constants.Timeout) {
+            
+            if !responded {
+                responded = true
+                completionBlock(nil, Constants.ErrorTimeout)
                 return
             }
-            completionBlock(user, nil)
+        }
+        
+        databaseReference
+            .child(Constants.Entities.Users)
+            .child(currentUserId)
+            .observeSingleEvent(of: .value, with: { (snapshot) in
+                
+                if !responded {
+                    responded = true
+                
+                    guard let user = TMUser(snapshot: snapshot) else {
+                        
+                        completionBlock(nil, Constants.ErrorDetailsNotFound)
+                        return
+                    }
+                    completionBlock(user, nil)
+                
+                }
+            
         }) { (error) in
             
-            completionBlock(nil, error.localizedDescription)
+            if !responded {
+                responded = true
+                completionBlock(nil, error.localizedDescription)
+                
+            }
         }
     }
     

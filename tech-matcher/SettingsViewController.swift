@@ -221,8 +221,9 @@ extension SettingsViewController {
     
     func retrieveDetailsFromServer(){
         
-        
+        showProgressWithMessage(message: "Retrieving user details")
         datasource?.loadUserDetails({ (user, error) in
+            self.dismissProgress()
             
             guard error == nil else {
                 self.showErrorMessage(error!)
