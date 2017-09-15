@@ -124,17 +124,20 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
-                            <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="n5f-vb-lsN">
-                                <rect key="frame" x="26" y="84" width="268" height="161"/>
+                            <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="n5f-vb-lsN">
+                                <rect key="frame" x="26" y="84" width="268" height="150"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sorry, we couldn't find users at the moment. Please try again now or wait few minutes." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ehC-zs-2jx">
-                                        <rect key="frame" x="0.0" y="0.0" width="268" height="61"/>
+                                        <rect key="frame" x="5" y="0.0" width="258" height="80"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="80" id="3WM-jf-9Li"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t8X-eN-zrQ">
-                                        <rect key="frame" x="34" y="111" width="200" height="50"/>
+                                        <rect key="frame" x="34" y="100" width="200" height="50"/>
                                         <color key="backgroundColor" red="0.13687922499999999" green="0.68385221490000003" blue="0.87855718819999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="32P-fV-L9x"/>
@@ -149,6 +152,10 @@
                                         </connections>
                                     </button>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="ehC-zs-2jx" secondAttribute="trailing" constant="5" id="LRu-Ms-9kk"/>
+                                    <constraint firstItem="ehC-zs-2jx" firstAttribute="leading" secondItem="n5f-vb-lsN" secondAttribute="leading" constant="5" id="wLn-K4-LZ2"/>
+                                </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -200,7 +207,7 @@
                                 <rect key="frame" x="0.0" y="28" width="320" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="G30-YK-k0w" id="wSZ-xr-UgD">
-                                    <rect key="frame" x="0.0" y="0.0" width="287" height="100"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="287" height="99.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="match-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="yKF-VU-oDL">
@@ -274,7 +281,7 @@
                                         <rect key="frame" x="0.0" y="28" width="320" height="185"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1wN-z2-mVo" id="KZk-oh-7Hs">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="185"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="184.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Danilo:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7kE-5b-zvE">
