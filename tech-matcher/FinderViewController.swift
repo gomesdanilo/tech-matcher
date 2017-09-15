@@ -40,19 +40,12 @@ class FinderViewController: UIViewController {
         
         updateScreen(mode: .Empty)
         
-        
         if let loggedInUserId = loggedInUserId {
             datasource = TMDatasource(currentUserId: loggedInUserId)
             datasource?.matchDelegate = self
-            
             datasource?.retrieveMatches()
-            loadUserDetails({ (success) in
-                if success {
-                    self.retrieveNextUser()
-                } else {
-                    self.updateScreen(mode: FinderViewController.ScreenMode.UsersNotFound)
-                }
-            })
+            
+            retrieveDetailsAndUsers()
         } else {
             showErrorMessage("Invalid parameters for screen.")
         }
@@ -65,6 +58,21 @@ class FinderViewController: UIViewController {
         } else if Constants.SegueShowMatches == segue.identifier {
             let vc = segue.destination as! MatchesViewController
             vc.loggedInUser = loggedInUser
+        }
+    }
+    
+    func retrieveDetailsAndUsers(){
+        
+        if loggedInUser == nil {
+            loadUserDetails({ (success) in
+                if success {
+                    self.retrieveNextUser()
+                } else {
+                    self.updateScreen(mode: FinderViewController.ScreenMode.UsersNotFound)
+                }
+            })
+        } else {
+            retrieveNextUser()
         }
     }
 }
@@ -101,7 +109,8 @@ extension FinderViewController {
     }
     
     @IBAction func didClickOnSearchAgain(_ sender: Any) {
-        retrieveNextUser()
+        
+        retrieveDetailsAndUsers()
     }
     
     
@@ -183,25 +192,27 @@ extension FinderViewController {
     
     func loadUserDetails(_ completionBlock : @escaping (_ success : Bool) -> Void){
         
-        showProgressWithMessage(message: "Retrieving user details...")
-        datasource?.loadUserDetails({ (user, error, showSettings) in
-            self.dismissProgress()
-            
-            if error != nil {
-                self.showErrorMessage(error!)
-            }
-            
-            if showSettings {
-                self.didClickOnSettingsButton(self)
-            }
-            
-            if user != nil {
-                self.loggedInUser = user
-                completionBlock(true)
-            } else {
-                completionBlock(false)
-            }
-        })
+        if let datasource = self.datasource {
+            showProgressWithMessage(message: "Retrieving user details...")
+            datasource.loadUserDetails({ (user, error, showSettings) in
+                self.dismissProgress()
+                
+                if error != nil {
+                    self.showErrorMessage(error!)
+                }
+                
+                if showSettings {
+                    self.didClickOnSettingsButton(self)
+                }
+                
+                if user != nil {
+                    self.loggedInUser = user
+                    completionBlock(true)
+                } else {
+                    completionBlock(false)
+                }
+            })
+        }
     }
 }
 

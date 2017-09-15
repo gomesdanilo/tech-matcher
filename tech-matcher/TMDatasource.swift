@@ -376,7 +376,7 @@ extension TMDatasource {
             
             if !responded {
                 responded = true
-                self.matchDelegate?.didReceiveListMatches(nil, Constants.ErrorTimeout)
+                self.messageDelegate?.didReceiveListMessages(nil, Constants.ErrorTimeout)
                 return
             }
         }

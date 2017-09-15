@@ -26,6 +26,7 @@ class MatchesViewController: UITableViewController {
         if let loggedInUser = loggedInUser {
             datasource = TMDatasource(currentUserId: loggedInUser.userId)
             datasource?.matchDelegate = self
+            retrieveDataFromServer()
         } else {
             showErrorMessage(Constants.ErrorNoInternet)
         }

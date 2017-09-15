@@ -34,7 +34,7 @@ struct Constants {
     static let ErrorDetailsNotFound = "Details not found. This might be your first time. Please fill all details."
     static let ErrorNoInternet = "Sorry, your device is not connected to the Internet."
     
-    static let ErrorTimeout = "Sorry, timeout reached. Connectivity issues"
+    static let ErrorTimeout = "Sorry, timeout reached. There is no data or you have connectivity issues"
     
     struct Keys {
         
