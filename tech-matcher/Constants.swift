@@ -29,6 +29,9 @@ struct Constants {
     static let ImageSize = 600
     static let JPEGCompression : CGFloat = 0.8
     
+    static let ErrorDetailsNotFound = "Details not found. This might be your first time. Please fill all details."
+    
+    
     struct Keys {
         
         // User
@@ -44,7 +47,20 @@ struct Constants {
         // Message
         static let Content = "content"
         static let Timestamp = "timestamp"
+        
+        
     }
+    
+    struct Entities {
+        static let Users = "users"
+    }
+    
+    
+    
+    
+    
+    
+    
     
     
     

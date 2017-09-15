@@ -39,7 +39,14 @@ class TMDatasource {
         databaseReference = Database.database().reference()
         storageReference = Storage.storage().reference()
         self.currentUserId = currentUserId
+        
     }
+    
+    
+    func isConnected() -> Bool {
+        return ConnectivityHandler.sharedInstance().connected
+    }
+    
     
     deinit {
        databaseReference.removeAllObservers()
@@ -52,13 +59,24 @@ extension TMDatasource {
     
     func loadUserDetails(_ completionBlock : @escaping (_ user : TMUser?,_ error : String?) -> Void){
         
-        databaseReference.child("users").child(currentUserId).observeSingleEvent(of: .value, with: { (snapshot) in
+        if !isConnected() {
+            completionBlock(nil, "Sorry, your device is not connected to the Internet.")
+            return
+        }
+        
+        let ref = databaseReference.child(Constants.Entities.Users).child(currentUserId)
+        
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
             guard let user = TMUser(snapshot: snapshot) else {
-                completionBlock(nil, "Details not found.")
+                
+                completionBlock(nil, Constants.ErrorDetailsNotFound)
                 return
             }
             completionBlock(user, nil)
-        })
+        }) { (error) in
+            
+            completionBlock(nil, error.localizedDescription)
+        }
     }
     
     func updateUserSettings(_ user : TMUser, completionBlock : @escaping (_ success : Bool, _ error : String?) -> Void){
@@ -116,6 +134,13 @@ extension TMDatasource {
     }
     
     func retrievePage(completionBlock : @escaping (_ users : [TMUser]?, _ error : String?) -> Void){
+        
+        if !isConnected() {
+            completionBlock(nil, "Sorry, your device is not connected to the Internet.")
+            return
+        }
+        
+        
         var query = databaseReference.child("users").queryOrderedByKey()
         
         if startingValue != nil {

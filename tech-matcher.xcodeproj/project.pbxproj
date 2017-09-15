@@ -27,6 +27,7 @@
 		99B0C5041F66B7D300347235 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B0C5031F66B7D300347235 /* LoginViewController.swift */; };
 		99C0F1D81F6997A1005299A5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C0F1D71F6997A1005299A5 /* Constants.swift */; };
 		99DA77DB1F66B4F2009D96FE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 99DA77DA1F66B4F2009D96FE /* GoogleService-Info.plist */; };
+		99F4D3061F6BE1F10090FD05 /* ConnectivityHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F4D3051F6BE1F10090FD05 /* ConnectivityHandler.swift */; };
 		C2E4478FAEAD9DC9416395B3 /* Pods_tech_matcher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45526E6469A2A456183AA3B3 /* Pods_tech_matcher.framework */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +56,7 @@
 		99B0C5031F66B7D300347235 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		99C0F1D71F6997A1005299A5 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = "tech-matcher/Constants.swift"; sourceTree = "<group>"; };
 		99DA77DA1F66B4F2009D96FE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "tech-matcher/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		99F4D3051F6BE1F10090FD05 /* ConnectivityHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectivityHandler.swift; sourceTree = "<group>"; };
 		E9EE0669935E24175C3C6F69 /* Pods-tech-matcher.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tech-matcher.debug.xcconfig"; path = "Pods/Target Support Files/Pods-tech-matcher/Pods-tech-matcher.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -166,6 +168,7 @@
 				995505601F66C3570019ECC5 /* SettingsViewController.swift */,
 				995505641F66C37B0019ECC5 /* MatchesViewController.swift */,
 				995505661F66C3820019ECC5 /* ChatViewController.swift */,
+				99F4D3051F6BE1F10090FD05 /* ConnectivityHandler.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -332,6 +335,7 @@
 				99C0F1D81F6997A1005299A5 /* Constants.swift in Sources */,
 				990FA8A51F696E95008047F8 /* TMMessage.swift in Sources */,
 				995505611F66C3570019ECC5 /* SettingsViewController.swift in Sources */,
+				99F4D3061F6BE1F10090FD05 /* ConnectivityHandler.swift in Sources */,
 				995505631F66C3710019ECC5 /* FinderViewController.swift in Sources */,
 				99255F511F6AB45C00C97BAD /* KeyboardController.swift in Sources */,
 				996C20FB1F66AD4D004291C1 /* AppDelegate.swift in Sources */,

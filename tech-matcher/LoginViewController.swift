@@ -24,6 +24,7 @@ class LoginViewController: UIViewController {
         
         if let vc = FUIAuth.defaultAuthUI() {
             let authVc = vc.authViewController()
+            vc.delegate = self
             present(authVc, animated: true, completion: nil)
         }
     }
@@ -58,5 +59,17 @@ class LoginViewController: UIViewController {
             vc.loggedInUserId = currentUser!.uid
         }
     }
+
+}
+
+extension LoginViewController : FUIAuthDelegate {
+    
+    
+    func authUI(_ authUI: FUIAuth, didSignInWith user: User?, error: Error?) {
+        if let error = error {
+            showErrorMessage(error.localizedDescription)
+        }
+    }
+    
 
 }
