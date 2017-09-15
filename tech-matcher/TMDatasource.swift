@@ -145,13 +145,40 @@ extension TMDatasource {
 
 extension TMDatasource {
     
-    func likeUser(userId : String, like : Bool, completionBlock : @escaping () -> Void){
+    func likeUser(userId : String, like : Bool,
+                  completionBlock : @escaping (_ success : Bool, _ error : String?) -> Void){
+        
+        if !isConnected() {
+            completionBlock(false, Constants.ErrorNoInternet)
+            return
+        }
+        
+        var responded = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + Constants.Timeout) {
+            
+            if !responded {
+                responded = true
+                completionBlock(false, Constants.ErrorTimeout)
+                return
+            }
+        }
         
         let values = ["/userLikes/\(currentUserId)/\(userId)": like]
         
         // Updates database.
         databaseReference.updateChildValues(values) { (error, databaseReference) in
-            completionBlock()
+            
+            if !responded {
+                responded = true
+                
+                if error != nil {
+                    completionBlock(false, error!.localizedDescription)
+                    return
+                }
+                
+                completionBlock(true, nil)
+                
+            }
         }
     }
     

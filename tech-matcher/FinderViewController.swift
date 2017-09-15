@@ -136,9 +136,18 @@ extension FinderViewController {
     }
     
     func likeUser(like : Bool){
-        if let presentingUser = presentingUser {
-            datasource?.likeUser(userId: presentingUser.userId, like: like, completionBlock: {
-                self.retrieveNextUser()
+        if let presentingUser = presentingUser, let datasource = self.datasource {
+            
+            showProgressWithMessage(message: "Loading...")
+            datasource.likeUser(userId: presentingUser.userId, like: like, completionBlock: {(success, error) in
+                
+                self.dismissProgress()
+                
+                if success {
+                    self.retrieveNextUser()
+                } else if error != nil {
+                    self.showErrorMessage(error!)
+                }
             })
         }
     }
