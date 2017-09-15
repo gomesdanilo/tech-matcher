@@ -54,7 +54,7 @@ class FinderViewController: UIViewController {
             vc.loggedInUserId = loggedInUserId
         } else if Constants.SegueShowMatches == segue.identifier {
             let vc = segue.destination as! MatchesViewController
-            vc.loggedInUser = loggedInUser!
+            vc.loggedInUser = loggedInUser
         }
     }
 }
@@ -62,12 +62,24 @@ class FinderViewController: UIViewController {
 // MARK: - EVENTS
 
 extension FinderViewController {
-    @IBAction func didClickOnSettingsButton(_ sender: Any) {
+    
+    func navigateToMatches(){
+        performSegue(withIdentifier: Constants.SegueShowMatches, sender: self)
+    }
+    
+    func navigateToSettings(){
+        
         performSegue(withIdentifier: Constants.SegueShowSettings, sender: self)
     }
     
+    
+    @IBAction func didClickOnSettingsButton(_ sender: Any) {
+        navigateToSettings()
+    }
+    
     @IBAction func didClickOnMatchesButton(_ sender: Any) {
-        performSegue(withIdentifier: Constants.SegueShowMatches, sender: self)
+        navigateToMatches()
+        
     }
     
     @IBAction func didClickOnSkip(_ sender: Any) {

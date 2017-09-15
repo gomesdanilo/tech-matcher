@@ -22,9 +22,14 @@ class MatchesViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        datasource = TMDatasource(currentUserId: loggedInUser!.userId)
-        datasource?.matchDelegate = self
-        datasource?.retrieveMatches()
+        
+        if let loggedInUser = loggedInUser {
+            datasource = TMDatasource(currentUserId: loggedInUser.userId)
+            datasource?.matchDelegate = self
+            datasource?.retrieveMatches()
+        } else {
+            showErrorMessage(Constants.ErrorNoInternet)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -50,6 +55,7 @@ class MatchesViewController: UITableViewController {
                         if let image = UIImage(data: data) {
                             self.imageCache.setObject(image, forKey: url as NSString)
                             self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                            print("Updating image for row ", indexPath.row)
                         }
                     }
                 })
@@ -95,10 +101,20 @@ extension MatchesViewController : TMDatasourceMatchDelegate {
             return
         }
         
-        if matches != nil {
-            self.matches.append(contentsOf: matches!)
-            self.tableView.reloadData()
+        if let matches = matches {
+            
+            let previousCount = self.matches.count
+            let count = matches.count
+            
+            self.matches.append(contentsOf: matches)
+            
+            var indexes : [IndexPath] = []
+            for i in 0..<count {
+                indexes.append(IndexPath(row: i+previousCount, section: 0))
+            }
+            self.tableView.insertRows(at: indexes, with: .automatic)
         }
+        
     }
 }
 
