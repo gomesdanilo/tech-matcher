@@ -96,12 +96,27 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar-finder-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="4HS-Tc-NEq">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hcF-LY-al5">
                                                 <rect key="frame" x="0.0" y="55" width="300" height="160"/>
+                                                <subviews>
+                                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="0Nd-sZ-4uc">
+                                                        <rect key="frame" x="140" y="70" width="20" height="20"/>
+                                                    </activityIndicatorView>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar-finder-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="4HS-Tc-NEq">
+                                                        <rect key="frame" x="0.0" y="0.0" width="300" height="160"/>
+                                                    </imageView>
+                                                </subviews>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="160" id="rzB-hv-ywv"/>
+                                                    <constraint firstAttribute="trailing" secondItem="4HS-Tc-NEq" secondAttribute="trailing" id="422-FL-MOg"/>
+                                                    <constraint firstItem="0Nd-sZ-4uc" firstAttribute="centerY" secondItem="hcF-LY-al5" secondAttribute="centerY" id="GVA-i6-Jet"/>
+                                                    <constraint firstAttribute="bottom" secondItem="4HS-Tc-NEq" secondAttribute="bottom" id="Z5i-wZ-lmn"/>
+                                                    <constraint firstItem="0Nd-sZ-4uc" firstAttribute="centerX" secondItem="hcF-LY-al5" secondAttribute="centerX" id="e5h-8N-XXW"/>
+                                                    <constraint firstItem="4HS-Tc-NEq" firstAttribute="top" secondItem="hcF-LY-al5" secondAttribute="top" id="q6e-Xw-5dz"/>
+                                                    <constraint firstItem="4HS-Tc-NEq" firstAttribute="leading" secondItem="hcF-LY-al5" secondAttribute="leading" id="quL-Kl-g2L"/>
+                                                    <constraint firstAttribute="height" constant="160" id="tpM-U7-Qu4"/>
                                                 </constraints>
-                                            </imageView>
+                                            </view>
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="c1E-Bz-gll">
@@ -203,6 +218,7 @@
                         <outlet property="container" destination="JEy-1X-2Tf" id="UD5-IL-AZo"/>
                         <outlet property="containerUsersNotFound" destination="n5f-vb-lsN" id="oI4-hV-qUf"/>
                         <outlet property="fullnameLabel" destination="yHI-Sh-t8x" id="INk-rD-4gZ"/>
+                        <outlet property="imageActivityIndicator" destination="0Nd-sZ-4uc" id="ckI-wA-NTu"/>
                         <segue destination="eKh-Pr-z04" kind="show" identifier="showSettings" id="coA-jm-CVh"/>
                         <segue destination="xh4-Uq-7FO" kind="show" identifier="showMatches" id="3lt-XT-GXe"/>
                     </connections>
@@ -224,7 +240,7 @@
                                 <rect key="frame" x="0.0" y="28" width="320" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="G30-YK-k0w" id="wSZ-xr-UgD">
-                                    <rect key="frame" x="0.0" y="0.0" width="287" height="99.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="287" height="100"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="match-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="yKF-VU-oDL">
@@ -298,7 +314,7 @@
                                         <rect key="frame" x="0.0" y="28" width="320" height="185"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1wN-z2-mVo" id="KZk-oh-7Hs">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="184.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="185"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Danilo:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7kE-5b-zvE">

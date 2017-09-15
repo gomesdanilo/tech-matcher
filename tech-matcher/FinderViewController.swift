@@ -23,6 +23,7 @@ class FinderViewController: UIViewController {
     @IBOutlet weak var fullnameLabel: UILabel!
     @IBOutlet weak var aboutLabel: UILabel!
     @IBOutlet weak var avatarImageView: UIImageView!
+    @IBOutlet weak var imageActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var container: UIStackView!
     @IBOutlet weak var containerUsersNotFound: UIStackView!
     
@@ -158,9 +159,15 @@ extension FinderViewController {
         fullnameLabel.text = user.fullname
         aboutLabel.text = user.about
         
+        avatarImageView.isHidden = true
         avatarImageView.image = #imageLiteral(resourceName: "avatar-finder-placeholder")
+        imageActivityIndicator.startAnimating()
+        
         if let image = user.image {
             datasource?.downloadPicture(url: image, completionBlock: { (data, error) in
+                
+                self.imageActivityIndicator.stopAnimating()
+                self.avatarImageView.isHidden = false
                 
                 if let data = data {
                     if let img = UIImage(data: data) {
