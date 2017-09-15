@@ -40,12 +40,22 @@ class FinderViewController: UIViewController {
         
         updateScreen(mode: .Empty)
         
-        datasource = TMDatasource(currentUserId: loggedInUserId!)
-        datasource?.matchDelegate = self
-        datasource?.retrieveMatches()
         
-        loadUserDetails()
-        retrieveNextUser()
+        if let loggedInUserId = loggedInUserId {
+            datasource = TMDatasource(currentUserId: loggedInUserId)
+            datasource?.matchDelegate = self
+            
+            datasource?.retrieveMatches()
+            loadUserDetails({ (success) in
+                if success {
+                    self.retrieveNextUser()
+                } else {
+                    self.updateScreen(mode: FinderViewController.ScreenMode.UsersNotFound)
+                }
+            })
+        } else {
+            showErrorMessage("Invalid parameters for screen.")
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -146,32 +156,50 @@ extension FinderViewController {
     
     func retrieveNextUser(){
         
+        if let datasource = self.datasource {
         
-        updateScreen(mode: .Empty)
-        datasource?.nextUser(completionBlock: { (user, error) in
+            updateScreen(mode: .Empty)
+            showProgressWithMessage(message: "Retriving users...")
+            datasource.nextUser(completionBlock: { (user, error) in
+                self.dismissProgress()
+                
+                if error != nil {
+                    self.showErrorMessage(error!)
+                    self.updateScreen(mode: .Empty)
+                    return
+                }
+                
+                if user != nil {
+                    self.loadUser(user!)
+                    self.updateScreen(mode: .Presenting)
+                } else {
+                    self.updateScreen(mode: .UsersNotFound)
+                }
+            })
+        
+        
+        }
+    }
+    
+    func loadUserDetails(_ completionBlock : @escaping (_ success : Bool) -> Void){
+        
+        showProgressWithMessage(message: "Retrieving user details...")
+        datasource?.loadUserDetails({ (user, error, showSettings) in
+            self.dismissProgress()
             
             if error != nil {
                 self.showErrorMessage(error!)
-                self.updateScreen(mode: .Empty)
-                return
+            }
+            
+            if showSettings {
+                self.didClickOnSettingsButton(self)
             }
             
             if user != nil {
-                self.loadUser(user!)
-                self.updateScreen(mode: .Presenting)
-            } else {
-                self.updateScreen(mode: .UsersNotFound)
-            }
-        })
-    }
-    
-    func loadUserDetails(){
-        datasource?.loadUserDetails({ (user, error) in
-            
-            if user == nil {
-                self.didClickOnSettingsButton(self)
-            } else {
                 self.loggedInUser = user
+                completionBlock(true)
+            } else {
+                completionBlock(false)
             }
         })
     }
@@ -183,10 +211,10 @@ extension FinderViewController : TMDatasourceMatchDelegate {
 
     func didReceiveListMatches(_ matches: [TMMatch]?, _ error: String?) {
         
+        // This runs in the "background", no need to show errors to user.
         guard let matches = matches else {
             return
         }
-        
         
         let notSeen = matches.filter { (match) -> Bool in
             return !match.seen

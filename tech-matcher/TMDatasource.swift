@@ -57,10 +57,10 @@ class TMDatasource {
 
 extension TMDatasource {
     
-    func loadUserDetails(_ completionBlock : @escaping (_ user : TMUser?,_ error : String?) -> Void){
+    func loadUserDetails(_ completionBlock : @escaping (_ user : TMUser?, _ error : String?, _ showSettings : Bool) -> Void){
         
         if !isConnected() {
-            completionBlock(nil, "Sorry, your device is not connected to the Internet.")
+            completionBlock(nil, "Sorry, your device is not connected to the Internet.", false)
             return
         }
         
@@ -69,7 +69,7 @@ extension TMDatasource {
             
             if !responded {
                 responded = true
-                completionBlock(nil, Constants.ErrorTimeout)
+                completionBlock(nil, Constants.ErrorTimeout, false)
                 return
             }
         }
@@ -84,10 +84,10 @@ extension TMDatasource {
                 
                     guard let user = TMUser(snapshot: snapshot) else {
                         
-                        completionBlock(nil, Constants.ErrorDetailsNotFound)
+                        completionBlock(nil, Constants.ErrorDetailsNotFound, true)
                         return
                     }
-                    completionBlock(user, nil)
+                    completionBlock(user, nil, false)
                 
                 }
             
@@ -95,7 +95,7 @@ extension TMDatasource {
             
             if !responded {
                 responded = true
-                completionBlock(nil, error.localizedDescription)
+                completionBlock(nil, error.localizedDescription, false)
                 
             }
         }
