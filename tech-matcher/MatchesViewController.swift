@@ -26,7 +26,6 @@ class MatchesViewController: UITableViewController {
         if let loggedInUser = loggedInUser {
             datasource = TMDatasource(currentUserId: loggedInUser.userId)
             datasource?.matchDelegate = self
-            datasource?.retrieveMatches()
         } else {
             showErrorMessage(Constants.ErrorNoInternet)
         }
@@ -93,8 +92,17 @@ extension MatchesViewController {
 
 // MARK: - TMDatasourceDelegate
 extension MatchesViewController : TMDatasourceMatchDelegate {
+    
+    func retrieveDataFromServer(){
+        if let datasource = datasource {
+            showProgressWithMessage(message: "Retrieving matches")
+            datasource.retrieveMatches()
+        }
+        
+    }
 
     func didReceiveListMatches(_ matches: [TMMatch]?, _ error: String?) {
+        dismissProgress()
         
         if error != nil {
             showErrorMessage(error!)

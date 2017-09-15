@@ -36,9 +36,12 @@ class ChatViewController: UIViewController {
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 44.0
         
-        self.datasource = TMDatasource(currentUserId: loggedInUser!.userId)
-        self.datasource?.messageDelegate = self
-        self.datasource?.retrieveMessages(matchId: match!.matchId)
+        
+        if let loggedInUser = loggedInUser, let match = match {
+            self.datasource = TMDatasource(currentUserId: loggedInUser.userId)
+            self.datasource?.messageDelegate = self
+            retrieveDataFromServer(matchId: match.matchId)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -118,7 +121,17 @@ extension ChatViewController {
 
 extension ChatViewController : TMDatasourceMessageDelegate {
 
+    func retrieveDataFromServer(matchId: String) {
+        if let datasource = self.datasource {
+            showProgressWithMessage(message: "Retrieving Messages")
+            datasource.retrieveMessages(matchId: matchId)
+        }
+    }
+
+
     func didReceiveListMessages(_ messages: [TMMessage]?, _ error: String?) {
+        
+        dismissProgress()
         
         if error != nil {
             showErrorMessage(error!)

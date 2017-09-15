@@ -327,6 +327,16 @@ extension TMDatasource {
             self.matchDelegate?.didReceiveListMatches(nil, Constants.ErrorNoInternet)
         }
         
+        var responded = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + Constants.Timeout) {
+            
+            if !responded {
+                responded = true
+                self.matchDelegate?.didReceiveListMatches(nil, Constants.ErrorTimeout)
+                return
+            }
+        }
+        
         // TODO: Release handle
         self.databaseReference
             .child("usersMatches/\(self.currentUserId)")
@@ -337,7 +347,10 @@ extension TMDatasource {
                     .child("/users/\(userMatchSnapshot.key)")
                     .observeSingleEvent(of: .value, with: { (userSnapshot) in
                         
+                        responded = true
+                        
                         guard let match = self.parseMatch(userMatchSnapshot, userSnapshot) else {
+                            self.matchDelegate?.didReceiveListMatches(nil, "Invalid response from server")
                             return
                         }
                         
@@ -358,17 +371,31 @@ extension TMDatasource {
             self.messageDelegate?.didReceiveListMessages(nil, Constants.ErrorNoInternet)
         }
         
+        var responded = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + Constants.Timeout) {
+            
+            if !responded {
+                responded = true
+                self.matchDelegate?.didReceiveListMatches(nil, Constants.ErrorTimeout)
+                return
+            }
+        }
+        
         // TODO: Release handle
         self.databaseReference
             .child("chat/\(matchId)")
             .queryOrderedByKey()
             .observe(.childAdded, with: { (message) in
                 
+                responded = true
+                
                 guard let dictionary = message.value as? [String: Any] else {
+                    self.messageDelegate?.didReceiveListMessages(nil, "Invalid response from server")
                     return
                 }
                 
                 guard let message = TMMessage(currentUserId: self.currentUserId, dictionary: dictionary) else {
+                    self.messageDelegate?.didReceiveListMessages(nil, "Invalid response from server")
                     return
                 }
                 
